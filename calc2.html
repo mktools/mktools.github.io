@@ -1,0 +1,122 @@
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>大規模杯計算機 - タッグ</title>
+
+  <script type="text/javascript" src="js/calc2.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <p>
+    大規模杯計算機 - タッグ(2v2)
+  </p>
+  <p>
+    使い方：<br>
+  </p>
+
+  <tr class="setting">
+      <td>形式<input id="membernum" class="number" size="3" type="number" value="2"></td>
+      <td>チーム数<input id="playernum" class="number" size="3" type="number" value="6"></td>
+      <td>通過チーム数<input id="passernum" class="number" size="3" type="number" value="3"></td>
+    </tr>
+
+  <p>
+    <textarea id="names" cols="70" rows="7" placeholder="">
+Lis☆izumi★進（7691-2812-0612）Lis☆さえきゆうか（0230-1918-2812）
+astrum_∑（4827-2469-6193）astrum_N（5873-7205-7020）
+りずにゃん（6536-2613-1415）みかんにゃん（6042-0250-1266）
+Fam♢﻿モト（5731-0936-6987）Fam♢﻿のほん（6316-2405-0522）
+No kids（2153-6870-6717）kids（5575-2619-6395）
+TSM_OMG（5750-3536-3609）TSM_myth（3411-7525-8519）
+</textarea>
+    <textarea id="points" cols="5" rows="7" placeholder="">
+62,61
+59,76
+35,50
+52,41
+42,48
+62,68
+</textarea>
+<br>
+    <button type=button onclick="pasteNames()">名前一括貼付</button>
+    <button type=button onclick="pastePoints()">得点一括貼付</button>
+    <button type=button onclick="getTeamName()">チーム名推定</button>
+
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <td>名前</td>
+        <td>得点</td>
+        <td>チーム名</td>
+    </thead>
+    <tbody>
+      <tr class="pl1">
+        <td><input id="n1" name="name" class="name" type="text"></td>
+        <td><input id="p1" name="point" class="number" size="3" type="number"></td>
+        <td rowspan="2"><input id="t1" name="team" class="tag" type="text"></td>
+      </tr>
+      <tr class="pl2">
+        <td><input id="n2" name="name" class="name" type="text"></td>
+        <td><input id="p2" name="point" class="number" size="3" type="number"></td>
+      </tr>
+      <tr class="pl3">
+        <td><input id="n3" name="name" class="name" type="text"></td>
+        <td><input id="p3" name="point" class="number" size="3" type="number"></td>
+        <td rowspan="2"><input id="t2" name="team" class="tag" type="text"></td>
+      </tr>
+      <tr class="pl4">
+        <td><input id="n4" name="name" class="name" type="text"></td>
+        <td><input id="p4" name="point" class="number" size="3" type="number"></td>
+      </tr>
+      <tr class="pl5">
+        <td><input id="n5" name="name" class="name" type="text"></td>
+        <td><input id="p5" name="point" class="number" size="3" type="number"></td>
+        <td rowspan="2"><input id="t3" name="team" class="tag" type="text"></td>
+      </tr>
+      <tr class="pl6">
+        <td><input id="n6" name="name" class="name" type="text"></td>
+        <td><input id="p6" name="point" class="number" size="3" type="number"></td>
+      </tr>
+      <tr class="pl7">
+        <td><input id="n7" name="name" class="name" type="text"></td>
+        <td><input id="p7" name="point" class="number" size="3" type="number"></td>
+        <td rowspan="2"><input id="t4" name="team" class="tag" type="text"></td>
+      </tr>
+      <tr class="pl8">
+        <td><input id="n8" name="name" class="name" type="text"></td>
+        <td><input id="p8" name="point" class="number" size="3" type="number"></td>
+      </tr>
+      <tr class="pl9">
+        <td><input id="n9" name="name" class="name" type="text"></td>
+        <td><input id="p9" name="point" class="number" size="3" type="number"></td>
+        <td rowspan="2"><input id="t5" name="team" class="tag" type="text"></td>
+      </tr>
+      <tr class="pl10">
+        <td><input id="n10" name="name" class="name" type="text"></td>
+        <td><input id="p10" name="point" class="number" size="3" type="number"></td>
+      </tr>
+      <tr class="pl11">
+        <td><input id="n11" name="name" class="name" type="text"></td>
+        <td><input id="p11" name="point" class="number" size="3" type="number"></td>
+        <td rowspan="2"><input id="t6" name="team" class="tag" type="text"></td>
+      </tr>
+      <tr class="pl12">
+        <td><input id="n12" name="name" class="name" type="text"></td>
+        <td><input id="p12" name="point" class="number" size="3" type="number"></td>
+      </tr>
+    </tbody>
+  </table>
+  <button type=button onclick="calc2()">計算</button>
+
+  <p>
+    <textarea id="result" name="result" cols="70" rows="32" placeholder=""></textarea><br>
+    <button type=button onclick="copy()">コピー</button>
+  </p>
+
+</body>
+
+</html>
