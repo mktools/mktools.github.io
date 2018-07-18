@@ -1,17 +1,23 @@
 function pasteNames() {
-    let nameArray = new Array();
-    nameArray = document.getElementById("names").value.split("\n");
+    var nameArray = new Array();
+    var allNames = document.getElementById("names").value;
+    //たまに混入しているゼロ幅文字を消す
+    allNames = allNames.replace(/[\u200B-\u200D\u2028-\u202E\uFEFF]/g, '');
+    var fixedNames = allNames.replace(/([（(][0-9]{4}[-‐–][0-9]{4}[-‐–][0-9]{4}[）)])/g, "$1\n");
+    fixedNames = fixedNames.replace(/\n\n/g, "\n");
+
+    // console.log(fixedNames);
+    nameArray = fixedNames.split("\n");
+
+    //nameArray = document.getElementById("names").value.split("\n");
     let playerNames = document.getElementsByName("name");
     const n = Number(document.getElementById("playernum").value);
     const m = Number(document.getElementById("membernum").value);
 
-    for (i = 0; i < n; i++) {
-        let nameArrays = new Array();
-        nameArrays = nameArray[i].split("）");
-        for (j = 0; j < m; j++) {
-            playerNames[i * m + j].value = nameArrays[j] + "）";
-        }
+    for (i = 0; i < n * m; i++) {
+        playerNames[i].value = nameArray[i];
     }
+    getTeamName();
 }
 
 function pastePoints() {
@@ -42,6 +48,62 @@ function objArraySort(data, key) {
         return 0;
     });
 }
+
+function calc1() {
+    var playerNames = document.getElementsByName("name");
+    var playerPoints = document.getElementsByName("point");
+    var n = Number(document.getElementById("playernum").value);
+    var playersArray = new Array();
+    for (i = 0; i < n; i++) {
+        var obj = new Object();
+        obj.point = parseInt(playerPoints[i].value, 10);
+        obj.name = playerNames[i].value;
+        playersArray.push(obj);
+    }
+    objArraySort(playersArray, 'point');
+
+    var result = maketable1(playersArray);
+    document.getElementById("result").value = result;
+
+}
+
+function maketable1(data) {
+    var str = "";
+    var p = Number(document.getElementById("passernum").value);
+    var n = Number(document.getElementById("playernum").value);
+
+    if (p === 0) {
+        for (i = 0; i < n; i++) {
+            str += data[i].point + "pts : " + data[i].name + "\n";
+        }
+        str += "\n優勝\n"
+        str += data[0].name + "\n";
+
+    } else if (0 < p && p < n) {
+
+        for (i = 0; i < p; i++) {
+            str += data[i].point + "pts : " + data[i].name + "\n";
+        }
+        str += "--------------------------------------------\n"
+        for (i = p; i < n; i++) {
+            str += data[i].point + "pts : " + data[i].name + "\n";
+        }
+
+        if (data[p - 1].point === data[p].point) {
+            str += "\n※進出可能ラインで同点がいます※\n"
+        }
+
+        str += "\n主催コピペ用\n"
+        for (i = 0; i < p; i++) {
+            str += data[i].name + "\n";
+        }
+    } else {
+        str += "エラー : 通過人数がおかしいです\n"
+    }
+
+    return str;
+}
+
 
 function calc2() {
     const teamNames = document.getElementsByName("team");
@@ -79,14 +141,14 @@ function maketable2(data) {
     const n = Number(document.getElementById("playernum").value);
     const m = Number(document.getElementById("membernum").value);
 
-    if (p == 0) {
+    if (p === 0) {
         for (i = 0; i < n; i++) {
             let strtmp = "";
             for (j = 0; j < m; j++) {
                 strtmp += data[i].players[j].point + "pts : " + data[i].players[j].name + "\n";
             }
             str += strtmp;
-            str += data[i].point + "pts : " + data[i].name + "\n\n";
+            str += data[i].name + " : " + data[i].point + "pts\n\n";
         }
         str += "\n優勝\n"
         let strtmp = "";
@@ -104,7 +166,7 @@ function maketable2(data) {
                 strtmp += data[i].players[j].point + "pts : " + data[i].players[j].name + "\n";
             }
             str += strtmp;
-            str += data[i].point + "pts : " + data[i].name + "\n\n";
+            str += data[i].name + " : " + data[i].point + "pts\n\n";
 
         }
         str += "--------------------------------------------\n"
@@ -114,10 +176,10 @@ function maketable2(data) {
                 strtmp += data[i].players[j].point + "pts : " + data[i].players[j].name + "\n";
             }
             str += strtmp;
-            str += data[i].point + "pts : " + data[i].name + "\n\n";
+            str += data[i].name + " : " + data[i].point + "pts\n\n";
         }
 
-        if (data[p - 1].point == data[p].point) {
+        if (data[p - 1].point === data[p].point) {
             str += "\n※進出可能ラインで同点がいます※\n"
         }
 
@@ -130,7 +192,11 @@ function maketable2(data) {
             str += strtmp + "\n";
         }
     } else {
-
+        if (m === 1) {
+            str += "通過人数がおかしいです\n"
+        } else {
+            str += "通過チーム数がおかしいです\n"
+        }
     }
 
     return str;
@@ -141,8 +207,8 @@ function maketable2(data) {
 function LCS(s1, s2) {
 
     // フレンドコードを削除
-    s1 = s1.replace(/（[0-9]{4}-[0-9]{4}-[0-9]{4}）/, "");
-    s2 = s2.replace(/（[0-9]{4}-[0-9]{4}-[0-9]{4}）/, "");
+    s1 = s1.replace(/([（(][0-9]{4}[-‐–][0-9]{4}[-‐–][0-9]{4}[）)])/, "");
+    s2 = s2.replace(/([（(][0-9]{4}[-‐–][0-9]{4}[-‐–][0-9]{4}[）)])/, "");
 
     // Init the matrix of all substring lengths to use Dynamic Programming approach.
     const substringMatrix = Array(s2.length + 1).fill(null).map(() => {
@@ -205,25 +271,25 @@ function getTeamName() {
     const playerNames = document.getElementsByName("name");
     let teamName = document.getElementsByName("team");
     let teamNameArray = new Array();
-    if (m == 2) {
+    if (m === 2) {
         for (i = 0; i < n; i++) {
             name = LCS(playerNames[i * 2].value, playerNames[i * 2 + 1].value)
             teamNameArray.push(name);
         }
-    } else if (m == 3) {
+    } else if (m === 3) {
         for (i = 0; i < n; i++) {
             name = LCS(playerNames[i * 3].value, playerNames[i * 3 + 1].value)
             name = LCS(name, playerNames[i * 3 + 2].value)
             teamNameArray.push(name);
         }
-    } else if (m == 4) {
+    } else if (m === 4) {
         for (i = 0; i < n; i++) {
             name = LCS(playerNames[i * 4].value, playerNames[i * 4 + 1].value)
             name = LCS(name, playerNames[i * 4 + 2].value)
             name = LCS(name, playerNames[i * 4 + 3].value)
             teamNameArray.push(name);
         }
-    } else if (m == 6) {
+    } else if (m === 6) {
         for (i = 0; i < n; i++) {
             name = LCS(playerNames[i * 6].value, playerNames[i * 6 + 1].value)
             name = LCS(name, playerNames[i * 6 + 2].value)
@@ -260,8 +326,26 @@ function execCopy(string) {
 
 function copy() {
     if (execCopy(document.getElementById("result").value)) {
-        alert('コピーしました');
+        alert('集計結果をコピーしました');
     } else {
         alert('このブラウザでは対応していません');
     }
+}
+
+function reset() {
+    var playerNames = document.getElementsByName("name");
+    var teamNames = document.getElementsByName("team");
+    var playerPoints = document.getElementsByName("point");
+
+    for (i = 0; i < 12; i++) {
+        playerNames[i].value = "";
+        playerPoints[i].value = "";
+    }
+
+    for (i = 0; i < teamNames.length; i++) {
+        teamNames[i].value = "";
+    }
+
+    document.getElementById("names").value = "";
+    document.getElementById("result").value = "";
 }

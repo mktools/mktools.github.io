@@ -9,41 +9,41 @@
 </head>
 
 <body>
+  <a href="index.html">トップへ戻る</a>
   <p>
     大規模杯計算機 - タッグ(2v2)
   </p>
+  <details>
+    <summary>使い方</summary>
+    <ol>
+      <li>通過チーム数を入力する（決勝の場合は0を入力する）</li>
+      <li>組分けから該当する組をコピペして「名前一括貼付」を押す</li>
+      <li>得点を入力(Tabキーで移動可)して「計算」を押す</li>
+      <li>「コピー」を押して進行スレの書き込み欄に貼り付ける</li>
+      <li> リザルト画像URLを文頭に追加して書き込む</li>
+    </ol>
+  </details>
   <p>
-    使い方：<br>
-  </p>
-
-  <tr class="setting">
-      <td>形式<input id="membernum" class="number" size="3" type="number" value="2"></td>
+    <tr class="setting">
+      <td>形式<input id="membernum" class="number" size="3" type="number" value="2" readonly></td>
       <td>チーム数<input id="playernum" class="number" size="3" type="number" value="6"></td>
       <td>通過チーム数<input id="passernum" class="number" size="3" type="number" value="3"></td>
     </tr>
+  </p>
 
   <p>
-    <textarea id="names" cols="70" rows="7" placeholder="">
-Lis☆izumi★進（7691-2812-0612）Lis☆さえきゆうか（0230-1918-2812）
-astrum_∑（4827-2469-6193）astrum_N（5873-7205-7020）
-りずにゃん（6536-2613-1415）みかんにゃん（6042-0250-1266）
-Fam♢﻿モト（5731-0936-6987）Fam♢﻿のほん（6316-2405-0522）
-No kids（2153-6870-6717）kids（5575-2619-6395）
-TSM_OMG（5750-3536-3609）TSM_myth（3411-7525-8519）
-</textarea>
-    <textarea id="points" cols="5" rows="7" placeholder="">
+    <textarea id="names" cols="70" rows="7" placeholder="ここに組分けをコピペ"></textarea>
+    <!-- <textarea id="points" cols="5" rows="7" placeholder="">
 62,61
 59,76
 35,50
 52,41
 42,48
 62,68
-</textarea>
-<br>
+</textarea> -->
+    <br>
     <button type=button onclick="pasteNames()">名前一括貼付</button>
-    <button type=button onclick="pastePoints()">得点一括貼付</button>
-    <button type=button onclick="getTeamName()">チーム名推定</button>
-
+    <!-- <button type=button onclick="pastePoints()">得点一括貼付</button> -->
   </p>
 
   <table>
@@ -55,66 +55,70 @@ TSM_OMG（5750-3536-3609）TSM_myth（3411-7525-8519）
     </thead>
     <tbody>
       <tr class="pl1">
-        <td><input id="n1" name="name" class="name" type="text"></td>
-        <td><input id="p1" name="point" class="number" size="3" type="number"></td>
-        <td rowspan="2"><input id="t1" name="team" class="tag" type="text"></td>
+        <td><input tabindex="1" name="name" class="name" type="text"></td>
+        <td><input tabindex="13" name="point" class="number" size="3" type="number"></td>
+        <td rowspan="2"><input tabindex="25" name="team" class="team" type="text"></td>
       </tr>
       <tr class="pl2">
-        <td><input id="n2" name="name" class="name" type="text"></td>
-        <td><input id="p2" name="point" class="number" size="3" type="number"></td>
+        <td><input tabindex="2" name="name" class="name" type="text"></td>
+        <td><input tabindex="14" name="point" class="number" size="3" type="number"></td>
       </tr>
       <tr class="pl3">
-        <td><input id="n3" name="name" class="name" type="text"></td>
-        <td><input id="p3" name="point" class="number" size="3" type="number"></td>
-        <td rowspan="2"><input id="t2" name="team" class="tag" type="text"></td>
+        <td><input tabindex="3" name="name" class="name" type="text"></td>
+        <td><input tabindex="15" name="point" class="number" size="3" type="number"></td>
+        <td rowspan="2"><input tabindex="26" name="team" class="team" type="text"></td>
       </tr>
       <tr class="pl4">
-        <td><input id="n4" name="name" class="name" type="text"></td>
-        <td><input id="p4" name="point" class="number" size="3" type="number"></td>
+        <td><input tabindex="4" name="name" class="name" type="text"></td>
+        <td><input tabindex="16" name="point" class="number" size="3" type="number"></td>
       </tr>
       <tr class="pl5">
-        <td><input id="n5" name="name" class="name" type="text"></td>
-        <td><input id="p5" name="point" class="number" size="3" type="number"></td>
-        <td rowspan="2"><input id="t3" name="team" class="tag" type="text"></td>
+        <td><input tabindex="5" name="name" class="name" type="text"></td>
+        <td><input tabindex="17" name="point" class="number" size="3" type="number"></td>
+        <td rowspan="2"><input tabindex="27" name="team" class="team" type="text"></td>
       </tr>
       <tr class="pl6">
-        <td><input id="n6" name="name" class="name" type="text"></td>
-        <td><input id="p6" name="point" class="number" size="3" type="number"></td>
+        <td><input tabindex="6" name="name" class="name" type="text"></td>
+        <td><input tabindex="18" name="point" class="number" size="3" type="number"></td>
       </tr>
       <tr class="pl7">
-        <td><input id="n7" name="name" class="name" type="text"></td>
-        <td><input id="p7" name="point" class="number" size="3" type="number"></td>
-        <td rowspan="2"><input id="t4" name="team" class="tag" type="text"></td>
+        <td><input tabindex="7" name="name" class="name" type="text"></td>
+        <td><input tabindex="19" name="point" class="number" size="3" type="number"></td>
+        <td rowspan="2"><input tabindex="28" name="team" class="team" type="text"></td>
       </tr>
       <tr class="pl8">
-        <td><input id="n8" name="name" class="name" type="text"></td>
-        <td><input id="p8" name="point" class="number" size="3" type="number"></td>
+        <td><input tabindex="8" name="name" class="name" type="text"></td>
+        <td><input tabindex="20" name="point" class="number" size="3" type="number"></td>
       </tr>
       <tr class="pl9">
-        <td><input id="n9" name="name" class="name" type="text"></td>
-        <td><input id="p9" name="point" class="number" size="3" type="number"></td>
-        <td rowspan="2"><input id="t5" name="team" class="tag" type="text"></td>
+        <td><input tabindex="9" name="name" class="name" type="text"></td>
+        <td><input tabindex="21" name="point" class="number" size="3" type="number"></td>
+        <td rowspan="2"><input tabindex="29" name="team" class="team" type="text"></td>
       </tr>
       <tr class="pl10">
-        <td><input id="n10" name="name" class="name" type="text"></td>
-        <td><input id="p10" name="point" class="number" size="3" type="number"></td>
+        <td><input tabindex="10" name="name" class="name" type="text"></td>
+        <td><input tabindex="22" name="point" class="number" size="3" type="number"></td>
       </tr>
       <tr class="pl11">
-        <td><input id="n11" name="name" class="name" type="text"></td>
-        <td><input id="p11" name="point" class="number" size="3" type="number"></td>
-        <td rowspan="2"><input id="t6" name="team" class="tag" type="text"></td>
+        <td><input tabindex="11" name="name" class="name" type="text"></td>
+        <td><input tabindex="23" name="point" class="number" size="3" type="number"></td>
+        <td rowspan="2"><input tabindex="30" name="team" class="team" type="text"></td>
       </tr>
       <tr class="pl12">
-        <td><input id="n12" name="name" class="name" type="text"></td>
-        <td><input id="p12" name="point" class="number" size="3" type="number"></td>
+        <td><input tabindex="12" name="name" class="name" type="text"></td>
+        <td><input tabindex="24" name="point" class="number" size="3" type="number"></td>
       </tr>
     </tbody>
   </table>
   <button type=button onclick="calc2()">計算</button>
+  <button type=button onclick="copy()">コピー</button>
 
   <p>
-    <textarea id="result" name="result" cols="70" rows="32" placeholder=""></textarea><br>
-    <button type=button onclick="copy()">コピー</button>
+    <textarea id="result" name="result" cols="70" rows="32" placeholder=""></textarea>
+  </p>
+
+  <p>
+    <button type=button onclick="reset()">リセット</button>
   </p>
 
 </body>
