@@ -2,21 +2,21 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>フォーマン杯計算機</title>
+  <title>個人杯計算機</title>
 
   <script type="text/javascript" src="js/calc2.js"></script>
   <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body class ="calc4">
+<body class ="calc1">
   <a href="index.html">トップへ戻る</a>
   <p>
-    大規模杯計算機 - フォーマン(4v4)
+    大規模杯計算機 - 個人(1v1)
   </p>
   <details>
     <summary>使い方</summary>
-    <ol>
-      <li>通過チーム数を入力する（決勝の場合は0を入力する）</li>
+    <ol>      
+      <li>通過人数を入力する</li>
       <li>組分けから該当する組をコピペして「名前一括貼付」を押す</li>
       <li>得点を入力(Tabキーで移動可)して「計算」を押す</li>
       <li>「コピー」を押して進行スレの書き込み欄に貼り付ける</li>
@@ -24,24 +24,33 @@
     </ol>
   </details>
   <p>
-
     <tr class="setting">
-      <td>形式<input id="membernum" class="number" size="3" type="number" value="4" readonly></td>
-      <td>チーム数<input id="playernum" class="number" size="3" type="number" value="3"></td>
-      <td>通過チーム数<input id="passernum" class="number" size="3" type="number" value="2"></td>
+      <td>形式<input id="membernum" class="number" size="3" type="number" value="1" readonly></td>
+      <td>人数<input id="playernum" class="number" size="3" type="number" value="12"></td>
+      <td>通過人数<input id="passernum" class="number" size="3" type="number" value="8"></td>
     </tr>
   </p>
 
   <p>
-    <textarea id="names" cols="120" rows="4" placeholder="ここに組分けをコピペ"></textarea>
-    <!-- <textarea id="points" cols="14" rows="4" placeholder="">
-49,66,65,70
-55,51,85,51
-49,57,38,32
-</textarea> -->
+    <textarea id="names" cols="40" rows="13" placeholder="ここに組分けをコピペ"></textarea>
+    <!-- <textarea id="points" cols="3" rows="13" placeholder="">
+69
+64
+51
+33
+70
+58
+68
+46
+48
+47
+38
+64
+    </textarea> -->
     <br>
     <button type=button onclick="pasteNames()">名前一括貼付</button>
     <!-- <button type=button onclick="pastePoints()">得点一括貼付</button> -->
+
   </p>
 
   <table>
@@ -49,13 +58,11 @@
       <tr>
         <td>名前</td>
         <td>得点</td>
-        <td>チーム名</td>
     </thead>
     <tbody>
       <tr class="pl1">
         <td><input tabindex="1" name="name" class="name" type="text"></td>
         <td><input tabindex="13" name="point" class="number" size="3" type="number"></td>
-        <td rowspan="4"><input tabindex="25" name="team" class="team" type="text"></td>
       </tr>
       <tr class="pl2">
         <td><input tabindex="2" name="name" class="name" type="text"></td>
@@ -72,7 +79,6 @@
       <tr class="pl5">
         <td><input tabindex="5" name="name" class="name" type="text"></td>
         <td><input tabindex="17" name="point" class="number" size="3" type="number"></td>
-        <td rowspan="4"><input tabindex="26" name="team" class="team" type="text"></td>
       </tr>
       <tr class="pl6">
         <td><input tabindex="6" name="name" class="name" type="text"></td>
@@ -89,7 +95,6 @@
       <tr class="pl9">
         <td><input tabindex="9" name="name" class="name" type="text"></td>
         <td><input tabindex="21" name="point" class="number" size="3" type="number"></td>
-        <td rowspan="4"><input tabindex="27" name="team" class="team" type="text"></td>
       </tr>
       <tr class="pl10">
         <td><input tabindex="10" name="name" class="name" type="text"></td>
@@ -105,13 +110,12 @@
       </tr>
     </tbody>
   </table>
-  <button type=button onclick="calc2()">計算</button>
+  <button type=button onclick="calc1()">計算</button>
   <button type=button onclick="copy()">コピー</button>
 
   <p>
-    <textarea id="result" name="result" cols="120" rows="28" placeholder=""></textarea>
+    <textarea id="result" name="result" cols="60" rows="32" placeholder=""></textarea>
   </p>
-
   <p>
     <button type=button onclick="reset()">リセット</button>
   </p>

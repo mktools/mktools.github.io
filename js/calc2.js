@@ -3,19 +3,17 @@ function pasteNames() {
     var allNames = document.getElementById("names").value;
     //たまに混入しているゼロ幅文字を消す
     allNames = allNames.replace(/[\u200B-\u200D\u2028-\u202E\uFEFF]/g, '');
-    var fixedNames = allNames.replace(/([（(][0-9]{4}[-‐–][0-9]{4}[-‐–][0-9]{4}[）)])/g, "$1\n");
-    fixedNames = fixedNames.replace(/\n\n/g, "\n");
+    var fixedNames = allNames.replace(/([（(][0-9]{4}[-‐–][0-9]{4}[-‐–][0-9]{4}[）)]\s*)/g, "$1\n");
 
-    // console.log(fixedNames);
+    fixedNames = fixedNames.replace(/\n\n/g, "\n");
     nameArray = fixedNames.split("\n");
 
-    //nameArray = document.getElementById("names").value.split("\n");
     let playerNames = document.getElementsByName("name");
     const n = Number(document.getElementById("playernum").value);
     const m = Number(document.getElementById("membernum").value);
 
     for (i = 0; i < n * m; i++) {
-        playerNames[i].value = nameArray[i];
+        playerNames[i].value = nameArray[i].trim();
     }
     getTeamName();
 }
@@ -141,7 +139,19 @@ function maketable2(data) {
     const n = Number(document.getElementById("playernum").value);
     const m = Number(document.getElementById("membernum").value);
 
-    if (p === 0) {
+    if (m === 6) {
+        for (i = 0; i < n; i++) {
+            let strtmp = "";
+            for (j = 0; j < m; j++) {
+                strtmp += data[i].players[j].point + "pts : " + data[i].players[j].name + "\n";
+            }
+            str += strtmp;
+            str += data[i].name + " : " + data[i].point + "pts\n\n";
+        }
+        str += "\n勝利チーム\n"
+        str += data[0].name + "\n";
+
+    } else if (p === 0) {
         for (i = 0; i < n; i++) {
             let strtmp = "";
             for (j = 0; j < m; j++) {
@@ -296,6 +306,7 @@ function getTeamName() {
             name = LCS(name, playerNames[i * 6 + 3].value)
             name = LCS(name, playerNames[i * 6 + 4].value)
             name = LCS(name, playerNames[i * 6 + 5].value)
+            teamNameArray.push(name);
         }
     } else {
         return;
