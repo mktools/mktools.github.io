@@ -53,7 +53,7 @@ function objArraySort(data, key) {
         } else {
             if (a.pos < b.pos) {
                 return num_a;
-            } else if (a.pos > b.pos){
+            } else if (a.pos > b.pos) {
                 return num_b;
             }
         }
@@ -82,6 +82,15 @@ function calc1() {
 
 function maketable1(data) {
     var str = "";
+    var url = document.getElementById("imageurl").value;
+
+    if (url != "") {
+        str += "結果画像 : " + url + "\n\n";
+    }else{
+        str += "結果画像 : なし" + "\n\n";
+
+    }
+
     var p = Number(document.getElementById("passernum").value);
     var n = Number(document.getElementById("playernum").value);
 
@@ -151,6 +160,12 @@ function calc2() {
 
 function maketable2(data) {
     var str = "";
+    var url = document.getElementById("imageurl").value;
+
+    if (url != "") {
+        str += "結果画像 : " + url + "\n\n";
+    }
+
     var p = Number(document.getElementById("passernum").value);
     var n = Number(document.getElementById("playernum").value);
     var m = Number(document.getElementById("membernum").value);
