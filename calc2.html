@@ -21,9 +21,10 @@
       <li>チーム数を入力する（通常は6のままでOK）</li>
       <li>通過チーム数を入力する（決勝の場合は0を入力する）</li>
       <li>結果画像URLを入力する</li>
-      <li>組分けから集計する組をコピペして「名前一括貼付」を押す</li>
-      <li>得点を入力(Enterキーで移動可)して「計算」を押す</li>
-      <li>「集計結果をコピー」を押して進行スレの書き込み欄に貼りつけ</li>
+      <li>組分けから集計する組をコピペして「<b>名前一括貼付</b>」を押す</li>
+      <li>得点を入力(Enterキーで移動可)して「<b>計算</b>」を押す<br>
+          <u>※進出可能ラインで同点がいた場合</u>は正しい進出チーム名の横にあるチェックボックスを押して再度「<b>計算</b>」を押す</li>
+      <li>「<b>集計結果をコピー</b>」を押して進行スレの書き込み欄に貼りつけ</li>
       </li>
     </ol>
   </details>
@@ -55,12 +56,14 @@
         <td>名前</td>
         <td>得点</td>
         <td>チーム名</td>
+        <td>進出可能ライン同点時進出者者</td>
     </thead>
     <tbody>
       <tr class="pl1">
         <td><input tabindex="1" name="name" class="name" type="text"></td>
         <td><input tabindex="13" name="point" class="number" size="3" type="number"></td>
         <td rowspan="2"><input tabindex="25" name="team" class="team" type="text"></td>
+        <td rowspan="2"><input name="drawpasser" class="box" type="checkbox"></td>
       </tr>
       <tr class="pl2">
         <td><input tabindex="2" name="name" class="name" type="text"></td>
@@ -70,6 +73,7 @@
         <td><input tabindex="3" name="name" class="name" type="text"></td>
         <td><input tabindex="15" name="point" class="number" size="3" type="number"></td>
         <td rowspan="2"><input tabindex="26" name="team" class="team" type="text"></td>
+        <td rowspan="2"><input name="drawpasser" class="box" type="checkbox"></td>
       </tr>
       <tr class="pl4">
         <td><input tabindex="4" name="name" class="name" type="text"></td>
@@ -79,6 +83,7 @@
         <td><input tabindex="5" name="name" class="name" type="text"></td>
         <td><input tabindex="17" name="point" class="number" size="3" type="number"></td>
         <td rowspan="2"><input tabindex="27" name="team" class="team" type="text"></td>
+        <td rowspan="2"><input name="drawpasser" class="box" type="checkbox"></td>
       </tr>
       <tr class="pl6">
         <td><input tabindex="6" name="name" class="name" type="text"></td>
@@ -88,6 +93,7 @@
         <td><input tabindex="7" name="name" class="name" type="text"></td>
         <td><input tabindex="19" name="point" class="number" size="3" type="number"></td>
         <td rowspan="2"><input tabindex="28" name="team" class="team" type="text"></td>
+        <td rowspan="2"><input name="drawpasser" class="box" type="checkbox"></td>
       </tr>
       <tr class="pl8">
         <td><input tabindex="8" name="name" class="name" type="text"></td>
@@ -97,6 +103,7 @@
         <td><input tabindex="9" name="name" class="name" type="text"></td>
         <td><input tabindex="21" name="point" class="number" size="3" type="number"></td>
         <td rowspan="2"><input tabindex="29" name="team" class="team" type="text"></td>
+        <td rowspan="2"><input name="drawpasser" class="box" type="checkbox"></td>
       </tr>
       <tr class="pl10">
         <td><input tabindex="10" name="name" class="name" type="text"></td>
@@ -106,6 +113,7 @@
         <td><input tabindex="11" name="name" class="name" type="text"></td>
         <td><input tabindex="23" name="point" class="number" size="3" type="number"></td>
         <td rowspan="2"><input tabindex="30" name="team" class="team" type="text"></td>
+        <td rowspan="2"><input name="drawpasser" class="box" type="checkbox"></td>
       </tr>
       <tr class="pl12">
         <td><input tabindex="12" name="name" class="name" type="text"></td>

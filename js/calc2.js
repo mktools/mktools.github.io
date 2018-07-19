@@ -15,12 +15,17 @@ function pasteNames() {
     for (var i = 0; i < n * m; i++) {
         var pn = nameArray[i];
         if (typeof pn === "undefined" || pn === "") {
-            playerNames[i].value = "Player" + (i + 1);
+            var tempid = ('00' + (i+1)).slice(-2);
+            playerNames[i].value = "Player" + tempid + "（0000-0000-00" + tempid +  "）";
         } else {
             playerNames[i].value = pn.trim();
         }
     }
     getTeamName();
+}
+
+function zeroPadding(num,length){
+    return ('0000000000' + num).slice(-length);
 }
 
 function pastePoints() {
@@ -51,10 +56,16 @@ function objArraySort(data, key) {
         } else if (x < y) {
             return num_b;
         } else {
-            if (a.pos < b.pos) {
+            if (a.prefer > b.prefer) {
                 return num_a;
-            } else if (a.pos > b.pos) {
+            } else if (a.prefer < b.prefer) {
                 return num_b;
+            } else {
+                if (a.pos < b.pos) {
+                    return num_a;
+                } else if (a.pos > b.pos) {
+                    return num_b;
+                }
             }
         }
         return 0;
@@ -64,13 +75,25 @@ function objArraySort(data, key) {
 function calc1() {
     var playerNames = document.getElementsByName("name");
     var playerPoints = document.getElementsByName("point");
+    var isPrefer = document.getElementsByName("drawpasser");
     var n = Number(document.getElementById("playernum").value);
+
+    var preferArray = new Array();
+    for (var i = 0; i < n; i++) {
+        if (isPrefer[i].checked) {
+            preferArray.push(1);
+        } else {
+            preferArray.push(0);
+        }
+    }
+
     var playersArray = new Array();
     for (var i = 0; i < n; i++) {
         var obj = new Object();
         obj.point = Number(playerPoints[i].value);
         obj.name = playerNames[i].value;
         obj.pos = i;
+        obj.prefer = preferArray[i];
         playersArray.push(obj);
     }
     objArraySort(playersArray, 'point');
@@ -133,8 +156,20 @@ function calc2() {
     var teamNames = document.getElementsByName("team");
     var playerNames = document.getElementsByName("name");
     var playerPoints = document.getElementsByName("point");
+    var isPrefer = document.getElementsByName("drawpasser");
+
     var n = Number(document.getElementById("playernum").value);
     var m = Number(document.getElementById("membernum").value);
+
+    var preferArray = new Array();
+    for (var i = 0; i < n; i++) {
+        if (isPrefer[i].checked) {
+            preferArray.push(1);
+        } else {
+            preferArray.push(0);
+        }
+    }
+    console.log(preferArray);
 
     var teamsArray = new Array();
     for (var i = 0; i < n; i++) {
@@ -151,6 +186,7 @@ function calc2() {
         }
         objs.players = playersArray;
         objs.name = teamNames[i].value;
+        objs.prefer = preferArray[i];
         teamsArray.push(objs);
     }
     objArraySort(teamsArray, 'point');
