@@ -1,0 +1,11 @@
+input.number { width: 50px; }
+input.team { width: 150px; }
+input.name { width: 220px; }
+
+body.top {  background-color: rgb(238, 238, 238) }
+body.calc1 {  background-color: rgb(205, 255, 238) }
+body.calc2 {  background-color: rgb(238, 205, 255) }
+body.calc3 {  background-color: rgb(238, 255, 205) }
+body.calc4 {  background-color: rgb(255, 205, 238) }
+body.calc6 {  background-color: rgb(255, 238, 205) }
+body.grouping {  background-color: rgb(238, 238, 238) }
