@@ -15,7 +15,7 @@ function pasteNames() {
     for (var i = 0; i < n * m; i++) {
         var pn = nameArray[i];
         if (typeof pn === "undefined" || pn === "") {
-            playerNames[i].value = "Player" + (i+1);
+            playerNames[i].value = "Player" + (i + 1);
         } else {
             playerNames[i].value = pn.trim();
         }
@@ -46,8 +46,17 @@ function objArraySort(data, key) {
     data = data.sort(function (a, b) {
         var x = a[key];
         var y = b[key];
-        if (x > y) return num_a;
-        if (x < y) return num_b;
+        if (x > y) {
+            return num_a;
+        } else if (x < y) {
+            return num_b;
+        } else {
+            if (a.pos < b.pos) {
+                return num_a;
+            } else if (a.pos > b.pos){
+                return num_b;
+            }
+        }
         return 0;
     });
 }
@@ -61,6 +70,7 @@ function calc1() {
         var obj = new Object();
         obj.point = Number(playerPoints[i].value);
         obj.name = playerNames[i].value;
+        obj.pos = i;
         playersArray.push(obj);
     }
     objArraySort(playersArray, 'point');
@@ -101,7 +111,7 @@ function maketable1(data) {
             str += data[i].name + "\n";
         }
     } else {
-        str += "エラー : 通過人数がおかしいです\n"
+        str += "通過人数がおかしいです\n"
     }
 
     return str;
@@ -123,6 +133,7 @@ function calc2() {
         for (var j = 0; j < m; j++) {
             var obj = new Object();
             obj.point = Number(playerPoints[i * m + j].value);
+            obj.pos = i * m + j;
             objs.point += obj.point;
             obj.name = playerNames[i * m + j].value;
             playersArray.push(obj);
