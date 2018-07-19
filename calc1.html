@@ -20,10 +20,10 @@
     <ol>
       <li>人数を入力する（通常は12のままでOK）</li>
       <li>通過人数を入力する（決勝の場合は0を入力する）</li>
+      <li>結果画像URLを入力する</li>
       <li>組分けから集計する組をコピペして「名前一括貼付」を押す</li>
       <li>得点を入力(Enterキーで移動可)して「計算」を押す</li>
-      <li>「コピー」を押して進行スレの書き込み欄に貼り付け、<br> リザルト画像URLを文頭に追加して書き込む
-      </li>
+      <li>「集計結果をコピー」を押して進行スレの書き込み欄に貼りつけ</li>
     </ol>
   </details>
   <p>
@@ -33,7 +33,7 @@
         <input id="membernum" class="number" size="3" type="hidden" value="1" readonly>
       </td>
       <td>人数<input id="playernum" class="number" size="3" type="number" value="12"></td>
-      <td>通過人数<input id="passernum" class="number" size="3" type="number" value="8"></td>
+      <td>通過人数<input id="passernum" class="number" size="3" type="number"></td>
     </tr>
   </p>
   <p>
@@ -54,65 +54,79 @@
       <tr>
         <td>名前</td>
         <td>得点</td>
+        <!-- <td>優先進出者</td> -->
     </thead>
     <tbody>
       <tr class="pl1">
         <td><input tabindex="1" name="name" class="name" type="text"></td>
         <td><input tabindex="13" name="point" class="number" size="3" type="number"></td>
+        <!-- <td><input name="drawpasser" class="box" type="checkbox"></td> -->
       </tr>
       <tr class="pl2">
         <td><input tabindex="2" name="name" class="name" type="text"></td>
         <td><input tabindex="14" name="point" class="number" size="3" type="number"></td>
+        <!-- <td><input name="drawpasser" class="box" type="checkbox"></td> -->
       </tr>
       <tr class="pl3">
         <td><input tabindex="3" name="name" class="name" type="text"></td>
         <td><input tabindex="15" name="point" class="number" size="3" type="number"></td>
+        <!-- <td><input name="drawpasser" class="box" type="checkbox"></td> -->
       </tr>
       <tr class="pl4">
         <td><input tabindex="4" name="name" class="name" type="text"></td>
         <td><input tabindex="16" name="point" class="number" size="3" type="number"></td>
+        <!-- <td><input name="drawpasser" class="box" type="checkbox"></td> -->
       </tr>
       <tr class="pl5">
         <td><input tabindex="5" name="name" class="name" type="text"></td>
         <td><input tabindex="17" name="point" class="number" size="3" type="number"></td>
+        <!-- <td><input name="drawpasser" class="box" type="checkbox"></td> -->
       </tr>
       <tr class="pl6">
         <td><input tabindex="6" name="name" class="name" type="text"></td>
         <td><input tabindex="18" name="point" class="number" size="3" type="number"></td>
+        <!-- <td><input name="drawpasser" class="box" type="checkbox"></td> -->
       </tr>
       <tr class="pl7">
         <td><input tabindex="7" name="name" class="name" type="text"></td>
         <td><input tabindex="19" name="point" class="number" size="3" type="number"></td>
+        <!-- <td><input name="drawpasser" class="box" type="checkbox"></td> -->
       </tr>
       <tr class="pl8">
         <td><input tabindex="8" name="name" class="name" type="text"></td>
         <td><input tabindex="20" name="point" class="number" size="3" type="number"></td>
+        <!-- <td><input name="drawpasser" class="box" type="checkbox"></td> -->
       </tr>
       <tr class="pl9">
         <td><input tabindex="9" name="name" class="name" type="text"></td>
         <td><input tabindex="21" name="point" class="number" size="3" type="number"></td>
+        <!-- <td><input name="drawpasser" class="box" type="checkbox"></td> -->
       </tr>
       <tr class="pl10">
         <td><input tabindex="10" name="name" class="name" type="text"></td>
         <td><input tabindex="22" name="point" class="number" size="3" type="number"></td>
+        <!-- <td><input name="drawpasser" class="box" type="checkbox"></td> -->
       </tr>
       <tr class="pl11">
         <td><input tabindex="11" name="name" class="name" type="text"></td>
         <td><input tabindex="23" name="point" class="number" size="3" type="number"></td>
+        <!-- <td><input name="drawpasser" class="box" type="checkbox"></td> -->
       </tr>
       <tr class="pl12">
         <td><input tabindex="12" name="name" class="name" type="text"></td>
         <td><input tabindex="24" name="point" class="number" size="3" type="number"></td>
+        <!-- <td><input name="drawpasser" class="box" type="checkbox"></td> -->
       </tr>
     </tbody>
   </table>
-  <button type=button onclick="calc1()">計算</button>
-  <button type=button onclick="copy()">コピー</button>
-
   <p>
-    <textarea id="result" name="result" cols="60" rows="32" placeholder=""></textarea>
+    <button type=button onclick="calc1()">計算</button>
   </p>
   <p>
+    <textarea id="result" name="result" cols="60" rows="32" placeholder="ここに集計結果が出力されます"></textarea>
+  </p>
+  <p>
+    <button type=button onclick="copy()">集計結果をコピー</button>
     <button type=button onclick="reset()">リセット</button>
   </p>
 

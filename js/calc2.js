@@ -86,13 +86,15 @@ function maketable1(data) {
 
     if (url != "") {
         str += "結果画像 : " + url + "\n\n";
-    }else{
-        str += "結果画像 : なし" + "\n\n";
-
+    } else {
+        str += "結果画像がありません" + "\n\n";
     }
 
-    var p = Number(document.getElementById("passernum").value);
     var n = Number(document.getElementById("playernum").value);
+    var p = document.getElementById("passernum").value;
+    if (p !== "") {
+        p = Number(p);
+    }
 
     if (p === 0) {
         for (var i = 0; i < n; i++) {
@@ -164,11 +166,16 @@ function maketable2(data) {
 
     if (url != "") {
         str += "結果画像 : " + url + "\n\n";
+    } else {
+        str += "結果画像がありません" + "\n\n";
     }
 
-    var p = Number(document.getElementById("passernum").value);
     var n = Number(document.getElementById("playernum").value);
     var m = Number(document.getElementById("membernum").value);
+    var p = document.getElementById("passernum").value;
+    if (p !== "") {
+        p = Number(p);
+    }
 
     if (m === 6) {
         for (var i = 0; i < n; i++) {
@@ -375,19 +382,30 @@ function copy() {
 }
 
 function reset() {
-    var playerNames = document.getElementsByName("name");
-    var teamNames = document.getElementsByName("team");
-    var playerPoints = document.getElementsByName("point");
 
-    for (var i = 0; i < 12; i++) {
-        playerNames[i].value = "";
-        playerPoints[i].value = "";
+    var isReset = window.confirm('入力欄・集計結果のリセットを行いますか？');
+    if (isReset) {
+        var playerNames = document.getElementsByName("name");
+        var teamNames = document.getElementsByName("team");
+        var playerPoints = document.getElementsByName("point");
+
+        for (var i = 0; i < 12; i++) {
+            playerNames[i].value = "";
+            playerPoints[i].value = "";
+        }
+
+        for (var i = 0; i < teamNames.length; i++) {
+            teamNames[i].value = "";
+        }
+
+        document.getElementById("imageurl").value = "";
+        document.getElementById("names").value = "";
+        document.getElementById("result").value = "";
+
+        var m = Number(document.getElementById("membernum").value);
+
+        document.getElementById("playernum").value = 12 / m;
+        document.getElementById("passernum").value = null;
+
     }
-
-    for (var i = 0; i < teamNames.length; i++) {
-        teamNames[i].value = "";
-    }
-
-    document.getElementById("names").value = "";
-    document.getElementById("result").value = "";
 }

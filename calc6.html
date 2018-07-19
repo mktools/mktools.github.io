@@ -18,10 +18,10 @@
   <details>
     <summary>使い方</summary>
     <ol>
+      <li>結果画像URLを入力する</li>
       <li>対戦チームのメンバーを1行ずつ記入して「名前一括貼付」を押す</li>
       <li>得点を入力(Enterキーで移動可)して「計算」を押す</li>
-      <li>「コピー」を押して進行スレの書き込み欄に貼り付ける</li>
-      <li> リザルト画像URLを文頭に追加して書き込む</li>
+      <li>「集計結果をコピー」を押して進行スレの書き込み欄に貼りつけ</li>
     </ol>
   </details>
   <p>
@@ -31,8 +31,8 @@
         <!-- 形式 -->
         <input id="membernum" class="number" size="3" type="hidden" value="6" readonly>
       </td>
-      <td><input id="playernum" class="number" size="3" type="hidden" value="2"></td>
-      <td><input id="passernum" class="number" size="3" type="hidden" value="1"></td>
+      <td><input id="playernum" class="number" size="3" type="hidden" value="2" readonly></td>
+      <td><input id="passernum" class="number" size="3" type="hidden" value="1" readonly></td>
     </tr>
   </p>
   <p>
@@ -106,13 +106,13 @@
     </tbody>
   </table>
   <button type=button onclick="calc2()">計算</button>
-  <button type=button onclick="copy()">コピー</button>
 
   <p>
-    <textarea id="result" name="result" cols="40" rows="28" placeholder=""></textarea>
+    <textarea id="result" name="result" cols="40" rows="28" placeholder="ここに集計結果が出力されます"></textarea>
   </p>
 
   <p>
+    <button type=button onclick="copy()">集計結果をコピー</button>
     <button type=button onclick="reset()">リセット</button>
   </p>
 
