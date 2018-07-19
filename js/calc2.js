@@ -8,27 +8,32 @@ function pasteNames() {
     fixedNames = fixedNames.replace(/\n\n/g, "\n");
     nameArray = fixedNames.split("\n");
 
-    let playerNames = document.getElementsByName("name");
-    const n = Number(document.getElementById("playernum").value);
-    const m = Number(document.getElementById("membernum").value);
+    var playerNames = document.getElementsByName("name");
+    var n = Number(document.getElementById("playernum").value);
+    var m = Number(document.getElementById("membernum").value);
 
-    for (i = 0; i < n * m; i++) {
-        playerNames[i].value = nameArray[i].trim();
+    for (var i = 0; i < n * m; i++) {
+        var pn = nameArray[i];
+        if (typeof pn === "undefined" || pn === "") {
+            playerNames[i].value = "Player" + (i+1);
+        } else {
+            playerNames[i].value = pn.trim();
+        }
     }
     getTeamName();
 }
 
 function pastePoints() {
-    let pointArray = new Array();
+    var pointArray = new Array();
     pointArray = document.getElementById("points").value.split("\n");
-    let playerPoints = document.getElementsByName("point");
-    const n = Number(document.getElementById("playernum").value);
-    const m = Number(document.getElementById("membernum").value);
+    var playerPoints = document.getElementsByName("point");
+    var n = Number(document.getElementById("playernum").value);
+    var m = Number(document.getElementById("membernum").value);
 
-    for (i = 0; i < n; i++) {
-        let pointArrays = new Array();
+    for (var i = 0; i < n; i++) {
+        var pointArrays = new Array();
         pointArrays = pointArray[i].split(",");
-        for (j = 0; j < m; j++) {
+        for (var j = 0; j < m; j++) {
             playerPoints[i * m + j].value = pointArrays[j];
         }
     }
@@ -52,9 +57,9 @@ function calc1() {
     var playerPoints = document.getElementsByName("point");
     var n = Number(document.getElementById("playernum").value);
     var playersArray = new Array();
-    for (i = 0; i < n; i++) {
+    for (var i = 0; i < n; i++) {
         var obj = new Object();
-        obj.point = parseInt(playerPoints[i].value, 10);
+        obj.point = Number(playerPoints[i].value);
         obj.name = playerNames[i].value;
         playersArray.push(obj);
     }
@@ -71,7 +76,7 @@ function maketable1(data) {
     var n = Number(document.getElementById("playernum").value);
 
     if (p === 0) {
-        for (i = 0; i < n; i++) {
+        for (var i = 0; i < n; i++) {
             str += data[i].point + "pts : " + data[i].name + "\n";
         }
         str += "\n優勝\n"
@@ -79,7 +84,7 @@ function maketable1(data) {
 
     } else if (0 < p && p < n) {
 
-        for (i = 0; i < p; i++) {
+        for (var i = 0; i < p; i++) {
             str += data[i].point + "pts : " + data[i].name + "\n";
         }
         str += "--------------------------------------------\n"
@@ -92,7 +97,7 @@ function maketable1(data) {
         }
 
         str += "\n主催コピペ用\n"
-        for (i = 0; i < p; i++) {
+        for (var i = 0; i < p; i++) {
             str += data[i].name + "\n";
         }
     } else {
@@ -104,20 +109,20 @@ function maketable1(data) {
 
 
 function calc2() {
-    const teamNames = document.getElementsByName("team");
-    const playerNames = document.getElementsByName("name");
-    const playerPoints = document.getElementsByName("point");
-    const n = Number(document.getElementById("playernum").value);
-    const m = Number(document.getElementById("membernum").value);
+    var teamNames = document.getElementsByName("team");
+    var playerNames = document.getElementsByName("name");
+    var playerPoints = document.getElementsByName("point");
+    var n = Number(document.getElementById("playernum").value);
+    var m = Number(document.getElementById("membernum").value);
 
-    let teamsArray = new Array();
-    for (i = 0; i < n; i++) {
-        let playersArray = new Array();
-        let objs = new Object();
+    var teamsArray = new Array();
+    for (var i = 0; i < n; i++) {
+        var playersArray = new Array();
+        var objs = new Object();
         objs.point = 0;
-        for (j = 0; j < m; j++) {
-            let obj = new Object();
-            obj.point = parseInt(playerPoints[i * m + j].value, 10);
+        for (var j = 0; j < m; j++) {
+            var obj = new Object();
+            obj.point = Number(playerPoints[i * m + j].value);
             objs.point += obj.point;
             obj.name = playerNames[i * m + j].value;
             playersArray.push(obj);
@@ -128,21 +133,21 @@ function calc2() {
     }
     objArraySort(teamsArray, 'point');
     //console.log(teamsArray);
-    const result = maketable2(teamsArray);
+    var result = maketable2(teamsArray);
     document.getElementById("result").value = result;
 
 }
 
 function maketable2(data) {
-    let str = "";
-    const p = Number(document.getElementById("passernum").value);
-    const n = Number(document.getElementById("playernum").value);
-    const m = Number(document.getElementById("membernum").value);
+    var str = "";
+    var p = Number(document.getElementById("passernum").value);
+    var n = Number(document.getElementById("playernum").value);
+    var m = Number(document.getElementById("membernum").value);
 
     if (m === 6) {
-        for (i = 0; i < n; i++) {
-            let strtmp = "";
-            for (j = 0; j < m; j++) {
+        for (var i = 0; i < n; i++) {
+            var strtmp = "";
+            for (var j = 0; j < m; j++) {
                 strtmp += data[i].players[j].point + "pts : " + data[i].players[j].name + "\n";
             }
             str += strtmp;
@@ -152,17 +157,17 @@ function maketable2(data) {
         str += data[0].name + "\n";
 
     } else if (p === 0) {
-        for (i = 0; i < n; i++) {
-            let strtmp = "";
-            for (j = 0; j < m; j++) {
+        for (var i = 0; i < n; i++) {
+            var strtmp = "";
+            for (var j = 0; j < m; j++) {
                 strtmp += data[i].players[j].point + "pts : " + data[i].players[j].name + "\n";
             }
             str += strtmp;
             str += data[i].name + " : " + data[i].point + "pts\n\n";
         }
         str += "\n優勝\n"
-        let strtmp = "";
-        for (j = 0; j < m; j++) {
+        var strtmp = "";
+        for (var j = 0; j < m; j++) {
             strtmp += data[0].players[j].name;
         }
         str += strtmp + "\n";
@@ -170,9 +175,9 @@ function maketable2(data) {
 
     } else if (0 < p && p < n) {
 
-        for (i = 0; i < p; i++) {
-            let strtmp = "";
-            for (j = 0; j < m; j++) {
+        for (var i = 0; i < p; i++) {
+            var strtmp = "";
+            for (var j = 0; j < m; j++) {
                 strtmp += data[i].players[j].point + "pts : " + data[i].players[j].name + "\n";
             }
             str += strtmp;
@@ -181,8 +186,8 @@ function maketable2(data) {
         }
         str += "--------------------------------------------\n"
         for (i = p; i < n; i++) {
-            let strtmp = "";
-            for (j = 0; j < m; j++) {
+            var strtmp = "";
+            for (var j = 0; j < m; j++) {
                 strtmp += data[i].players[j].point + "pts : " + data[i].players[j].name + "\n";
             }
             str += strtmp;
@@ -194,9 +199,9 @@ function maketable2(data) {
         }
 
         str += "\n主催コピペ用\n"
-        for (i = 0; i < p; i++) {
-            let strtmp = "";
-            for (j = 0; j < m; j++) {
+        for (var i = 0; i < p; i++) {
+            var strtmp = "";
+            for (var j = 0; j < m; j++) {
                 strtmp += data[i].players[j].name;
             }
             str += strtmp + "\n";
@@ -221,26 +226,26 @@ function LCS(s1, s2) {
     s2 = s2.replace(/([（(][0-9]{4}[-‐–][0-9]{4}[-‐–][0-9]{4}[）)])/, "");
 
     // Init the matrix of all substring lengths to use Dynamic Programming approach.
-    const substringMatrix = Array(s2.length + 1).fill(null).map(() => {
+    var substringMatrix = Array(s2.length + 1).fill(null).map(function () {
         return Array(s1.length + 1).fill(null);
     });
 
     // Fill the first row and first column with zeros to provide initial values.
-    for (let columnIndex = 0; columnIndex <= s1.length; columnIndex += 1) {
+    for (var columnIndex = 0; columnIndex <= s1.length; columnIndex += 1) {
         substringMatrix[0][columnIndex] = 0;
     }
 
-    for (let rowIndex = 0; rowIndex <= s2.length; rowIndex += 1) {
+    for (var rowIndex = 0; rowIndex <= s2.length; rowIndex += 1) {
         substringMatrix[rowIndex][0] = 0;
     }
 
     // Build the matrix of all substring lengths to use Dynamic Programming approach.
-    let longestSubstringLength = 0;
-    let longestSubstringColumn = 0;
-    let longestSubstringRow = 0;
+    var longestSubstringLength = 0;
+    var longestSubstringColumn = 0;
+    var longestSubstringRow = 0;
 
-    for (let rowIndex = 1; rowIndex <= s2.length; rowIndex += 1) {
-        for (let columnIndex = 1; columnIndex <= s1.length; columnIndex += 1) {
+    for (var rowIndex = 1; rowIndex <= s2.length; rowIndex += 1) {
+        for (var columnIndex = 1; columnIndex <= s1.length; columnIndex += 1) {
             if (s1[columnIndex - 1] === s2[rowIndex - 1]) {
                 substringMatrix[rowIndex][columnIndex] = substringMatrix[rowIndex - 1][columnIndex - 1] + 1;
             } else {
@@ -263,7 +268,7 @@ function LCS(s1, s2) {
     }
 
     // Detect the longest substring from the matrix.
-    let longestSubstring = '';
+    var longestSubstring = '';
 
     while (substringMatrix[longestSubstringRow][longestSubstringColumn] > 0) {
         longestSubstring = s1[longestSubstringColumn - 1] + longestSubstring;
@@ -275,32 +280,32 @@ function LCS(s1, s2) {
 }
 
 function getTeamName() {
-    const n = Number(document.getElementById("playernum").value);
-    const m = Number(document.getElementById("membernum").value);
+    var n = Number(document.getElementById("playernum").value);
+    var m = Number(document.getElementById("membernum").value);
 
-    const playerNames = document.getElementsByName("name");
-    let teamName = document.getElementsByName("team");
-    let teamNameArray = new Array();
+    var playerNames = document.getElementsByName("name");
+    var teamName = document.getElementsByName("team");
+    var teamNameArray = new Array();
     if (m === 2) {
-        for (i = 0; i < n; i++) {
+        for (var i = 0; i < n; i++) {
             name = LCS(playerNames[i * 2].value, playerNames[i * 2 + 1].value)
             teamNameArray.push(name);
         }
     } else if (m === 3) {
-        for (i = 0; i < n; i++) {
+        for (var i = 0; i < n; i++) {
             name = LCS(playerNames[i * 3].value, playerNames[i * 3 + 1].value)
             name = LCS(name, playerNames[i * 3 + 2].value)
             teamNameArray.push(name);
         }
     } else if (m === 4) {
-        for (i = 0; i < n; i++) {
+        for (var i = 0; i < n; i++) {
             name = LCS(playerNames[i * 4].value, playerNames[i * 4 + 1].value)
             name = LCS(name, playerNames[i * 4 + 2].value)
             name = LCS(name, playerNames[i * 4 + 3].value)
             teamNameArray.push(name);
         }
     } else if (m === 6) {
-        for (i = 0; i < n; i++) {
+        for (var i = 0; i < n; i++) {
             name = LCS(playerNames[i * 6].value, playerNames[i * 6 + 1].value)
             name = LCS(name, playerNames[i * 6 + 2].value)
             name = LCS(name, playerNames[i * 6 + 3].value)
@@ -311,7 +316,7 @@ function getTeamName() {
     } else {
         return;
     }
-    for (i = 0; i < n; i++) {
+    for (var i = 0; i < n; i++) {
         teamName[i].value = teamNameArray[i];
     }
 }
@@ -348,12 +353,12 @@ function reset() {
     var teamNames = document.getElementsByName("team");
     var playerPoints = document.getElementsByName("point");
 
-    for (i = 0; i < 12; i++) {
+    for (var i = 0; i < 12; i++) {
         playerNames[i].value = "";
         playerPoints[i].value = "";
     }
 
-    for (i = 0; i < teamNames.length; i++) {
+    for (var i = 0; i < teamNames.length; i++) {
         teamNames[i].value = "";
     }
 
