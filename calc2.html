@@ -5,10 +5,12 @@
   <title>タッグ杯集計機</title>
 
   <script type="text/javascript" src="js/calc2.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script type="text/javascript" src="js/focus.js"></script>
   <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body class ="calc2">
+<body class="calc2">
   <a href="index.html">トップへ戻る</a>
   <p>
     大規模杯集計機 - タッグ(2v2)
@@ -16,31 +18,28 @@
   <details>
     <summary>使い方</summary>
     <ol>
-      <li>通過チーム数を入力する（決勝の場合は0を入力する）</li>
-      <li>組分けから該当する組をコピペして「名前一括貼付」を押す</li>
-      <li>得点を入力(Tabキーで移動可)して「計算」を押す</li>
-      <li>「コピー」を押して進行スレの書き込み欄に貼り付ける</li>
-      <li> リザルト画像URLを文頭に追加して書き込む</li>
+        <li>チーム数を入力する（通常は6のままでOK）</li>
+        <li>通過チーム数を入力する（決勝の場合は0を入力する）</li>
+        <li>組分けから集計する組をコピペして「名前一括貼付」を押す</li>
+        <li>得点を入力(Enterキーで移動可)して「計算」を押す</li>
+        <li>「コピー」を押して進行スレの書き込み欄に貼り付け、<br>
+              リザルト画像URLを文頭に追加して書き込む</li>
     </ol>
   </details>
   <p>
     <tr class="setting">
-      <td>形式<input id="membernum" class="number" size="3" type="number" value="2" readonly></td>
+      <td>
+        <!-- 形式 -->
+        <input id="membernum" class="number" size="3" type="hidden" value="2" readonly>
+      </td>
       <td>チーム数<input id="playernum" class="number" size="3" type="number" value="6"></td>
       <td>通過チーム数<input id="passernum" class="number" size="3" type="number" value="3"></td>
     </tr>
   </p>
 
   <p>
-    <textarea id="names" cols="70" rows="7" placeholder="ここに組分けをコピペ"></textarea>
-    <!-- <textarea id="points" cols="5" rows="7" placeholder="">
-62,61
-59,76
-35,50
-52,41
-42,48
-62,68
-</textarea> -->
+    <textarea id="names" cols="80" rows="7" placeholder="ここに組分けをコピペ"></textarea>
+    <!-- <textarea id="points" cols="5" rows="7" placeholder=""></textarea> -->
     <br>
     <button type=button onclick="pasteNames()">名前一括貼付</button>
     <!-- <button type=button onclick="pastePoints()">得点一括貼付</button> -->
@@ -114,7 +113,7 @@
   <button type=button onclick="copy()">コピー</button>
 
   <p>
-    <textarea id="result" name="result" cols="70" rows="32" placeholder=""></textarea>
+    <textarea id="result" name="result" cols="80" rows="32" placeholder=""></textarea>
   </p>
 
   <p>

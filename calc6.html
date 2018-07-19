@@ -5,10 +5,12 @@
   <title>交流戦集計機</title>
 
   <script type="text/javascript" src="js/calc2.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script type="text/javascript" src="js/focus.js"></script>
   <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body class ="calc6">
+<body class="calc6">
   <a href="index.html">トップへ戻る</a>
   <p>
     大規模杯集計機 - 交流戦(6v6)
@@ -17,7 +19,7 @@
     <summary>使い方</summary>
     <ol>
       <li>対戦チームのメンバーを1行ずつ記入して「名前一括貼付」を押す</li>
-      <li>得点を入力(Tabキーで移動可)して「計算」を押す</li>
+      <li>得点を入力(Enterキーで移動可)して「計算」を押す</li>
       <li>「コピー」を押して進行スレの書き込み欄に貼り付ける</li>
       <li> リザルト画像URLを文頭に追加して書き込む</li>
     </ol>
@@ -25,14 +27,17 @@
   <p>
 
     <tr class="setting">
-      <td>形式<input id="membernum" class="number" size="3" type="number" value="6" readonly></td>
+      <td>
+        <!-- 形式 -->
+        <input id="membernum" class="number" size="3" type="hidden" value="6" readonly>
+      </td>
       <td><input id="playernum" class="number" size="3" type="hidden" value="2"></td>
       <td><input id="passernum" class="number" size="3" type="hidden" value="1"></td>
     </tr>
   </p>
 
   <p>
-    <textarea id="names" cols="40" rows="13" placeholder="ここに組分けをコピペ"></textarea>
+    <textarea id="names" cols="40" rows="13" placeholder="ここにメンバーをコピペ"></textarea>
     <br>
     <button type=button onclick="pasteNames()">名前一括貼付</button>
     <!-- <button type=button onclick="pastePoints()">得点一括貼付</button> -->
@@ -102,7 +107,7 @@
   <button type=button onclick="copy()">コピー</button>
 
   <p>
-    <textarea id="result" name="result" cols="120" rows="28" placeholder=""></textarea>
+    <textarea id="result" name="result" cols="40" rows="28" placeholder=""></textarea>
   </p>
 
   <p>
