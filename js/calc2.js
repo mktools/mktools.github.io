@@ -15,17 +15,13 @@ function pasteNames() {
     for (var i = 0; i < n * m; i++) {
         var pn = nameArray[i];
         if (typeof pn === "undefined" || pn === "") {
-            var tempid = ('00' + (i+1)).slice(-2);
-            playerNames[i].value = "Player" + tempid + "（0000-0000-00" + tempid +  "）";
+            var tempid = ('00' + (i + 1)).slice(-2);
+            playerNames[i].value = "Player" + tempid + "（0000-0000-00" + tempid + "）";
         } else {
             playerNames[i].value = pn.trim();
         }
     }
     getTeamName();
-}
-
-function zeroPadding(num,length){
-    return ('0000000000' + num).slice(-length);
 }
 
 function pastePoints() {
@@ -79,9 +75,12 @@ function calc1() {
     var n = Number(document.getElementById("playernum").value);
 
     var preferArray = new Array();
+    var existsPrefer = false;
+
     for (var i = 0; i < n; i++) {
         if (isPrefer[i].checked) {
             preferArray.push(1);
+            existsPrefer = true;
         } else {
             preferArray.push(0);
         }
@@ -98,19 +97,19 @@ function calc1() {
     }
     objArraySort(playersArray, 'point');
 
-    var result = maketable1(playersArray);
+    var result = maketable1(playersArray, existsPrefer);
     document.getElementById("result").value = result;
 
 }
 
-function maketable1(data) {
+function maketable1(data, existsPrefer) {
     var str = "";
     var url = document.getElementById("imageurl").value;
 
     if (url != "") {
         str += "結果画像 : " + url + "\n\n";
     } else {
-        str += "結果画像がありません" + "\n\n";
+        str += "※結果画像がありません※" + "\n\n";
     }
 
     var n = Number(document.getElementById("playernum").value);
@@ -123,6 +122,9 @@ function maketable1(data) {
         for (var i = 0; i < n; i++) {
             str += data[i].point + "pts : " + data[i].name + "\n";
         }
+        if (data[0].point === data[1].point) {
+            //TODO: 決勝で最高得点者が複数いる場合のの文面追加
+        }
         str += "\n優勝\n"
         str += data[0].name + "\n";
 
@@ -131,13 +133,40 @@ function maketable1(data) {
         for (var i = 0; i < p; i++) {
             str += data[i].point + "pts : " + data[i].name + "\n";
         }
-        str += "--------------------------------------------\n"
+        str += "--------------------------------------------\n\n"
         for (i = p; i < n; i++) {
             str += data[i].point + "pts : " + data[i].name + "\n";
         }
 
         if (data[p - 1].point === data[p].point) {
-            str += "\n※進出可能ラインで同点がいます※\n"
+            if (existsPrefer) {
+                var correctChecked = true;
+
+                for (var i = 0; i < p; i++) {
+                    if (data[i].point === data[p].point && data[i].prefer == false) {
+                        correctChecked = false;
+                    }
+                }
+                for (var i = p; i < n; i++) {
+                    if (data[i].point === data[p].point && data[i].prefer == true) {
+                        correctChecked = false;
+                    }
+                }
+                if (correctChecked) {
+                    str += "\n登録順または進行役補正により "
+                    for (var i = 0; i < p; i++) {
+                        if (data[i].point === data[p].point) {
+                            var dataname = data[i].name.replace(/([（(][0-9]{4}[-‐–][0-9]{4}[-‐–][0-9]{4}[）)])/, "");
+                            str += dataname + "さん ";
+                        }
+                    }
+                    str += "が通過となります\n"
+                } else {
+                    str += "\n※進出可能同点チェックがおかしいです※\n"
+                }
+            } else {
+                str += "\n※進出可能ラインで同点がいます※\n"
+            }
         }
 
         str += "\n主催コピペ用\n"
@@ -145,7 +174,7 @@ function maketable1(data) {
             str += data[i].name + "\n";
         }
     } else {
-        str += "通過人数がおかしいです\n"
+        str += "※通過人数がおかしいです※\n"
     }
 
     return str;
@@ -162,14 +191,17 @@ function calc2() {
     var m = Number(document.getElementById("membernum").value);
 
     var preferArray = new Array();
+    var existsPrefer = false;
+
     for (var i = 0; i < n; i++) {
         if (isPrefer[i].checked) {
             preferArray.push(1);
+            existsPrefer = true;
         } else {
             preferArray.push(0);
         }
     }
-    console.log(preferArray);
+    // console.log(preferArray);
 
     var teamsArray = new Array();
     for (var i = 0; i < n; i++) {
@@ -191,19 +223,19 @@ function calc2() {
     }
     objArraySort(teamsArray, 'point');
     //console.log(teamsArray);
-    var result = maketable2(teamsArray);
+    var result = maketable2(teamsArray, existsPrefer);
     document.getElementById("result").value = result;
 
 }
 
-function maketable2(data) {
+function maketable2(data, existsPrefer) {
     var str = "";
     var url = document.getElementById("imageurl").value;
 
     if (url != "") {
         str += "結果画像 : " + url + "\n\n";
     } else {
-        str += "結果画像がありません" + "\n\n";
+        str += "※結果画像がありません※" + "\n\n";
     }
 
     var n = Number(document.getElementById("playernum").value);
@@ -222,6 +254,19 @@ function maketable2(data) {
             str += strtmp;
             str += data[i].name + " : " + data[i].point + "pts\n\n";
         }
+        if (data[p - 1].point === data[p].point) {
+            if (existsPrefer) {
+                str += "\n※登録順または進行役補正により "
+                for (var i = 0; i < p; i++) {
+                    if (data[i].point === data[p].point) {
+                        str += data[i].name + " ";
+                    }
+                }
+                str += "が通過となります\n"
+            } else {
+                str += "\n※同点です※\n"
+            }
+        }
         str += "\n勝利チーム\n"
         str += data[0].name + "\n";
 
@@ -234,6 +279,10 @@ function maketable2(data) {
             str += strtmp;
             str += data[i].name + " : " + data[i].point + "pts\n\n";
         }
+        if (data[0].point === data[1].point) {
+            //TODO: 決勝で最高得点チームが複数いる場合の文面追加
+        }
+
         str += "\n優勝\n"
         var strtmp = "";
         for (var j = 0; j < m; j++) {
@@ -253,7 +302,7 @@ function maketable2(data) {
             str += data[i].name + " : " + data[i].point + "pts\n\n";
 
         }
-        str += "--------------------------------------------\n"
+        str += "--------------------------------------------\n\n"
         for (i = p; i < n; i++) {
             var strtmp = "";
             for (var j = 0; j < m; j++) {
@@ -264,7 +313,33 @@ function maketable2(data) {
         }
 
         if (data[p - 1].point === data[p].point) {
-            str += "\n※進出可能ラインで同点がいます※\n"
+            if (existsPrefer) {
+                var correctChecked = true;
+
+                for (var i = 0; i < p; i++) {
+                    if (data[i].point === data[p].point && data[i].prefer == false) {
+                        correctChecked = false;
+                    }
+                }
+                for (var i = p; i < n; i++) {
+                    if (data[i].point === data[p].point && data[i].prefer == true) {
+                        correctChecked = false;
+                    }
+                }
+                if (correctChecked) {
+                    str += "\n登録順または進行役補正により "
+                    for (var i = 0; i < p; i++) {
+                        if (data[i].point === data[p].point) {
+                            str += data[i].name + " ";
+                        }
+                    }
+                    str += "が通過となります\n"
+                } else {
+                    str += "\n※進出可能同点チェックがおかしいです※\n"
+                }
+            } else {
+                str += "\n※進出可能ラインで同点がいます※\n"
+            }
         }
 
         str += "\n主催コピペ用\n"
@@ -277,9 +352,9 @@ function maketable2(data) {
         }
     } else {
         if (m === 1) {
-            str += "通過人数がおかしいです\n"
+            str += "※通過人数がおかしいです※\n"
         } else {
-            str += "通過チーム数がおかしいです\n"
+            str += "※通過チーム数がおかしいです※\n"
         }
     }
 
@@ -291,8 +366,8 @@ function maketable2(data) {
 function LCS(s1, s2) {
 
     // フレンドコードを削除
-    s1 = s1.replace(/([（(][0-9]{4}[-‐–][0-9]{4}[-‐–][0-9]{4}[）)])/, "");
-    s2 = s2.replace(/([（(][0-9]{4}[-‐–][0-9]{4}[-‐–][0-9]{4}[）)])/, "");
+    var s1 = s1.replace(/([（(][0-9]{4}[-‐–][0-9]{4}[-‐–][0-9]{4}[）)])/, "");
+    var s2 = s2.replace(/([（(][0-9]{4}[-‐–][0-9]{4}[-‐–][0-9]{4}[）)])/, "");
 
     // Init the matrix of all substring lengths to use Dynamic Programming approach.
     var substringMatrix = Array(s2.length + 1).fill(null).map(function () {
@@ -413,7 +488,7 @@ function copy() {
     if (execCopy(document.getElementById("result").value)) {
         alert('集計結果をコピーしました');
     } else {
-        alert('このブラウザでは対応していません');
+        alert('※このブラウザでは対応していません※');
     }
 }
 
