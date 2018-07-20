@@ -2,13 +2,13 @@ input.number { width: 50px; }
 input.team { width: 150px; }
 input.name { width: 270px; }
 
-body.top {  background-color: rgb(242, 242, 242) }
-body.calc1 {  background-color: rgb(232, 254, 255) }
-body.calc2 {  background-color: rgb(209, 232, 207) }
-body.calc3 {  background-color: rgb(255, 251, 227) }
-body.calc4 {  background-color: rgb(232, 218, 208) }
-body.calc6 {  background-color: rgb(255, 227, 242) }
-body.grouping {  background-color: rgb(242, 242, 242) }
+body.top {  background-color: rgb(238, 238, 238) }
+body.calc1 {  background-color: rgb(200, 232, 239) }
+body.calc2 {  background-color: rgb(212, 242, 207) }
+body.calc3 {  background-color: rgb(242, 237, 219) }
+body.calc4 {  background-color: rgb(242, 214, 207) }
+body.calc6 {  background-color: rgb(235, 217, 242) }
+body.grouping {  background-color: rgb(238, 238, 238) }
 
 label, input[type='checkbox'] {
   cursor: pointer;
