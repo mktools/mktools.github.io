@@ -133,7 +133,7 @@ function maketable1(data, existsPrefer) {
         for (var i = 0; i < p; i++) {
             str += data[i].point + "pts : " + data[i].name + "\n";
         }
-        str += "\n--------------------------------------------\n"
+        str += "\n--------------------------------------------\n\n"
         for (i = p; i < n; i++) {
             str += data[i].point + "pts : " + data[i].name + "\n";
         }
