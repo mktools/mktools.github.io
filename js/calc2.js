@@ -89,7 +89,12 @@ function calc1() {
     var playersArray = new Array();
     for (var i = 0; i < n; i++) {
         var obj = new Object();
-        obj.point = Number(playerPoints[i].value);
+        playerPoints[i].value = playerPoints[i].value.replace(/[^0-9+-]/g, '');
+        obj.point = Number(eval(playerPoints[i].value));
+        if (isNaN(obj.point)) {
+            obj.point = 0;
+        }
+
         obj.name = playerNames[i].value;
         obj.pos = i;
         obj.prefer = preferArray[i];
@@ -210,7 +215,11 @@ function calc2() {
         objs.point = 0;
         for (var j = 0; j < m; j++) {
             var obj = new Object();
-            obj.point = Number(playerPoints[i * m + j].value);
+            playerPoints[i * m + j].value = playerPoints[i * m + j].value.replace(/[^0-9+-]/g, '');
+            obj.point = Number(eval(playerPoints[i * m + j].value));
+            if (isNaN(obj.point)) {
+                obj.point = 0;
+            }
             obj.pos = i * m + j;
             objs.point += obj.point;
             obj.name = playerNames[i * m + j].value;
