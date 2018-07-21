@@ -89,6 +89,8 @@ function calc1() {
     var playersArray = new Array();
     for (var i = 0; i < n; i++) {
         var obj = new Object();
+        playerPoints[i].value = playerPoints[i].value.replace(/([＋])/g, '+');
+        playerPoints[i].value = playerPoints[i].value.replace(/([ー－])/g, '-');
         playerPoints[i].value = playerPoints[i].value.replace(/[^0-9+-]/g, '');
         obj.point = Number(eval(playerPoints[i].value));
         if (isNaN(obj.point)) {
@@ -215,7 +217,7 @@ function calc2() {
         objs.point = 0;
         for (var j = 0; j < m; j++) {
             var obj = new Object();
-            playerPoints[i * m + j].value = playerPoints[i * m + j].value.replace(/[^0-9+-]/g, '');
+            playerPoints[i * m + j].value = playerPoints[i * m + j].value.replace(/[^0-9+-＋－]/g, '');
             obj.point = Number(eval(playerPoints[i * m + j].value));
             if (isNaN(obj.point)) {
                 obj.point = 0;
