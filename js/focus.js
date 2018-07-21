@@ -2,7 +2,7 @@
 // https://blog.makotoishida.com/2013/02/javascript-enter.html
 
 $(function(){
-  var elements = "input[type=number]";
+  var elements = "input[type=tel]";
   $(elements).keypress(function(e) {
     var c = e.which ? e.which : e.keyCode;
     if (c == 13) { 
