@@ -133,7 +133,7 @@ function maketable1(data, existsPrefer) {
         for (var i = 0; i < p; i++) {
             str += data[i].point + "pts : " + data[i].name + "\n";
         }
-        str += "--------------------------------------------\n\n"
+        str += "\n--------------------------------------------\n"
         for (i = p; i < n; i++) {
             str += data[i].point + "pts : " + data[i].name + "\n";
         }
@@ -256,7 +256,7 @@ function maketable2(data, existsPrefer) {
         }
         if (data[p - 1].point === data[p].point) {
             if (existsPrefer) {
-                str += "\n※登録順または進行役補正により "
+                str += "\n登録順または進行役補正により "
                 for (var i = 0; i < p; i++) {
                     if (data[i].point === data[p].point) {
                         str += data[i].name + " ";
