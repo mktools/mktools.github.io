@@ -5,7 +5,7 @@ function pasteNames() {
     //たまに混入しているゼロ幅文字を消す
     allNames = allNames.replace(/[\u200B-\u200D\u2028-\u202E\uFEFF]/g, '');
     //フレンドコードを区切りとしてプレイヤー名を検出
-    allNames = allNames.replace(/([（(][0-9]{4}[-‐–][0-9]{4}[-‐–][0-9]{4}[）)]\s*)/g, "$1\n");
+    allNames = allNames.replace(/([（(][0-9]{4}[-ｰ‐–][0-9]{4}[-ｰ‐–][0-9]{4}[）)]\s*)/g, "$1\n");
 
     allNames = allNames.replace(/\n\n/g, "\n");
     nameArray = allNames.split("\n");
@@ -407,8 +407,8 @@ function maketable2(data, existsPrefer) {
 // https://github.com/trekhleb/javascript-algorithms/blob/master/src/algorithms/string/longest-common-substring/longestCommonSubstring.js
 function LCS(s1, s2) {
     // フレンドコードを削除
-    var s1 = s1.replace(/([（(][0-9]{4}[-‐–][0-9]{4}[-‐–][0-9]{4}[）)])/, "");
-    var s2 = s2.replace(/([（(][0-9]{4}[-‐–][0-9]{4}[-‐–][0-9]{4}[）)])/, "");
+    var s1 = s1.replace(/([（(][0-9]{4}[-ｰ‐–][0-9]{4}[-ｰ‐–][0-9]{4}[）)]\s*)/g, "");
+    var s2 = s2.replace(/([（(][0-9]{4}[-ｰ‐–][0-9]{4}[-ｰ‐–][0-9]{4}[）)]\s*)/g, "");
 
     // Init the matrix of all substring lengths to use Dynamic Programming approach.
     var substringMatrix = Array(s2.length + 1).fill(null).map(function () {

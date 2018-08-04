@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="ja">
 
 <head>
   <meta charset="utf-8" />
@@ -11,13 +12,14 @@
 <body class="grouping">
   <a href="index.html">トップへ戻る</a>
   <p>
-    大規模杯組分け機
+    大規模杯組分け機(仮)<br>
+    <b>あくまで仮作成の状態なので実運用は非推奨</b>
   </p>
   <details>
     <summary>使い方</summary>
     <ol>
       <li>「形式」から大会の形式を選択する</li>
-      <li>「進行役」「一般参加者」欄に参加者を入力する（進行をしない進行役は一般参加者の欄へ入力）<br></li>
+      <li>「進行役」「一般参加者」欄に参加者を入力する（進行をしない進行役は一般参加者の欄へ入力）<br>
           ※1名につき必ず改行を入れること（チーム戦の場合はチーム人数につき改行）<br></li>
       <li>「出力」を押す（各人数がおかしい場合は不足・余剰人数を出力）</li>
     </ol>
@@ -48,7 +50,7 @@
     <div id="linep">一般参加者 : 0名</div>
   </p>
 
-  <button type=button onclick="grouping()">出力</button>
+  <button type="button" onclick="grouping()">出力</button>
   <!-- <button type=button onclick="reset()">リセット</button> -->
   <hr>
 

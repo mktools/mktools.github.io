@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 
 <head>
   <meta charset="utf-8" />
@@ -22,7 +22,7 @@
       <li>チーム数を入力する（通常は3のままでOK）</li>
       <li>通過チーム数を入力する（決勝の場合は0を入力する）</li>
       <li>結果画像URLを入力する</li>
-      <li>組分けから集計する組をコピペして「<b>名前一括貼付</b>」を押す</li>
+      <li>組分け一覧から集計する組をコピペして「<b>名前一括貼付</b>」を押す</li>
       <li>得点を入力(Enterキーで移動可)して「<b>計算</b>」を押す<br>
         ※回線落ち者の加点は「+」コース重複などの減点は「-」を含んだ式で表記<br>
           <u>※進出可能ラインで同点がいた場合</u>は正しい進出チーム名の横にあるチェックボックスを押して再度「<b>計算</b>」を押す</li>
@@ -52,11 +52,11 @@
 
   <table>
     <thead>
-      <tr>
+      <tr valign="bottom">
         <td>名前</td>
         <td>得点</td>
         <td>チーム名</td>
-        <td>進出可能ライン同点時進出者</td>
+        <td>進出可能ライン<br>同点時進出者</td>
       </tr>
     </thead>
     <tbody>
@@ -116,7 +116,7 @@
       </tr>
       <tr class="plsum" height="100%">
         <td align="right"></td>
-        <td><input id="pointsum" class="point" size="4" type="text" placeholder="合計点" readonly></td>
+        <td title="8レース: 656点 12レース: 984点 になればOK"><input id="pointsum" class="point" size="4" type="text" placeholder="合計点" readonly></td>
         <td></td>
       </tr>
     </tbody>
