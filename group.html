@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8" />
+  <title>ランダム模擬用組分け機</title>
+
+  <script type="text/javascript" src="js/grouping.js"></script>
+  <script src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="grouping">
+  <a href="index.html">トップへ戻る</a>
+  <p>
+    ランダム模擬用組分け機
+  </p>
+  <details>
+    <summary>使い方</summary>
+    <ol>
+      <li>「形式」からチームの構成人数を選択する</li>
+      <li>「参加者」欄に参加者を1人1行ずつ入力する</li>
+      <li>「出力」を押す</li>
+      <li>「組分け結果をツイート」から結果をツイートする（文字数オーバーのときは参加者名を短縮する）</li>
+    </ol>
+  </details>
+  <p>
+    <tr class="setting">
+      <td>形式
+        <select id="groupnum" class="number" name="type" onchange="updateCount()">
+          <option value="6">タッグ(2v2)</option>
+          <option value="4">トリプルス(3v3)</option>
+          <option value="3">フォーマン(4v4)</option>
+          <option value="2">交流戦(6v6)</option>
+          </select>
+      </td>
+      <td>ランダム抽選<input id="israndom" class="box" type="checkbox"   disabled  checked="checked"></td>
+    </tr>
+  </p>
+  <p>
+    <textarea id="player" cols="30" rows="12" placeholder="参加者"></textarea>
+  </p>
+  <!-- <p>
+    <div id="linep">参加者 : 0名</div>
+  </p> -->
+
+  <button type="button" onclick="group()">出力</button>
+  <!-- <button type=button onclick="reset()">リセット</button> -->
+  <hr>
+
+  <p>
+    <div id="result">ここに組分け結果が出力されます</div>
+  </p>
+
+</body>
+
+</html>

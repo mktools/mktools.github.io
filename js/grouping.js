@@ -1,6 +1,5 @@
 function countLine(id, str) {
   // str = str.replace(/^\n/g, '');
-
   var m = 12 / Number(document.getElementById("playernum").value);
 
   num = str.match(/\r\n|\n/g);
@@ -10,7 +9,7 @@ function countLine(id, str) {
     line = 1;
   }
 
-  if(str.length === 0){
+  if (str.length === 0) {
     line = 0;
   }
 
@@ -30,10 +29,68 @@ function countLine(id, str) {
 }
 
 function updateCount() {
-
   countLine("linef", document.getElementById("facil").value);
   countLine("linep", document.getElementById("player").value);
+}
 
+function getTime() {
+  // 例) => Wed Feb 16 2017 12:00:00 GMT+0900
+  var request = new XMLHttpRequest();
+  request.open('HEAD', window.location.href, true);
+  request.send();
+  request.onreadystatechange = function () {
+    if (this.readyState === 4) {
+      var serverDate = new Date(request.getResponseHeader('Date'));
+      var str = serverDate.toLocaleString();
+    }
+  }
+  console.log(str);
+  return str;
+}
+
+function group() {
+  var playerArray = new Array();
+  var playerNames = document.getElementById("player").value;
+  playerNames = playerNames.replace(/[\u200B-\u200D\u2028-\u202E\uFEFF]/g, '');
+  playerArray = playerNames.split("\n");
+  var n = Number(document.getElementById("groupnum").value);
+  var m = 12 / n;
+  var p = playerArray.length;
+  var str = "";
+  var tweet = "組分け結果%0a";
+  var isRandom = document.getElementById("israndom").checked;
+
+  if (isRandom) {
+    shuffle(playerArray);
+  }
+
+  if (p === 12) {
+    for (var i = 0; i < n; i++) {
+      str += "<div id='" + i + "'>\n";
+      str += String.fromCharCode(i + 65) + "<br>";
+      tweet += String.fromCharCode(i + 65) + "%0a";
+      for (var j = 0; j < m; j++) {
+        str += playerArray[i * m + j] + "<br>";
+        tweet += playerArray[i * m + j];
+        if (i != n - 1 || j != m - 1) {
+          tweet += "%0a";
+        }
+      }
+      str += "\n</div><br>";
+    }
+    //TODO:
+    // console.log(getTime());
+    // str += "組分け時刻：" + getTime();
+    str += '<a href="https://twitter.com/intent/tweet?text='
+    str += tweet;
+    str += '" onClick="" rel="nofollow" class="twitter-link">組分け結果をツイート</a>'
+
+  } else if (p > 12) {
+    str += "参加者が" + (p - n * m) + "名余っています";
+  } else {
+    str += "参加者が" + (n * m - p) + "名不足しています";
+  }
+  document.getElementById("result").innerHTML = str;
 }
 
 function grouping() {
