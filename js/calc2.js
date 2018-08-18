@@ -1,3 +1,6 @@
+//たびたび使うフレコ正規表現
+var regexFC = /([（(][ 　]*[[0-9]{4}[ 　]*[-ｰ－−‐–][ 　]*[0-9]{4}[ 　]*[-ｰ−－‐–][ 　]*[0-9]{4}[ 　]*[[）)]\s*)/g;
+
 //組分けコピペ欄から名前を切出し・貼り付け
 function pasteNames() {
     var nameArray = new Array();
@@ -5,7 +8,7 @@ function pasteNames() {
     //たまに混入しているゼロ幅文字を消す
     allNames = allNames.replace(/[\u200B-\u200D\u2028-\u202E\uFEFF]/g, '');
     //フレンドコードを区切りとしてプレイヤー名を検出
-    allNames = allNames.replace(/([（(][0-9]{4}[-ｰ‐–][0-9]{4}[-ｰ‐–][0-9]{4}[）)]\s*)/g, "$1\n");
+    allNames = allNames.replace(regexFC, "$1\n");
 
     allNames = allNames.replace(/\n\n/g, "\n");
     nameArray = allNames.split("\n");
@@ -19,7 +22,8 @@ function pasteNames() {
         //未入力ならPlayer**（0000-0000-00**）で埋める
         if (typeof pn === "undefined" || pn === "") {
             var tempid = ('00' + (i + 1)).slice(-2);
-            playerNames[i].value = "Player" + tempid + "（0000-0000-00" + tempid + "）";
+            // playerNames[i].value = "Player" + tempid + "（0000-0000-00" + tempid + "）";
+            playerNames[i].value = "※プレイヤー" + tempid + "が見つかりません※"
         } else {
             playerNames[i].value = pn.trim();
         }
@@ -182,7 +186,7 @@ function maketable1(data, existsPrefer) {
                     str += "\n登録順または進行役補正により "
                     for (var i = 0; i < p; i++) {
                         if (data[i].point === data[p].point) {
-                            var dataname = data[i].name.replace(/([（(][0-9]{4}[-‐–][0-9]{4}[-‐–][0-9]{4}[）)])/, "");
+                            var dataname = data[i].name.replace(regexFC, "");
                             str += dataname + "さん ";
                         }
                     }
@@ -270,7 +274,11 @@ function maketable2(data, existsPrefer) {
     var url = document.getElementById("imageurl").value;
 
     if (url != "") {
-        str += "結果画像 : " + url + "\n\n";
+        if (url.match(/\r\n|\n/g) === null) {
+            str += "結果画像 : " + url + "\n\n";
+        }else{
+            str += "結果画像 : \n" + url + "\n\n";
+        }
     } else {
         str += "※結果画像がありません※" + "\n\n";
     }
@@ -402,13 +410,21 @@ function maketable2(data, existsPrefer) {
     return str;
 }
 
+//変則杯で末尾タグの場合「☆」がタグに含まれてしまうのでその応急処置
+function forIrr(s) {
+    return s.replace(/☆[カハドA]$/, "")
+}
+
 // 文字列からLongest Common Substring（最長共通部分文字列）を抽出する
 // コードは以下より引用
 // https://github.com/trekhleb/javascript-algorithms/blob/master/src/algorithms/string/longest-common-substring/longestCommonSubstring.js
 function LCS(s1, s2) {
     // フレンドコードを削除
-    var s1 = s1.replace(/([（(][0-9]{4}[-ｰ‐–][0-9]{4}[-ｰ‐–][0-9]{4}[）)]\s*)/g, "");
-    var s2 = s2.replace(/([（(][0-9]{4}[-ｰ‐–][0-9]{4}[-ｰ‐–][0-9]{4}[）)]\s*)/g, "");
+    var s1 = s1.replace(regexFC, "");
+    var s2 = s2.replace(regexFC, "");
+
+    s1 = forIrr(s1);
+    s2 = forIrr(s2);
 
     // Init the matrix of all substring lengths to use Dynamic Programming approach.
     var substringMatrix = Array(s2.length + 1).fill(null).map(function () {
@@ -581,8 +597,8 @@ function calcSum() {
 }
 
 window.onload = function setHandler() {
-    var pointlist = document.getElementsByName("point");    
+    var pointlist = document.getElementsByName("point");
     for (var i = 0, len = pointlist.length; i < len; ++i) {
         pointlist[i].addEventListener("change", calcSum);
-      }
+    }
 }
