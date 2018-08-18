@@ -3,25 +3,30 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>ランダム模擬用組分け機</title>
+  <meta name="description" content="ランダム模擬の組分けを自動で行います。twitterへの投稿も対応しています。">
+  <meta property="og:title" content="模擬組分け機">
+  <meta property="og:description" content="ランダム模擬の組分けを自動で行います。twitterへの投稿も対応しています。">
+  <title>模擬組分け機</title>
 
+  <script type="text/javascript" src="js/strimwidth.js"></script>
   <script type="text/javascript" src="js/grouping.js"></script>
-  <script src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <script type="text/javascript" src="js/submission.js"></script>
   <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body class="grouping">
   <a href="index.html">トップへ戻る</a>
   <p>
-    ランダム模擬用組分け機
+    模擬組分け機
   </p>
   <details>
-    <summary>使い方</summary>
+    <summary>使い方（クリックで表示）</summary>
     <ol>
       <li>「形式」からチームの構成人数を選択する</li>
       <li>「参加者」欄に参加者を1人1行ずつ入力する</li>
       <li>「出力」を押す</li>
-      <li>「組分け結果をツイート」から結果をツイートする</li>
+      <li>「組分け結果をツイート」から結果をツイートする<br>
+          ※仕様上一部記号が文字化けすることをご了承ください</li>
     </ol>
   </details>
   <p>
@@ -34,11 +39,11 @@
           <option value="2">交流戦(6v6)</option>
           </select>
       </td>
-      <td>ランダム抽選<input id="israndom" class="box" type="checkbox"   disabled  checked="checked"></td>
+      <td><input id="israndom" class="box"  type="hidden" checked="checked"></td>
     </tr>
   </p>
   <p>
-    <textarea id="player" cols="30" rows="12" placeholder="参加者"></textarea>
+    <textarea id="player" cols="40" rows="12" placeholder="ここに参加者名を1行ずつ入力する"></textarea>
   </p>
   <!-- <p>
     <div id="linep">参加者 : 0名</div>

@@ -48,6 +48,37 @@ function getTime() {
   return str;
 }
 
+var charCount = function (str) {
+  len = 0;
+  str = escape(str);
+  for (i = 0; i < str.length; i++ , len++) {
+    if (str.charAt(i) == "%") {
+      if (str.charAt(++i) == "u") {
+        i += 3;
+        len++;
+      }
+      i++;
+    }
+  }
+  return len;
+}
+
+function escape_html(string) {
+  if (typeof string !== 'string') {
+    return string;
+  }
+  return string.replace(/[&'`"<>]/g, function (match) {
+    return {
+      '&': '&amp;',
+      "'": '&#x27;',
+      '`': '&#x60;',
+      '"': '&quot;',
+      '<': '&lt;',
+      '>': '&gt;',
+    }[match]
+  });
+}
+
 function group() {
   var playerArray = new Array();
   var playerNames = document.getElementById("player").value;
@@ -57,7 +88,8 @@ function group() {
   var m = 12 / n;
   var p = playerArray.length;
   var str = "";
-  var tweet = "組分け結果%0a";
+  var tweet = "＝組分け結果＝%0a";
+  var query = "";
   var isRandom = document.getElementById("israndom").checked;
 
   if (isRandom) {
@@ -68,29 +100,36 @@ function group() {
     for (var i = 0; i < n; i++) {
       str += "<div id='" + i + "'>\n";
       str += String.fromCharCode(i + 65) + "<br>";
-      tweet += String.fromCharCode(i + 65) + "%0a";
+      tweet += String.fromCharCode(i + 65) + ":%20";
       for (var j = 0; j < m; j++) {
-        str += playerArray[i * m + j] + "<br>";
-        tweet += playerArray[i * m + j];
-        if (i != n - 1 || j != m - 1) {
+        str += escape_html(playerArray[i * m + j]) + "<br>";
+        tweet += encodeURIComponent(mb_strimwidth(playerArray[i * m + j], 0, 22, "…"));
+        if (j !== m - 1) {
+          tweet += ",%20";
+        }
+        if (j === m - 1) {
           tweet += "%0a";
         }
       }
       str += "\n</div><br>";
     }
-    //TODO:
+    tweet += "模擬組分け機"
+    // TODO:
     // console.log(getTime());
     // str += "組分け時刻：" + getTime();
-    str += '<a href="https://twitter.com/intent/tweet?text='
-    str += tweet;
-    str += '" onClick="" rel="nofollow" class="twitter-link">組分け結果をツイート</a>'
 
+    str += '<a href="https://twitter.com/intent/tweet?text=' + tweet;
+    str += '&url=' + location.href + '" onClick="'
+
+    str += "window.open(encodeURI(decodeURI(this.href)), 'tweetwindow', 'width=640, height=320, personalbar=0, toolbar=0, scrollbars=1, sizable=1'); return false;"
+    str += '" rel="nofollow" target=”_blank”class="twitter-link">組分け結果をツイート</a>'
   } else if (p > 12) {
     str += "参加者が" + (p - n * m) + "名余っています";
   } else {
     str += "参加者が" + (n * m - p) + "名不足しています";
   }
   document.getElementById("result").innerHTML = str;
+
 }
 
 function grouping() {
