@@ -99,8 +99,8 @@ function group() {
   if (p === 12) {
     for (var i = 0; i < n; i++) {
       str += "<div id='" + i + "'>\n";
-      str += String.fromCharCode(i + 65) + "<br>";
-      tweet += String.fromCharCode(i + 65) + ":%20";
+      str += "【" + String.fromCharCode(i + 65) + "】<br>";
+      tweet +=  "【" + String.fromCharCode(i + 65) + "】";
       for (var j = 0; j < m; j++) {
         str += escape_html(playerArray[i * m + j]) + "<br>";
         tweet += encodeURIComponent(mb_strimwidth(playerArray[i * m + j], 0, 22, "…"));
