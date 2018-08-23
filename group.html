@@ -8,9 +8,11 @@
   <meta property="og:description" content="ランダム模擬の組分けを自動で行います。twitterへの投稿も対応しています。">
   <title>模擬組分け機</title>
 
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
   <script type="text/javascript" src="js/strimwidth.js"></script>
   <script type="text/javascript" src="js/grouping.js"></script>
   <script type="text/javascript" src="js/submission.js"></script>
+  <script type="text/javascript" src="js/focusg.js"></script>
   <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -42,14 +44,55 @@
       <td><input id="israndom" class="box"  type="hidden" checked="checked"></td>
     </tr>
   </p>
-  <p>
+  <!-- <p>
     <textarea id="player" cols="40" rows="12" placeholder="ここに参加者名を1行ずつ入力する"></textarea>
-  </p>
+  </p> -->
+  <table>
+    <tbody>
+      <tr>
+        <td><input type="text" tabindex="1" name="name" placeholder="参加者名1を入力"></td>
+      </tr>
+      <tr>
+        <td><input type="text" tabindex="2" name="name" placeholder="参加者名2を入力"></td>
+      </tr>
+      <tr>
+        <td><input type="text" tabindex="3" name="name" placeholder="参加者名3を入力"></td>
+      </tr>
+      <tr>
+        <td><input type="text" tabindex="4" name="name" placeholder="参加者名4を入力"></td>
+      </tr>
+      <tr>
+        <td><input type="text" tabindex="5" name="name" placeholder="参加者名5を入力"></td>
+      </tr>
+      <tr>
+        <td><input type="text" tabindex="6" name="name" placeholder="参加者名6を入力"></td>
+      </tr>
+      <tr>
+        <td><input type="text" tabindex="7" name="name" placeholder="参加者名7を入力"></td>
+      </tr>
+      <tr>
+        <td><input type="text" tabindex="8" name="name" placeholder="参加者名8を入力"></td>
+      </tr>
+      <tr>
+        <td><input type="text" tabindex="9" name="name" placeholder="参加者名9を入力"></td>
+      </tr>
+      <tr>
+        <td><input type="text" tabindex="10" name="name" placeholder="参加者名10を入力"></td>
+      </tr>
+      <tr>
+        <td><input type="text" tabindex="11" name="name" placeholder="参加者名11を入力"></td>
+      </tr>
+      <tr>
+        <td><input type="text" tabindex="12" name="name" placeholder="参加者名12を入力"></td>
+      </tr>
+    </tbody>
+  </table>
+ 
   <!-- <p>
     <div id="linep">参加者 : 0名</div>
   </p> -->
 
-  <button type="button" onclick="group()">出力</button>
+  <button type="button" onclick="mogiGrouping()">出力</button>
   <!-- <button type=button onclick="reset()">リセット</button> -->
   <hr>
 

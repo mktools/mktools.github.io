@@ -63,7 +63,7 @@ var charCount = function (str) {
   return len;
 }
 
-function escape_html(string) {
+function escapeHtml(string) {
   if (typeof string !== 'string') {
     return string;
   }
@@ -79,12 +79,21 @@ function escape_html(string) {
   });
 }
 
-function group() {
+function mogiGrouping() {
   var playerArray = new Array();
-  var playerNames = document.getElementById("player").value;
-  playerNames = playerNames.replace(/[\u200B-\u200D\u2028-\u202E\uFEFF]/g, '');
-  playerArray = playerNames.split("\n");
+  // var playerNames = document.getElementById("player").value;
+  // playerNames = playerNames.replace(/[\u200B-\u200D\u2028-\u202E\uFEFF]/g, '');
+  // playerArray = playerNames.split("\n");
+
   var n = Number(document.getElementById("groupnum").value);
+  var playerNames = document.getElementsByName("name");
+  for (var i = 0; i < playerNames.length; i++) {
+    if (playerNames[i].value !== ""){
+      playerArray.push(playerNames[i].value);
+    }
+  }
+
+
   var m = 12 / n;
   var p = playerArray.length;
   var str = "";
@@ -100,9 +109,9 @@ function group() {
     for (var i = 0; i < n; i++) {
       str += "<div id='" + i + "'>\n";
       str += "【" + String.fromCharCode(i + 65) + "】<br>";
-      tweet +=  "【" + String.fromCharCode(i + 65) + "】";
+      tweet += "【" + String.fromCharCode(i + 65) + "】";
       for (var j = 0; j < m; j++) {
-        str += escape_html(playerArray[i * m + j]) + "<br>";
+        str += escapeHtml(playerArray[i * m + j]) + "<br>";
         tweet += encodeURIComponent(mb_strimwidth(playerArray[i * m + j], 0, 22, "…"));
         if (j !== m - 1) {
           tweet += ",%20";
