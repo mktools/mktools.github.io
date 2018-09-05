@@ -33,115 +33,21 @@ function updateCount() {
   countLine("linep", document.getElementById("player").value);
 }
 
-function getTime() {
-  // 例) => Wed Feb 16 2017 12:00:00 GMT+0900
-  var request = new XMLHttpRequest();
-  request.open('HEAD', window.location.href, true);
-  request.send();
-  request.onreadystatechange = function () {
-    if (this.readyState === 4) {
-      var serverDate = new Date(request.getResponseHeader('Date'));
-      var str = serverDate.toLocaleString();
-    }
-  }
-  console.log(str);
-  return str;
-}
-
-var charCount = function (str) {
-  len = 0;
-  str = escape(str);
-  for (i = 0; i < str.length; i++ , len++) {
-    if (str.charAt(i) == "%") {
-      if (str.charAt(++i) == "u") {
-        i += 3;
-        len++;
-      }
-      i++;
-    }
-  }
-  return len;
-}
-
-function escapeHtml(string) {
-  if (typeof string !== 'string') {
-    return string;
-  }
-  return string.replace(/[&'`"<>]/g, function (match) {
-    return {
-      '&': '&amp;',
-      "'": '&#x27;',
-      '`': '&#x60;',
-      '"': '&quot;',
-      '<': '&lt;',
-      '>': '&gt;',
-    }[match]
-  });
-}
-
-function mogiGrouping() {
-  var playerArray = new Array();
-  // var playerNames = document.getElementById("player").value;
-  // playerNames = playerNames.replace(/[\u200B-\u200D\u2028-\u202E\uFEFF]/g, '');
-  // playerArray = playerNames.split("\n");
-
-  var n = Number(document.getElementById("groupnum").value);
-  var playerNames = document.getElementsByName("name");
-  for (var i = 0; i < playerNames.length; i++) {
-    if (playerNames[i].value !== ""){
-      playerArray.push(playerNames[i].value);
-    }
-  }
-
-
-  var m = 12 / n;
-  var p = playerArray.length;
-  var str = "";
-  var tweet = "＝組分け結果＝%0a";
-  var query = "";
-  var isRandom = document.getElementById("israndom").checked;
-
-  if (isRandom) {
-    shuffle(playerArray);
-  }
-
-  if (p === 12) {
-    for (var i = 0; i < n; i++) {
-      str += "<div id='" + i + "'>\n";
-      str += "【" + String.fromCharCode(i + 65) + "】<br>";
-      tweet += "【" + String.fromCharCode(i + 65) + "】";
-      for (var j = 0; j < m; j++) {
-        str += escapeHtml(playerArray[i * m + j]) + "<br>";
-        tweet += encodeURIComponent(mb_strimwidth(playerArray[i * m + j], 0, 22, "…"));
-        if (j !== m - 1) {
-          tweet += ",%20";
-        }
-        if (j === m - 1) {
-          tweet += "%0a";
-        }
-      }
-      str += "\n</div><br>";
-    }
-    tweet += "模擬組分け機"
-    // TODO:
-    // console.log(getTime());
-    // str += "組分け時刻：" + getTime();
-
-    str += '<a href="https://twitter.com/intent/tweet?text=' + tweet;
-    str += '&url=' + location.href + '" onClick="'
-
-    str += "window.open(encodeURI(decodeURI(this.href)), 'tweetwindow', 'width=640, height=320, personalbar=0, toolbar=0, scrollbars=1, sizable=1'); return false;"
-    str += '" rel="nofollow" target=”_blank”class="twitter-link">組分け結果をツイート</a>'
-  } else if (p > 12) {
-    str += "参加者が" + (p - n * m) + "名余っています";
-  } else {
-    str += "参加者が" + (n * m - p) + "名不足しています";
-  }
-  document.getElementById("result").innerHTML = str;
-
-}
-
 function grouping() {
+
+  function shuffle(array) {
+    var n = array.length, t, i;
+
+    while (n) {
+      i = Math.floor(Math.random() * n--);
+      t = array[n];
+      array[n] = array[i];
+      array[i] = t;
+    }
+
+    return array;
+  }
+
   var facilArray = new Array();
   var playerArray = new Array();
   var facilNames = document.getElementById("facil").value;
@@ -153,6 +59,7 @@ function grouping() {
   playerArray = playerNames.split("\n");
 
   var m = Number(document.getElementById("playernum").value) - 1;
+  console.log(m);
   var n = facilArray.length;
   var p = playerArray.length;
   var str = "";
@@ -168,7 +75,7 @@ function grouping() {
     shuffle(facilArray);
   }
 
-  if (n * m === p) {
+  if (n * m === p && m !== -1) {
     for (var i = 0; i < n; i++) {
       str += (i + 1) + "組<br>";
       str += facilArray[i] + "<br>";
@@ -177,32 +84,21 @@ function grouping() {
       }
       str += "<br>";
     }
+  } else if (m === -1) {
+    str += "<b>形式を選択してください</b>";
 
   } else if (n * m < p) {
     if (m === 11) {
-      str += "一般参加者が" + (p - n * m) + "名余っています"
+      str += "一般参加者が<b>" + (p - n * m) + "名</b>余っています"
     } else {
-      str += "一般参加者が" + (p - n * m) + "団体余っています"
+      str += "一般参加者が<b>" + (p - n * m) + "団体</b>余っています"
     }
   } else {
     if (m === 11) {
-      str += "一般参加者が" + (n * m - p) + "名不足しています"
+      str += "一般参加者が<b>" + (n * m - p) + "名</b>不足しています"
     } else {
-      str += "一般参加者が" + (n * m - p) + "団体不足しています"
+      str += "一般参加者が<b>" + (n * m - p) + "団体</b>不足しています"
     }
   }
   document.getElementById("result").innerHTML = str;
-}
-
-function shuffle(array) {
-  var n = array.length, t, i;
-
-  while (n) {
-    i = Math.floor(Math.random() * n--);
-    t = array[n];
-    array[n] = array[i];
-    array[i] = t;
-  }
-
-  return array;
 }

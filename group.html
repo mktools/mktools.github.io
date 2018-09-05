@@ -3,15 +3,14 @@
 
 <head>
   <meta charset="utf-8" />
-  <meta name="description" content="ランダム模擬の組分けを自動で行います。twitterへの投稿も対応しています。">
+  <meta name="description" content="マリオカート ランダム模擬の組分けを自動で行います。twitterへの投稿も対応しています。">
   <meta property="og:title" content="模擬組分け機">
-  <meta property="og:description" content="ランダム模擬の組分けを自動で行います。twitterへの投稿も対応しています。">
+  <meta property="og:description" content="マリオカート ランダム模擬の組分けを自動で行います。twitterへの投稿も対応しています。">
   <title>模擬組分け機</title>
 
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
   <script type="text/javascript" src="js/strimwidth.js"></script>
-  <script type="text/javascript" src="js/grouping.js"></script>
-  <script type="text/javascript" src="js/submission.js"></script>
+  <script type="text/javascript" src="js/mogigrouping.js"></script>
   <script type="text/javascript" src="js/focusg.js"></script>
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -30,18 +29,19 @@
       <li>「組分け結果をツイート」から結果をツイートする<br>
           ※仕様上一部記号が文字化けすることをご了承ください</li>
     </ol>
+    本ツールを用いて行われた組分けの履歴は<a href="https://docs.google.com/spreadsheets/d/1o6y5xfx1DT2Fph-AbSvtHv4mRReOcHNqAkSuTPWXnWc/edit?usp=sharing">こちらから閲覧可能</a>となっています
   </details>
   <p>
     <tr class="setting">
-      <td>形式
-        <select id="groupnum" class="number" name="type" onchange="updateCount()">
+      <td><span style="vertical-align:top">形式</span>
+        <select id="groupnum" class="number" name="type" size="4">
           <option value="6">タッグ(2v2)</option>
           <option value="4">トリプルス(3v3)</option>
           <option value="3">フォーマン(4v4)</option>
           <option value="2">交流戦(6v6)</option>
           </select>
       </td>
-      <td><input id="israndom" class="box"  type="hidden" checked="checked"></td>
+      <td><input id="israndom" class="box" type="hidden" checked="checked"></td>
     </tr>
   </p>
   <!-- <p>
@@ -92,7 +92,7 @@
     <div id="linep">参加者 : 0名</div>
   </p> -->
 
-  <button type="button" onclick="mogiGrouping()">出力</button>
+  <button id="execgrouping" type="button" onclick="mogiGrouping()">出力</button>
   <!-- <button type=button onclick="reset()">リセット</button> -->
   <hr>
 
