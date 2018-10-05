@@ -1,5 +1,5 @@
 //たびたび使うフレコ正規表現
-var regexFC = /([（(][ 　]*[[0-9]{4}[ 　]*[-ｰ－−‐–][ 　]*[0-9]{4}[ 　]*[-ｰ−－‐–][ 　]*[0-9]{4}[ 　]*[[）)]\s*)/g;
+var regexFC = /([（(][ 　]*[[0-9]{4}[ 　]*[-ｰ－−‐– ][ 　]*[0-9]{4}[ 　]*[-ｰ−－‐– ][ 　]*[0-9]{4}[ 　]*[[）)]\s*)/g;
 
 //組分けコピペ欄から名前を切出し・貼り付け
 function pasteNames() {
@@ -148,16 +148,17 @@ function maketable1(data, existsPrefer) {
         p = Number(p);
     }
 
-    if (p === 0) {
+    if (p === 0 || p === n) {
         for (var i = 0; i < n; i++) {
             str += data[i].point + "pts : " + data[i].name + "\n";
         }
         if (data[0].point === data[1].point) {
             //TODO: 決勝で最高得点者が複数いる場合の文面追加
         }
-        str += "\n優勝\n"
-        str += data[0].name + "\n";
-
+        if (p === 0) {
+            str += "\n優勝\n"
+            str += data[0].name + "\n";
+        }
     } else if (0 < p && p < n) {
 
         for (var i = 0; i < p; i++) {
@@ -276,7 +277,7 @@ function maketable2(data, existsPrefer) {
     if (url != "") {
         if (url.match(/\r\n|\n/g) === null) {
             str += "結果画像 : " + url + "\n\n";
-        }else{
+        } else {
             str += "結果画像 : \n" + url + "\n\n";
         }
     } else {
