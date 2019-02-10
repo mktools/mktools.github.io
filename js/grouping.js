@@ -59,7 +59,6 @@ function grouping() {
   playerArray = playerNames.split("\n");
 
   var m = Number(document.getElementById("playernum").value) - 1;
-  console.log(m);
   var n = facilArray.length;
   var p = playerArray.length;
   var str = "";
@@ -68,19 +67,15 @@ function grouping() {
   // console.log(n);
   // console.log(p);
 
-  var isRandom = document.getElementById("israndom").checked;
-
-  if (isRandom) {
-    shuffle(playerArray);
-    shuffle(facilArray);
-  }
+  shuffle(playerArray);
+  shuffle(facilArray);
 
   if (n * m === p && m !== -1) {
     for (var i = 0; i < n; i++) {
       str += (i + 1) + "組<br>";
       str += facilArray[i] + "<br>";
-      for (var j = 0; j < m; j++)
-        str += playerArray[i * m + j] + "<br>"; {
+      for (var j = 0; j < m; j++) {
+        str += playerArray[i * m + j] + "<br>"; 
       }
       str += "<br>";
     }
