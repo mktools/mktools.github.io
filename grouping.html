@@ -5,8 +5,11 @@
   <meta charset="utf-8" />
   <title>大規模杯組分け機</title>
 
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script type="text/javascript" src="js/bcralnit.js"></script>
   <script type="text/javascript" src="js/grouping.js"></script>
   <link rel="stylesheet" href="css/style.css">
+
 </head>
 
 <body class="grouping">
@@ -20,10 +23,20 @@
     <ol>
       <li>「形式」から大会の形式を選択する</li>
       <li>「進行役」「一般参加者」欄に参加者を入力する（進行をしない進行役は一般参加者の欄へ入力）<br>
-          ※1名につき必ず改行を入れること（チーム戦の場合はチーム人数につき改行）<br></li>
-      <li>「出力」を押す（各人数がおかしい場合は不足・余剰人数を出力）</li>
+        ※1名につき必ず改行を入れること（チーム戦の場合はチーム人数につき改行）<br></li>
+      <li>「出力」を押す（各人数がおかしい場合は不足・余剰人数を出力，重複がある場合は警告つきで出力）</li>
     </ol>
   </details>
+
+  <details>
+    <summary>全参加者から進行役を抽出</summary>
+    <p>
+      <p>「★進」を含む行を進行役に，それ以外の行を一般参加者に割り振ります</p>
+      <textarea id="mixed" cols="120" rows="12" placeholder="全参加者を入力"></textarea>
+    </p>
+    <button type="button" onclick="extractFacil()">進行役を抽出</button>
+  </details>
+
   <p>
     <tr class="setting">
       <td><span style="vertical-align:top">形式</span>
@@ -33,7 +46,7 @@
           <option value="4">トリプルス(3v3)</option>
           <option value="3">フォーマン(4v4)</option>
           <option value="2">交流戦(6v6)</option>
-          </select>
+        </select>
       </td>
     </tr>
   </p>
