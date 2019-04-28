@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8" />
+  <title>大規模杯組分け機</title>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script type="text/javascript" src="js/bcralnit.js"></script>
+  <script type="text/javascript" src="js/grouping.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body class="grouping">
+  <a href="index.html">トップへ戻る</a>
+
+    <p>全参加者から進行役と一般参加者を抽出</p>
+    <p>
+      <p>「★進」を含む行を進行役に，それ以外の行を一般参加者に割り振ります</p>
+      <textarea id="mixed" cols="120" rows="12" placeholder="全参加者を入力"></textarea>
+    </p>
+    <button type="button" onclick="extractFacil()">進行役を抽出</button>
+
+  <p>
+    <textarea id="facil" cols="120" rows="12" placeholder="進行役" onkeyup="countLine('linef', value)"></textarea>
+  </p>
+  <p>
+    <textarea id="player" cols="120" rows="12" placeholder="一般参加者" onkeyup="countLine('linep', value)"></textarea>
+  </p>
+  <p>
+    <div id="linef">進行役 : 0名</div>
+    <div id="linep">一般参加者 : 0名</div>
+  </p>
+
+
+</body>
+
+</html>
