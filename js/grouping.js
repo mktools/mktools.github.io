@@ -31,8 +31,6 @@ function extractFacil(){
       playerNames += pn + "\n";
     }
   }
-  countLine('linef', facilNames.trim());
-  countLine('linep', playerNames.trim());
   document.getElementById("facil").value = facilNames.trim();
   document.getElementById("player").value = playerNames.trim();
   document.querySelector("#facil").dispatchEvent(new Event('click'));
@@ -48,7 +46,7 @@ function extractDuplicate(array) {
     players.push(hash);
   }
 
-  console.log(players);
+  //console.log(players);
 
   players.sort(function (a, b) {
     if (a.name < b.name) return -1;
@@ -69,7 +67,7 @@ function extractDuplicate(array) {
     }
   }
 
-  console.log(duplicates);
+  //console.log(duplicates);
 
   return duplicates;
 
@@ -167,7 +165,7 @@ function grouping() {
   var concatArray = facilArray.concat(playerArray);
   var duplicates = extractDuplicate(concatArray);
   var d = duplicates.length;
-  console.log(duplicates);
+  // console.log(duplicates);
 
   function parsePosition(num) {
     if (num > facilArray.length + 1) {
@@ -218,3 +216,15 @@ function grouping() {
 
   document.getElementById("result").innerHTML = str;
 }
+
+window.addEventListener('load', function setHandler() {
+  var execUpdateCount = document.getElementsByName("updater");
+  // var execGroupingButton = document.getElementById("execg");
+  execUpdateCount.forEach(
+    textarea => {
+      textarea.addEventListener("change",updateCount)
+      textarea.addEventListener("keyup",updateCount)
+    }
+  );
+  // execGroupingButton.addEventListener("click", grouping);
+}, false);
