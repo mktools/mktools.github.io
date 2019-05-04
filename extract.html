@@ -12,12 +12,14 @@
 
 </head>
 
-<body class="extract">
+<body class="grouping">
   <a href="index.html">トップへ戻る</a>
 
     <p>全参加者から進行役と一般参加者を抽出</p>
     <p>
-      <p>参加者を1行1団体「★進」を含む行を進行役に，それ以外の行を一般参加者に割り振ります</p>
+      <p>参加者を1行1団体単位で入力してください<br>「★進」を含む行を進行役に，それ以外の行を一般参加者に割り振ります</p>
+      <p>進行役の余剰や不足は考慮しないので，実際の運用では各自調整をお願いします</p>
+      
       <textarea id="mixed" cols="120" rows="12" placeholder="全参加者を入力"></textarea>
     </p>
     <button type="button" onclick="extractFacil()">進行役を抽出</button>

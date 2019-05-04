@@ -14,47 +14,60 @@ $(function () {
   });
 });
 
+//進行役を抽出する
 function extractFacil(){
 
+  //全参加者を取り出す
   var mixedNames = document.getElementById("mixed").value;
+  //文字列処理に支障を来たしうるゼロ幅文字を除去
   mixedNames = mixedNames.replace(/[\u200B-\u200D\u2028-\u202E\uFEFF]/g, '');
   mixedArray = mixedNames.split("\n");
 
+  //進行，一般参加者の取り出し結果
   facilNames = "";
   playerNames = "";
 
+  //行に★進を含むなら
   for (var i = 0; i < mixedArray.length; i++) {
     var pn = mixedArray[i];
-    if (pn.indexOf("★進") != -1) {//進行役っぽいなら
+    if (pn.indexOf("★進") != -1) {
       facilNames += pn + "\n";
     }else{
       playerNames += pn + "\n";
     }
   }
-  document.getElementById("facil").value = facilNames.trim();
-  document.getElementById("player").value = playerNames.trim();
-  document.querySelector("#facil").dispatchEvent(new Event('click'));
+  //末尾の改行を除去しておく
+  facilNames = facilNames.trim();
+  playerNames = playerNames.trim()
 
+  //textareaに反映
+  document.getElementById("facil").value = facilNames;
+  document.getElementById("player").value = playerNames;
 }
 
+//参加者の重複を検出する
 function extractDuplicate(array) {
+
+  //行番号:index と参加者名: name から成るオブジェクト を
+  //プレイヤーごとに格納した配列を作成する
   var players = [];
-  var duplicates = [];
-
   for (var i = 0; i < array.length; i++) {
-    var hash = { index: i + 1, name: array[i] };
-    players.push(hash);
+    var dict = { index: i + 1, name: array[i] };
+    players.push(dict);
   }
+ 
+  // 参加者名が重複するオブジェクトを格納する配列を作成
+  var duplicates = [];
+  var beforeDupl = Boolean(false);
 
-  //console.log(players);
-
+  //あらかじめ参加者名でソートしておく
   players.sort(function (a, b) {
     if (a.name < b.name) return -1;
     if (a.name > b.name) return 1;
     return 0;
   });
-
-  var beforeDupl = Boolean(false);
+  
+  // 参加者名を前後比較し，重複していればオブジェクトごと追加する
   for (var i = 0; i < players.length - 1; i++) {
     if (players[i].name === players[i + 1].name) {
       if (!beforeDupl) {
@@ -67,17 +80,16 @@ function extractDuplicate(array) {
     }
   }
 
-  //console.log(duplicates);
-
   return duplicates;
-
 }
 
-
+//HTML特殊文字をエスケープする()
 function escapeHtml(string) {
+  //stringでなければ(数値型など)そのまま返す
   if (typeof string !== 'string') {
     return string;
   }
+  // 文字列のうち特殊文字はエスケープされたものに置換する
   return string.replace(/[&'`"<>]/g, function (match) {
     return {
       '&': '&amp;',
@@ -90,10 +102,16 @@ function escapeHtml(string) {
   });
 }
 
+//参加者数をカウントする
+//進行役，一般参加者それぞれでカウントする
+//TODO: idを入力に取るのは密結合っぽいのでリファクタリングする
 function countLine(id, str) {
   // str = str.replace(/^\n/g, '');
+
+  //1団体あたりの人数
   var m = 12 / Number(document.getElementById("playernum").value);
 
+  //改行の個数を行数としてカウント
   num = str.match(/\r\n|\n/g);
   if (num !== null) {
     line = num.length + 1;
@@ -101,10 +119,12 @@ function countLine(id, str) {
     line = 1;
   }
 
+  //空文字列であった場合は例外処理として0とカウントする
   if (str.length === 0) {
     line = 0;
   }
 
+  //idが進行役であれば進行役のカウントに反映
   if (id === "linef") {
     if (m === 1) {
       document.getElementById(id).innerHTML = "進行役 : " + line + "名";
@@ -113,7 +133,7 @@ function countLine(id, str) {
       document.getElementById(id).innerHTML = "進行役 : " + line + "団体（" + line * m + "名）";
     }
 
-
+  //idが一般参加者であれば一般参加者のカウントに反映
   } else if (id === "linep") {
     if (m === 1) {
       document.getElementById(id).innerHTML = "一般参加者 : " + line + "名";
@@ -124,13 +144,16 @@ function countLine(id, str) {
 
 }
 
+//進行役・一般参加者両方にカウンタ更新をかける
 function updateCount() {
   countLine("linef", document.getElementById("facil").value);
   countLine("linep", document.getElementById("player").value);
 }
 
+//組分けを行う
 function grouping() {
 
+  //Fisher–Yatesアルゴリズムで配列シャッフルを行う
   function shuffle(array) {
     var n = array.length, t, i;
 
@@ -146,6 +169,7 @@ function grouping() {
 
   var facilArray = new Array();
   var playerArray = new Array();
+
   var facilNames = document.getElementById("facil").value;
   facilNames = facilNames.replace(/[\u200B-\u200D\u2028-\u202E\uFEFF]/g, '');
   facilArray = facilNames.split("\n");
@@ -162,8 +186,8 @@ function grouping() {
   // console.log(m);
   // console.log(n);
   // console.log(p);
-  var concatArray = facilArray.concat(playerArray);
-  var duplicates = extractDuplicate(concatArray);
+  var concatArray = facilArray.concat(playerArray); //進行役と一般参加者両方を含んだ全参加者
+  var duplicates = extractDuplicate(concatArray); //全参加者から重複を抽出した，(index,name)から成るオブジェクト配列
   var d = duplicates.length;
   // console.log(duplicates);
 
@@ -217,6 +241,7 @@ function grouping() {
   document.getElementById("result").innerHTML = str;
 }
 
+//textareaの更新があるたびにカウンタを更新するためのイベントハンドラ設定
 window.addEventListener('load', function setHandler() {
   var execUpdateCount = document.getElementsByName("updater");
   // var execGroupingButton = document.getElementById("execg");
