@@ -45,7 +45,29 @@ function extractFacil(){
   document.getElementById("player").value = playerNames;
 }
 
-//参加者の重複を検出する
+//非進行役を抽出する
+function extractNotFacil(array) {
+  //行番号:index と参加者名: name から成るオブジェクト を
+  //プレイヤーごとに格納した配列を作成する
+  var players = [];
+  for (var i = 0; i < array.length; i++) {
+    var dict = { index: i + 1, name: array[i] };
+    players.push(dict);
+  }
+  // 進行役でない参加者のオブジェクトを格納する配列を作成
+  var notFacilPlayer = [];
+
+  //行に★進を含まないならオブジェクトに格納
+  for (var i = 0; i < players.length; i++) {
+    var pn = players[i].name;
+    if (pn.indexOf("★進") == -1) {
+      notFacilPlayer.push(players[i]);
+    }
+  }
+  return notFacilPlayer;
+}
+
+//参加者の重複を抽出する
 function extractDuplicate(array) {
 
   //行番号:index と参加者名: name から成るオブジェクト を
@@ -188,6 +210,9 @@ function grouping() {
   // console.log(p);
   var concatArray = facilArray.concat(playerArray); //進行役と一般参加者両方を含んだ全参加者
   var duplicates = extractDuplicate(concatArray); //全参加者から重複を抽出した，(index,name)から成るオブジェクト配列
+  var notFacil = extractNotFacil(facilArray);
+  console.log(notFacil);
+  var nf = notFacil.length;
   var d = duplicates.length;
   // console.log(duplicates);
 
@@ -197,6 +222,15 @@ function grouping() {
     } else {
       return "進行役" + (num) + "行目：";
     }
+  }
+
+  if(nf > 0){
+    var strFacilErr = "<b>※※※進行役欄に一般参加者が含まれています※※※</b><br>";
+    for (var i = 0; i < nf; i++) {
+      strFacilErr += parsePosition(notFacil[i].index) + notFacil[i].name + "<br>";
+    }
+    strFacilErr += "<br></p>"
+    str += strFacilErr;
   }
 
   if (m === -1) {
