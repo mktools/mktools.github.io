@@ -25,21 +25,35 @@ function extractFacil(){
 
   //進行，一般参加者の取り出し結果
   facilNames = "";
+  notfacilNames = "";
   playerNames = "";
 
-  //行に★進を含むなら
+  //進行役の上限
+  var facilLimit =  document.getElementById("rooms").value;
+  var facilCount = 0;
+
+  //進行役と一般参加者を分離
   for (var i = 0; i < mixedArray.length; i++) {
     var pn = mixedArray[i];
     if (pn.indexOf("進") != -1) {
-      facilNames += pn + "\n";
+      facilCount++;
+      //あふれた進行役を分離
+      if(facilCount > facilLimit){
+        notfacilNames += pn + "\n";
+      }else{
+        facilNames += pn + "\n";
+      }
     }else{
       playerNames += pn + "\n";
     }
   }
+  //あふれた進行役を一般参加者の先頭に追加
+  playerNames = notfacilNames + playerNames;
+
   //末尾の改行を除去しておく
   facilNames = facilNames.trim();
   playerNames = playerNames.trim()
-
+  
   //textareaに反映
   document.getElementById("facil").value = facilNames;
   document.getElementById("player").value = playerNames;
