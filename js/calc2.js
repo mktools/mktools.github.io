@@ -1,5 +1,5 @@
 //たびたび使うフレコ正規表現
-var regexFC = /([（(][ 　]*[[0-9]{4}[ 　]*[-ｰ－−‐– ][ 　]*[0-9]{4}[ 　]*[-ｰ−－‐– ][ 　]*[0-9]{4}[ 　]*[[）)]\s*)/g;
+var regexFC = /([（(][ 　]*[[0-9]{4}[ 　]*[-ｰ－−‐– ]*[ 　]*[0-9]{4}[ 　]*[-ｰ−－‐– ]*[ 　]*[0-9]{4}[ 　]*[[）)]\s*)/g;
 
 //組分けコピペ欄から名前を切出し・貼り付け
 function pasteNames() {
@@ -9,6 +9,10 @@ function pasteNames() {
     allNames = allNames.replace(/[\u200B-\u200D\u2028-\u202E\uFEFF]/g, '');
     //フレンドコードを区切りとしてプレイヤー名を検出
     allNames = allNames.replace(regexFC, "$1\n");
+    //Switch名前欄で表現できない全角英数を半角英数に変換
+    allNames = allNames.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function(s) {
+        return String.fromCharCode(s.charCodeAt(0) - 65248);
+    });    
 
     allNames = allNames.replace(/\n\n/g, "\n");
     nameArray = allNames.split("\n");
