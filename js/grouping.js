@@ -29,7 +29,7 @@ function extractFacil(){
   playerNames = "";
 
   //進行役の上限
-  var facilLimit =  document.getElementById("rooms").value;
+  var facilLimit = document.getElementById("rooms").value;
   var facilCount = 0;
 
   //進行役と一般参加者を分離
@@ -38,7 +38,7 @@ function extractFacil(){
     if (pn.indexOf("進") != -1) {
       facilCount++;
       //あふれた進行役を分離
-      if(facilCount > facilLimit){
+      if(facilCount > facilLimit && facilLimit != 0){
         notfacilNames += pn + "\n";
       }else{
         facilNames += pn + "\n";
@@ -53,7 +53,7 @@ function extractFacil(){
   //末尾の改行を除去しておく
   facilNames = facilNames.trim();
   playerNames = playerNames.trim()
-  
+
   //textareaに反映
   document.getElementById("facil").value = facilNames;
   document.getElementById("player").value = playerNames;
