@@ -30,7 +30,7 @@ function extractFacil(){
   //行に★進を含むなら
   for (var i = 0; i < mixedArray.length; i++) {
     var pn = mixedArray[i];
-    if (pn.indexOf("★進") != -1) {
+    if (pn.indexOf("進") != -1) {
       facilNames += pn + "\n";
     }else{
       playerNames += pn + "\n";
@@ -60,7 +60,7 @@ function extractNotFacil(array) {
   //行に★進を含まないならオブジェクトに格納
   for (var i = 0; i < players.length; i++) {
     var pn = players[i].name;
-    if (pn.indexOf("★進") == -1) {
+    if (pn.indexOf("進") == -1) {
       notFacilPlayer.push(players[i]);
     }
   }
