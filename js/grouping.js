@@ -1,5 +1,5 @@
 $(function () {
-  $("#facil").bcralnit({
+  $("#host").bcralnit({
     width: '36px',
     background: '#eee',
     textalign: 'right',
@@ -15,7 +15,7 @@ $(function () {
 });
 
 //進行役を抽出する
-function extractFacil(){
+function extractHost() {
 
   //全参加者を取り出す
   var mixedNames = document.getElementById("mixed").value;
@@ -24,61 +24,64 @@ function extractFacil(){
   mixedArray = mixedNames.split("\n");
 
   //進行，一般参加者の取り出し結果
-  facilNames = "";
-  notfacilNames = "";
+  hostNames = "";
+  nothostNames = "";
   playerNames = "";
 
   //進行役の上限
-  var facilLimit = document.getElementById("rooms").value;
-  var facilCount = 0;
+  var hostLimit = document.getElementById("rooms").value;
+  var hostCount = 0;
 
   //進行役と一般参加者を分離
   for (var i = 0; i < mixedArray.length; i++) {
     var pn = mixedArray[i];
     if (pn.indexOf("進") != -1) {
-      facilCount++;
+      hostCount++;
       //あふれた進行役を分離
-      if(facilCount > facilLimit && facilLimit != 0){
-        notfacilNames += pn + "\n";
-      }else{
-        facilNames += pn + "\n";
+      if (hostCount > hostLimit && hostLimit != 0) {
+        nothostNames += pn + "\n";
+      } else {
+        hostNames += pn + "\n";
       }
-    }else{
+    } else {
       playerNames += pn + "\n";
     }
   }
   //あふれた進行役を一般参加者の先頭に追加
-  playerNames = notfacilNames + playerNames;
+  playerNames = nothostNames + playerNames;
 
   //末尾の改行を除去しておく
-  facilNames = facilNames.trim();
+  hostNames = hostNames.trim();
   playerNames = playerNames.trim()
 
   //textareaに反映
-  document.getElementById("facil").value = facilNames;
+  document.getElementById("host").value = hostNames;
   document.getElementById("player").value = playerNames;
 }
 
 //非進行役を抽出する
-function extractNotFacil(array) {
+function extractNotHost(array) {
   //行番号:index と参加者名: name から成るオブジェクト を
   //プレイヤーごとに格納した配列を作成する
   var players = [];
   for (var i = 0; i < array.length; i++) {
-    var dict = { index: i + 1, name: array[i] };
+    var dict = {
+      index: i + 1,
+      name: array[i]
+    };
     players.push(dict);
   }
   // 進行役でない参加者のオブジェクトを格納する配列を作成
-  var notFacilPlayer = [];
+  var notHostPlayers = [];
 
   //行に★進を含まないならオブジェクトに格納
   for (var i = 0; i < players.length; i++) {
     var pn = players[i].name;
     if (pn.indexOf("進") == -1) {
-      notFacilPlayer.push(players[i]);
+      notHostPlayers.push(players[i]);
     }
   }
-  return notFacilPlayer;
+  return notHostPlayers;
 }
 
 //参加者の重複を抽出する
@@ -88,10 +91,13 @@ function extractDuplicate(array) {
   //プレイヤーごとに格納した配列を作成する
   var players = [];
   for (var i = 0; i < array.length; i++) {
-    var dict = { index: i + 1, name: array[i] };
+    var dict = {
+      index: i + 1,
+      name: array[i]
+    };
     players.push(dict);
   }
- 
+
   // 参加者名が重複するオブジェクトを格納する配列を作成
   var duplicates = [];
   var beforeDupl = Boolean(false);
@@ -102,7 +108,7 @@ function extractDuplicate(array) {
     if (a.name > b.name) return 1;
     return 0;
   });
-  
+
   // 参加者名を前後比較し，重複していればオブジェクトごと追加する
   for (var i = 0; i < players.length - 1; i++) {
     if (players[i].name === players[i + 1].name) {
@@ -134,7 +140,7 @@ function escapeHtml(string) {
       '"': '&quot;',
       '<': '&lt;',
       '>': '&gt;',
-    }[match]
+    } [match]
   });
 }
 
@@ -169,7 +175,7 @@ function countLine(id, str) {
       document.getElementById(id).innerHTML = "進行役 : " + line + "団体（" + line * m + "名）";
     }
 
-  //idが一般参加者であれば一般参加者のカウントに反映
+    //idが一般参加者であれば一般参加者のカウントに反映
   } else if (id === "linep") {
     if (m === 1) {
       document.getElementById(id).innerHTML = "一般参加者 : " + line + "名";
@@ -182,7 +188,7 @@ function countLine(id, str) {
 
 //進行役・一般参加者両方にカウンタ更新をかける
 function updateCount() {
-  countLine("linef", document.getElementById("facil").value);
+  countLine("linef", document.getElementById("host").value);
   countLine("linep", document.getElementById("player").value);
 }
 
@@ -191,7 +197,8 @@ function grouping() {
 
   //Fisher–Yatesアルゴリズムで配列シャッフルを行う
   function shuffle(array) {
-    var n = array.length, t, i;
+    var n = array.length,
+      t, i;
 
     while (n) {
       i = Math.floor(Math.random() * n--);
@@ -203,64 +210,65 @@ function grouping() {
     return array;
   }
 
-  var facilArray = new Array();
+  var hostArray = new Array();
   var playerArray = new Array();
 
-  var facilNames = document.getElementById("facil").value;
-  facilNames = facilNames.replace(/[\u200B-\u200D\u2028-\u202E\uFEFF]/g, '');
-  facilArray = facilNames.split("\n");
+  var hostNames = document.getElementById("host").value;
+  hostNames = hostNames.replace(/[\u200B-\u200D\u2028-\u202E\uFEFF]/g, '');
+  hostArray = hostNames.split("\n");
 
   var playerNames = document.getElementById("player").value;
   playerNames = playerNames.replace(/[\u200B-\u200D\u2028-\u202E\uFEFF]/g, '');
   playerArray = playerNames.split("\n");
 
-  var m = Number(document.getElementById("playernum").value) - 1; // 1組あたりに必要な一般参加者数
-  var n = facilArray.length; //進行役の人数
-  var p = playerArray.length; //一般参加者の人数
+  var playerNumPerGroup = Number(document.getElementById("playernum").value) - 1; // 1組あたりに必要な一般参加者数
+  var hostNum = hostArray.length; //進行役の人数
+  var playerNum = playerArray.length; //一般参加者の人数
   var str = "";
 
   // console.log(m);
   // console.log(n);
   // console.log(p);
-  var concatArray = facilArray.concat(playerArray); //進行役と一般参加者両方を含んだ全参加者
+  var concatArray = hostArray.concat(playerArray); //進行役と一般参加者両方を含んだ全参加者
   var duplicates = extractDuplicate(concatArray); //全参加者から重複を抽出した，(index,name)から成るオブジェクト配列
-  var notFacil = extractNotFacil(facilArray);
-  console.log(notFacil);
-  var nf = notFacil.length;
+  var notHost = extractNotHost(hostArray);
+  console.log(notHost);
+  var nf = notHost.length;
   var d = duplicates.length;
   // console.log(duplicates);
 
   function parsePosition(num) {
-    if (num > facilArray.length + 1) {
-      return "一般参加者" + (num - facilArray.length) + "行目：";
+    if (num > hostArray.length + 1) {
+      return "一般参加者" + (num - hostArray.length) + "行目：";
     } else {
       return "進行役" + (num) + "行目：";
     }
   }
 
-  if(nf > 0){
-    var strFacilErr = "<b>※※※進行役欄に一般参加者が含まれています※※※</b><br>";
+  // 6v6の場合(1組あたり一般参加者が1のとき)は表示しない
+  if (nf > 0 && playerNumPerGroup !== 1) {
+    var strHostErr = "<b>※※※進行役欄に一般参加者が含まれています※※※</b><br>";
     for (var i = 0; i < nf; i++) {
-      strFacilErr += parsePosition(notFacil[i].index) + notFacil[i].name + "<br>";
+      strHostErr += parsePosition(notHost[i].index) + notHost[i].name + "<br>";
     }
-    strFacilErr += "<br></p>"
-    str += strFacilErr;
+    strHostErr += "<br></p>"
+    str += strHostErr;
   }
 
-  if (m === -1) {
+  if (playerNumPerGroup === -1) {
     str += "<b>形式を選択してください</b>";
 
-  } else if (n * m < p) { //参加者が溢れる or 進行が足りないとき
-    var subStr = (m == 11) ? "名" : "団体";
-    str += "一般参加者が<b>" + (p - n * m) + subStr + "</b>余っています";
-    if ((p % m) == 0) {
-      str += "<br>または進行役が<b>" + (p / m - n) + subStr + "</b>不足しています";
+  } else if (hostNum * playerNumPerGroup < playerNum) { //参加者が溢れる or 進行が足りないとき
+    var subStr = (playerNumPerGroup == 11) ? "名" : "団体";
+    str += "一般参加者が<b>" + (playerNum - hostNum * playerNumPerGroup) + subStr + "</b>余っています";
+    if ((playerNum % playerNumPerGroup) == 0) {
+      str += "<br>または進行役が<b>" + (playerNum / playerNumPerGroup - hostNum) + subStr + "</b>不足しています";
     }
-  } else if (n * m > p) { //参加者が足りない or 進行が溢れるとき
-    var subStr = (m == 11) ? "名" : "団体";
-    str += "一般参加者が<b>" + (n * m - p) + subStr + "</b>不足しています";
-    if ((p % m) == 0) {
-      str += "<br>または進行役が<b>" + (n - p / m) + subStr + "</b>余っています";
+  } else if (hostNum * playerNumPerGroup > playerNum) { //参加者が足りない or 進行が溢れるとき
+    var subStr = (playerNumPerGroup == 11) ? "名" : "団体";
+    str += "一般参加者が<b>" + (hostNum * playerNumPerGroup - playerNum) + subStr + "</b>不足しています";
+    if ((playerNum % playerNumPerGroup) == 0) {
+      str += "<br>または進行役が<b>" + (hostNum - playerNum / playerNumPerGroup) + subStr + "</b>余っています";
     }
   } else {
 
@@ -274,13 +282,13 @@ function grouping() {
     }
 
     shuffle(playerArray);
-    shuffle(facilArray);
+    shuffle(hostArray);
 
-    for (var i = 0; i < n; i++) {
+    for (var i = 0; i < hostNum; i++) {
       str += (i + 1) + "組<br>";
-      str += escapeHtml(facilArray[i]) + "<br>";
-      for (var j = 0; j < m; j++) {
-        str += escapeHtml(playerArray[i * m + j]) + "<br>";
+      str += escapeHtml(hostArray[i]) + "<br>";
+      for (var j = 0; j < playerNumPerGroup; j++) {
+        str += escapeHtml(playerArray[i * playerNumPerGroup + j]) + "<br>";
       }
       str += "<br>";
     }
@@ -295,8 +303,8 @@ window.addEventListener('load', function setHandler() {
   // var execGroupingButton = document.getElementById("execg");
   execUpdateCount.forEach(
     textarea => {
-      textarea.addEventListener("change",updateCount)
-      textarea.addEventListener("keyup",updateCount)
+      textarea.addEventListener("change", updateCount)
+      textarea.addEventListener("keyup", updateCount)
     }
   );
   // execGroupingButton.addEventListener("click", grouping);

@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>大規模杯組分け機</title>
+  <title>進行役抽出機</title>
 
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
   <script type="text/javascript" src="js/bcralnit.js"></script>
@@ -15,21 +15,21 @@
 <body class="grouping">
   <a href="index.html">トップへ戻る</a>
 
-    <p>全参加者から進行役と一般参加者を抽出</p>
-    <p>
-      <p>参加者を1行1団体単位で入力してください<br>「★進」を含む行を進行役に，それ以外の行を一般参加者に割り振ります</p>
-      <p>必要な進行役人数を入力した場合，その人数だけ記載順に進行役を抽出します（あふれた進行役は自動的に一般参加者の先頭に割り振られます）</p>
-      
-      <p><input id="rooms"  type="number" placeholder="必要な進行役人数 (任意)"></p>
-      <textarea id="mixed" cols="120" rows="12" placeholder="全参加者を入力"></textarea>
-    </p>
-    <button type="button" onclick="extractFacil()">進行役を抽出</button>
+  <p>全参加者から進行役と一般参加者を抽出</p>
+  <p>
+    <p>参加者を1行1団体単位で入力してください<br>「★進」を含む行を進行役に，それ以外の行を一般参加者に割り振ります</p>
+    <p>必要な進行役人数を入力した場合，その人数だけ記載順に進行役を抽出します（あふれた進行役は自動的に一般参加者の先頭に割り振られます）</p>
+
+    <p><input id="rooms" type="number" placeholder="必要な進行役人数 (任意)"></p>
+    <textarea id="mixed" cols="120" rows="12" placeholder="全参加者を入力"></textarea>
+  </p>
+  <button type="button" onclick="extractHost()">進行役を抽出</button>
 
   <p>
-    <textarea id="facil" name="updater" cols="120" rows="12" placeholder="進行役" ></textarea>
+    <textarea id="host" name="updater" cols="120" rows="12" placeholder="進行役"></textarea>
   </p>
   <p>
-    <textarea id="player" name="updater" cols="120" rows="12" placeholder="一般参加者" ></textarea>
+    <textarea id="player" name="updater" cols="120" rows="12" placeholder="一般参加者"></textarea>
   </p>
 </body>
 
