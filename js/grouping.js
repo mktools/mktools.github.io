@@ -33,26 +33,26 @@ function extractHost() {
   var hostCount = 0;
 
   //進行役と一般参加者を分離
-  for (var i = 0; i < mixedArray.length; i++) {
-    var pn = mixedArray[i];
-    if (pn.indexOf("進") != -1) {
+  mixedArray.forEach(function (name) {
+    if (name.indexOf("進") !== -1) {
       hostCount++;
       //あふれた進行役を分離
-      if (hostCount > hostLimit && hostLimit != 0) {
-        nothostNames += pn + "\n";
+      if (hostCount > hostLimit && hostLimit !== 0) {
+        nothostNames += name + "\n";
       } else {
-        hostNames += pn + "\n";
+        hostNames += name + "\n";
       }
     } else {
-      playerNames += pn + "\n";
+      playerNames += name + "\n";
     }
-  }
+  });
+
   //あふれた進行役を一般参加者の先頭に追加
   playerNames = nothostNames + playerNames;
 
   //末尾の改行を除去しておく
   hostNames = hostNames.trim();
-  playerNames = playerNames.trim()
+  playerNames = playerNames.trim();
 
   //textareaに反映
   document.getElementById("host").value = hostNames;
@@ -60,43 +60,36 @@ function extractHost() {
 }
 
 //非進行役を抽出する
-function extractNotHost(array) {
+function extractNotHost(hostNames) {
   //行番号:index と参加者名: name から成るオブジェクト を
   //プレイヤーごとに格納した配列を作成する
-  var players = [];
-  for (var i = 0; i < array.length; i++) {
-    var dict = {
-      index: i + 1,
-      name: array[i]
+  var players = hostNames.map(function (playerName, idx) {
+    var obj = {
+      index: idx + 1,
+      name: playerName
     };
-    players.push(dict);
-  }
-  // 進行役でない参加者のオブジェクトを格納する配列を作成
-  var notHostPlayers = [];
+    return obj;
+  });
 
-  //行に★進を含まないならオブジェクトに格納
-  for (var i = 0; i < players.length; i++) {
-    var pn = players[i].name;
-    if (pn.indexOf("進") == -1) {
-      notHostPlayers.push(players[i]);
-    }
-  }
+  // 進行役でない参加者のオブジェクトを格納する配列を作成
+  var notHostPlayers = players.filter(function (player) {
+    return player.name.indexOf("進") === -1;
+  });
+
   return notHostPlayers;
 }
 
 //参加者の重複を抽出する
-function extractDuplicate(array) {
-
+function extractDuplicate(playerNames) {
   //行番号:index と参加者名: name から成るオブジェクト を
   //プレイヤーごとに格納した配列を作成する
-  var players = [];
-  for (var i = 0; i < array.length; i++) {
-    var dict = {
-      index: i + 1,
-      name: array[i]
+  var players = playerNames.map(function (playerName, idx) {
+    var obj = {
+      index: idx + 1,
+      name: playerName
     };
-    players.push(dict);
-  }
+    return obj;
+  });
 
   // 参加者名が重複するオブジェクトを格納する配列を作成
   var duplicates = [];
@@ -140,7 +133,7 @@ function escapeHtml(string) {
       '"': '&quot;',
       '<': '&lt;',
       '>': '&gt;',
-    } [match]
+    } [match];
   });
 }
 
@@ -210,8 +203,8 @@ function grouping() {
     return array;
   }
 
-  var hostArray = new Array();
-  var playerArray = new Array();
+  var hostArray = [];
+  var playerArray = [];
 
   var hostNames = document.getElementById("host").value;
   hostNames = hostNames.replace(/[\u200B-\u200D\u2028-\u202E\uFEFF]/g, '');
@@ -251,7 +244,7 @@ function grouping() {
     for (var i = 0; i < nf; i++) {
       strHostErr += parsePosition(notHost[i].index) + notHost[i].name + "<br>";
     }
-    strHostErr += "<br></p>"
+    strHostErr += "<br></p>";
     str += strHostErr;
   }
 
@@ -277,7 +270,7 @@ function grouping() {
       for (var i = 0; i < d; i++) {
         strDupl += parsePosition(duplicates[i].index) + duplicates[i].name + "<br>";
       }
-      strDupl += "<br></p>"
+      strDupl += "<br></p>";
       str += strDupl;
     }
 
@@ -302,9 +295,9 @@ window.addEventListener('load', function setHandler() {
   var execUpdateCount = document.getElementsByName("updater");
   // var execGroupingButton = document.getElementById("execg");
   execUpdateCount.forEach(
-    textarea => {
-      textarea.addEventListener("change", updateCount)
-      textarea.addEventListener("keyup", updateCount)
+    function (textarea) {
+      textarea.addEventListener("change", updateCount);
+      textarea.addEventListener("keyup", updateCount);
     }
   );
   // execGroupingButton.addEventListener("click", grouping);
