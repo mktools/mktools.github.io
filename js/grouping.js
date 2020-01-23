@@ -141,7 +141,6 @@ function escapeHtml(string) {
 //進行役，一般参加者それぞれでカウントする
 //TODO: idを入力に取るのは密結合っぽいのでリファクタリングする
 function countLine(id, str) {
-  // str = str.replace(/^\n/g, '');
 
   //1団体あたりの人数
   var m = 12 / Number(document.getElementById("playernum").value);
@@ -164,7 +163,6 @@ function countLine(id, str) {
     if (m === 1) {
       document.getElementById(id).innerHTML = "進行役 : " + line + "名";
     } else {
-      // console.log(document.getElementById("playernum").value);
       document.getElementById(id).innerHTML = "進行役 : " + line + "団体（" + line * m + "名）";
     }
 
@@ -219,16 +217,11 @@ function grouping() {
   var playerNum = playerArray.length; //一般参加者の人数
   var str = "";
 
-  // console.log(m);
-  // console.log(n);
-  // console.log(p);
   var concatArray = hostArray.concat(playerArray); //進行役と一般参加者両方を含んだ全参加者
   var duplicates = extractDuplicate(concatArray); //全参加者から重複を抽出した，(index,name)から成るオブジェクト配列
   var notHost = extractNotHost(hostArray);
-  console.log(notHost);
   var nf = notHost.length;
   var d = duplicates.length;
-  // console.log(duplicates);
 
   function parsePosition(num) {
     if (num > hostArray.length + 1) {
@@ -293,12 +286,10 @@ function grouping() {
 //textareaの更新があるたびにカウンタを更新するためのイベントハンドラ設定
 window.addEventListener('load', function setHandler() {
   var execUpdateCount = document.getElementsByName("updater");
-  // var execGroupingButton = document.getElementById("execg");
   execUpdateCount.forEach(
     function (textarea) {
       textarea.addEventListener("change", updateCount);
       textarea.addEventListener("keyup", updateCount);
     }
   );
-  // execGroupingButton.addEventListener("click", grouping);
 }, false);
