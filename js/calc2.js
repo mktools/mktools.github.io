@@ -413,9 +413,10 @@ function maketable2(data, existsPrefer) {
     return str;
 }
 
-//変則杯で末尾タグの場合「☆」がタグに含まれてしまうのでその応急処置
+// 末尾に識別子をつける変速杯において末尾タグが用いられた場合
+// 識別子の「☆」がタグに含まれてしまうのでその応急処置
 function forIrr(s) {
-    return s.replace(/☆[カハドA]$/, "")
+    return s.replace(/☆[軽中重A]$/, "");
 }
 
 // 文字列からLongest Common Substring（最長共通部分文字列）を抽出する
