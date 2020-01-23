@@ -196,7 +196,7 @@ function maketable1(data, existsPrefer) {
                     }
                     str += "が通過となります\n";
                 } else {
-                    str += "\n※進出可能同点チェックがおかしいです※\n"
+                    str += "\n※進出可能同点チェックに誤りがあります※\n";
                 }
             } else {
                 str += "\n※進出可能ラインで同点がいます※\n";
@@ -208,7 +208,7 @@ function maketable1(data, existsPrefer) {
             str += data[i].name + "\n";
         }
     } else {
-        str += "※通過人数がおかしいです※\n"
+        str += "※通過人数に誤りがあります※\n";
     }
 
     return str;
@@ -386,7 +386,7 @@ function maketable2(data, existsPrefer) {
                     }
                     str += "が通過となります\n";
                 } else {
-                    str += "\n※進出可能同点チェックがおかしいです※\n"
+                    str += "\n※進出可能同点チェックに誤りがあります※\n";
                 }
             } else {
                 str += "\n※進出可能ラインで同点がいます※\n";
@@ -404,9 +404,9 @@ function maketable2(data, existsPrefer) {
         //それ以外（通過人数が不適切）
     } else {
         if (m === 1) {
-            str += "※通過人数がおかしいです※\n"
+            str += "※通過人数に誤りがあります※\n";
         } else {
-            str += "※通過チーム数がおかしいです※\n"
+            str += "※通過チーム数に誤りがあります※\n";
         }
     }
 
