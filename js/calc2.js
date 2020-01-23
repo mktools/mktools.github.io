@@ -3,7 +3,7 @@ var regexFC = /([（(]?[ 　]*[0-9]{4}[-ｰ－−‐– 　]*[0-9]{4}[-ｰ－−
 
 //組分けコピペ欄から名前を切出し・貼り付け
 function pasteNames() {
-    var nameArray = new Array();
+    var nameArray = [];
     var allNames = document.getElementById("names").value;
     //たまに混入しているゼロ幅文字を消す
     allNames = allNames.replace(/[\u200B-\u200D\u2028-\u202E\uFEFF]/g, '');
@@ -26,8 +26,7 @@ function pasteNames() {
         //未入力ならPlayer**（0000-0000-00**）で埋める
         if (typeof pn === "undefined" || pn === "") {
             var tempid = ('00' + (i + 1)).slice(-2);
-            // playerNames[i].value = "Player" + tempid + "（0000-0000-00" + tempid + "）";
-            playerNames[i].value = "※プレイヤー" + tempid + "が見つかりません※"
+            playerNames[i].value = "※プレイヤー" + tempid + "が見つかりません※";
         } else {
             playerNames[i].value = pn.trim();
         }
@@ -37,14 +36,14 @@ function pasteNames() {
 
 //得点コピペ欄から切り出し貼り付け（デバッグ用）
 function pastePoints() {
-    var pointArray = new Array();
+    var pointArray = [];
     pointArray = document.getElementById("points").value.split("\n");
     var playerPoints = document.getElementsByName("point");
     var n = Number(document.getElementById("playernum").value);
     var m = Number(document.getElementById("membernum").value);
 
     for (var i = 0; i < n; i++) {
-        var pointArrays = new Array();
+        var pointArrays = [];
         pointArrays = pointArray[i].split(",");
         for (var j = 0; j < m; j++) {
             playerPoints[i * m + j].value = pointArrays[j];
@@ -107,7 +106,7 @@ function calc1() {
     var n = Number(document.getElementById("playernum").value);
 
     //優先進出チェック
-    var preferArray = new Array();
+    var preferArray = [];
     var existsPrefer = false;
     for (var i = 0; i < n; i++) {
         if (isPrefer[i].checked) {
@@ -118,9 +117,9 @@ function calc1() {
         }
     }
 
-    var playersArray = new Array();
+    var playersArray = [];
     for (var i = 0; i < n; i++) {
-        var obj = new Object();
+        var obj = {};
         obj.point = validatePoint(playerPoints[i].value);
         obj.name = playerNames[i].value;
         obj.pos = i;
@@ -160,7 +159,7 @@ function maketable1(data, existsPrefer) {
             //TODO: 決勝で最高得点者が複数いる場合の文面追加
         }
         if (p === 0) {
-            str += "\n優勝\n"
+            str += "\n優勝\n";
             str += data[0].name + "\n";
         }
     } else if (0 < p && p < n) {
@@ -168,7 +167,7 @@ function maketable1(data, existsPrefer) {
         for (var i = 0; i < p; i++) {
             str += data[i].point + "pts : " + data[i].name + "\n";
         }
-        str += "--------------------------------------------\n"
+        str += "--------------------------------------------\n";
         for (i = p; i < n; i++) {
             str += data[i].point + "pts : " + data[i].name + "\n";
         }
@@ -188,23 +187,23 @@ function maketable1(data, existsPrefer) {
                     }
                 }
                 if (correctChecked) {
-                    str += "\n登録順または進行役補正により "
+                    str += "\n登録順または進行役補正により ";
                     for (var i = 0; i < p; i++) {
                         if (data[i].point === data[p].point) {
                             var dataname = data[i].name.replace(regexFC, "");
                             str += dataname + "さん ";
                         }
                     }
-                    str += "が通過となります\n"
+                    str += "が通過となります\n";
                 } else {
                     str += "\n※進出可能同点チェックがおかしいです※\n"
                 }
             } else {
-                str += "\n※進出可能ラインで同点がいます※\n"
+                str += "\n※進出可能ラインで同点がいます※\n";
             }
         }
 
-        str += "\n主催コピペ用\n"
+        str += "\n主催コピペ用\n";
         for (var i = 0; i < p; i++) {
             str += data[i].name + "\n";
         }
@@ -225,7 +224,7 @@ function calc2() {
     var n = Number(document.getElementById("playernum").value);
     var m = Number(document.getElementById("membernum").value);
 
-    var preferArray = new Array();
+    var preferArray = [];
     var existsPrefer = false;
 
     for (var i = 0; i < n; i++) {
@@ -248,14 +247,14 @@ function calc2() {
     //    }
     //  }
 
-    var teamsArray = new Array();
+    var teamsArray = [];
     for (var i = 0; i < n; i++) {
-        var playersArray = new Array();
-        var objs = new Object();
+        var playersArray = [];
+        var objs = {};
         objs.point = 0;
         objs.pos = i;
         for (var j = 0; j < m; j++) {
-            var obj = new Object();
+            var obj = {};
             obj.point = validatePoint(playerPoints[i * m + j].value);
             obj.name = playerNames[i * m + j].value;
             playersArray.push(obj);
@@ -267,7 +266,6 @@ function calc2() {
         teamsArray.push(objs);
     }
     objArraySort(teamsArray, 'point', 'prefer', 'pos');
-    //console.log(teamsArray);
     var result = maketable2(teamsArray, existsPrefer);
     document.getElementById("result").value = result;
 
@@ -308,18 +306,18 @@ function maketable2(data, existsPrefer) {
         }
         if (data[p - 1].point === data[p].point) {
             if (existsPrefer) {
-                str += "\n登録順または進行役補正により "
+                str += "\n登録順または進行役補正により ";
                 for (var i = 0; i < p; i++) {
                     if (data[i].point === data[p].point) {
                         str += data[i].name + " ";
                     }
                 }
-                str += "が通過となります\n"
+                str += "が通過となります\n";
             } else {
-                str += "\n※同点です※\n"
+                str += "\n※同点です※\n";
             }
         }
-        str += "\n勝利チーム\n"
+        str += "\n勝利チーム\n";
         str += data[0].name + "\n";
 
         //6v6以外かつ決勝のとき
@@ -336,7 +334,7 @@ function maketable2(data, existsPrefer) {
             //TODO: 決勝で最高得点チームが複数いる場合の文面追加
         }
 
-        str += "\n優勝\n"
+        str += "\n優勝\n";
         var strtmp = "";
         for (var j = 0; j < m; j++) {
             strtmp += data[0].players[j].name;
@@ -355,7 +353,7 @@ function maketable2(data, existsPrefer) {
             str += data[i].name + " : " + data[i].point + "pts\n\n";
 
         }
-        str += "--------------------------------------------\n\n"
+        str += "--------------------------------------------\n\n";
         for (i = p; i < n; i++) {
             var strtmp = "";
             for (var j = 0; j < m; j++) {
@@ -380,22 +378,22 @@ function maketable2(data, existsPrefer) {
                     }
                 }
                 if (correctChecked) {
-                    str += "\n登録順または進行役補正により "
+                    str += "\n登録順または進行役補正により ";
                     for (var i = 0; i < p; i++) {
                         if (data[i].point === data[p].point) {
                             str += data[i].name + " ";
                         }
                     }
-                    str += "が通過となります\n"
+                    str += "が通過となります\n";
                 } else {
                     str += "\n※進出可能同点チェックがおかしいです※\n"
                 }
             } else {
-                str += "\n※進出可能ラインで同点がいます※\n"
+                str += "\n※進出可能ラインで同点がいます※\n";
             }
         }
 
-        str += "\n主催コピペ用\n"
+        str += "\n主催コピペ用\n";
         for (var i = 0; i < p; i++) {
             var strtmp = "";
             for (var j = 0; j < m; j++) {
@@ -492,34 +490,34 @@ function getTeamName() {
 
     var playerNames = document.getElementsByName("name");
     var teamName = document.getElementsByName("team");
-    var teamNameArray = new Array();
+    var teamNameArray = [];
 
     //同チーム全プレイヤー間でLCSを掛けた結果をチーム名とする
     if (m === 2) {
         for (var i = 0; i < n; i++) {
-            name = LCS(playerNames[i * 2].value, playerNames[i * 2 + 1].value)
+            name = LCS(playerNames[i * 2].value, playerNames[i * 2 + 1].value);
             teamNameArray.push(name);
         }
     } else if (m === 3) {
         for (var i = 0; i < n; i++) {
-            name = LCS(playerNames[i * 3].value, playerNames[i * 3 + 1].value)
-            name = LCS(name, playerNames[i * 3 + 2].value)
+            name = LCS(playerNames[i * 3].value, playerNames[i * 3 + 1].value);
+            name = LCS(name, playerNames[i * 3 + 2].value);
             teamNameArray.push(name);
         }
     } else if (m === 4) {
         for (var i = 0; i < n; i++) {
-            name = LCS(playerNames[i * 4].value, playerNames[i * 4 + 1].value)
-            name = LCS(name, playerNames[i * 4 + 2].value)
-            name = LCS(name, playerNames[i * 4 + 3].value)
+            name = LCS(playerNames[i * 4].value, playerNames[i * 4 + 1].value);
+            name = LCS(name, playerNames[i * 4 + 2].value);
+            name = LCS(name, playerNames[i * 4 + 3].value);
             teamNameArray.push(name);
         }
     } else if (m === 6) {
         for (var i = 0; i < n; i++) {
-            name = LCS(playerNames[i * 6].value, playerNames[i * 6 + 1].value)
-            name = LCS(name, playerNames[i * 6 + 2].value)
-            name = LCS(name, playerNames[i * 6 + 3].value)
-            name = LCS(name, playerNames[i * 6 + 4].value)
-            name = LCS(name, playerNames[i * 6 + 5].value)
+            name = LCS(playerNames[i * 6].value, playerNames[i * 6 + 1].value);
+            name = LCS(name, playerNames[i * 6 + 2].value);
+            name = LCS(name, playerNames[i * 6 + 3].value);
+            name = LCS(name, playerNames[i * 6 + 4].value);
+            name = LCS(name, playerNames[i * 6 + 5].value);
             teamNameArray.push(name);
         }
     } else {
@@ -606,4 +604,4 @@ window.onload = function setHandler() {
     for (var i = 0, len = pointlist.length; i < len; ++i) {
         pointlist[i].addEventListener("change", calcSum);
     }
-}
+};
