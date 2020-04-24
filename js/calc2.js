@@ -137,6 +137,25 @@ function calc1() {
 //TODO:maketable2との統一
 function maketable1(data, existsPrefer) {
     var str = "";
+
+    var round = document.getElementById("roundnum").value;
+    var room = document.getElementById("roomnum").value;
+
+    if (round !== "") {
+        str += round;
+    } else {
+        str += "※回戦数が入力されていません※" + "\n\n";
+    }
+
+    if (room !== "" && round !== "決勝") {
+        str += room + "組\n";
+    } else if (round === "決勝") {
+        str += "\n"
+    } else {
+        str += "※組数が入力されていません※" + "\n\n";
+    }
+
+
     var url = document.getElementById("imageurl").value;
 
     if (url != "") {
