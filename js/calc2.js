@@ -619,9 +619,18 @@ function calcSum() {
     document.getElementById("pointsum").readOnly = true;
 }
 
+function setTextAreaRows() {
+    var text = document.getElementById("imageurl");
+    height = (text.value + "\n").match(/\n/g).length;
+    text.setAttribute("rows", height);
+}
+
 window.onload = function setHandler() {
     var pointlist = document.getElementsByName("point");
     for (var i = 0, len = pointlist.length; i < len; ++i) {
         pointlist[i].addEventListener("keyup", calcSum);
     }
+    var text = document.getElementById("imageurl");
+    text.addEventListener("keyup", setTextAreaRows)
+
 };

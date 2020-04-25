@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
-  
+
 <head>
   <meta charset="utf-8" />
   <title>トリプルス杯集計機</title>
@@ -25,7 +25,7 @@
       <li>組分け一覧から集計する組をコピペして「<b>名前一括貼付</b>」を押す</li>
       <li>得点を入力(Enterキーで移動可)して「<b>計算</b>」を押す<br>
         ※回線落ち者の加点は「+」コース重複などの減点は「-」を含んだ式で表記<br>
-          <u>※進出可能ラインで同点がいた場合</u>は正しい進出チーム名の横にあるチェックボックスを押して再度「<b>計算</b>」を押す</li>
+        <u>※進出可能ラインで同点がいた場合</u>は正しい進出チーム名の横にあるチェックボックスを押して再度「<b>計算</b>」を押す</li>
       <li>「<b>集計結果をコピー</b>」を押して進行スレの書き込み欄に貼りつけ</li>
     </ol>
   </details>
@@ -40,7 +40,7 @@
     </tr>
   </p>
   <p>
-    <input id="imageurl" class="text" size="70" type="text" placeholder="ここに結果画像URLをコピペ">
+    <textarea id="imageurl" class="text" cols="80" rows="1" type="text" placeholder="ここに結果画像URLをコピペ"></textarea>
   </p>
   <p>
     <textarea id="names" cols="120" rows="5" placeholder="ここに組分けをコピペ"></textarea>
@@ -118,7 +118,8 @@
       </tr>
       <tr class="plsum" height="100%">
         <td align="right"></td>
-        <td title="8レース: 656点 12レース: 984点 になればOK"><input id="pointsum" class="point" size="4" type="text" placeholder="合計点" readonly></td>
+        <td title="8レース: 656点 12レース: 984点 になればOK"><input id="pointsum" class="point" size="4" type="text"
+            placeholder="合計点" readonly></td>
         <td></td>
       </tr>
     </tbody>
