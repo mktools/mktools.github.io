@@ -144,7 +144,7 @@ function maketable1(data, existsPrefer) {
     if (round !== "") {
         str += round;
     } else {
-        str += "※回戦数が入力されていません※" + "\n\n";
+        str += "※回戦数が選択されていません※" + "\n\n";
     }
 
     if (room !== "" && round !== "決勝") {
@@ -423,7 +423,7 @@ function maketable2(data, existsPrefer) {
         //それ以外（通過人数が不適切）
     } else {
         if (m === 1) {
-            str += "※通過人数に誤りがあります※\n";
+            str += "※通過人数が選択されていません※\n";
         } else {
             str += "※通過チーム数に誤りがあります※\n";
         }
