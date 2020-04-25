@@ -622,6 +622,6 @@ function calcSum() {
 window.onload = function setHandler() {
     var pointlist = document.getElementsByName("point");
     for (var i = 0, len = pointlist.length; i < len; ++i) {
-        pointlist[i].addEventListener("change", calcSum);
+        pointlist[i].addEventListener("keyup", calcSum);
     }
 };
