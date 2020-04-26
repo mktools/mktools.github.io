@@ -147,10 +147,14 @@ function maketable1(data, existsPrefer) {
         str += "※回戦数が選択されていません※" + "\n\n";
     }
 
+    var n = Number(document.getElementById("playernum").value);
+    var p = document.getElementById("passernum").value;
+
     if (room !== "" && round !== "決勝") {
         str += room + "組\n";
     } else if (round === "決勝") {
         str += "\n"
+        p = 0;
     } else {
         str += "※組数が入力されていません※" + "\n\n";
     }
@@ -164,8 +168,6 @@ function maketable1(data, existsPrefer) {
         str += "※結果画像がありません※" + "\n\n";
     }
 
-    var n = Number(document.getElementById("playernum").value);
-    var p = document.getElementById("passernum").value;
     if (p !== "") {
         p = Number(p);
     }
@@ -617,6 +619,20 @@ function calcSum() {
     document.getElementById("pointsum").readOnly = false;
     document.getElementById("pointsum").value = pointSum;
     document.getElementById("pointsum").readOnly = true;
+}
+
+function setVisibleRoomAndPasser() {
+    var round = document.getElementById("roundnum").value;
+    if (round == "決勝") {
+        document.getElementById("passernum").style.display = "none";
+        document.getElementById("roomnum").style.display = "none";
+        document.getElementById("kumi").style.display = "none";
+    } else {
+        document.getElementById("passernum").style.display = "";
+        document.getElementById("roomnum").style.display = "";
+        document.getElementById("kumi").style.display = "";
+
+    }
 }
 
 function setTextAreaRows() {

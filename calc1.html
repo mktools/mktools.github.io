@@ -40,7 +40,7 @@
   </p>
   <p>
     <td><span style="vertical-align:top"></span>
-      <select id="roundnum" name="type">
+      <select id="roundnum" name="type" onchange="setVisibleRoomAndPasser()">
         <option value="" selected>回戦数を選択</option>
         <option value="1回戦">1回戦</option>
         <option value="2回戦">2回戦</option>
@@ -52,7 +52,7 @@
         <option value="決勝">決勝</option>
       </select>
     </td>
-    <td><input id="roomnum" class="number" size="2" type="number">組</td>
+    <td><input id="roomnum" class="number" size="2" type="number"><span id="kumi">組</span></td>
     <td><span style="vertical-align:top"></span>
       <select id="passernum" name="type">
         <option value="" selected>通過人数を選択</option>
