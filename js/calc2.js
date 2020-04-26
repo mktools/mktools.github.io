@@ -294,7 +294,30 @@ function calc2() {
 
 //出力用文字列の作成（2v2～6v6用）
 function maketable2(data, existsPrefer) {
+    var n = Number(document.getElementById("playernum").value);
+    var m = Number(document.getElementById("membernum").value);
+    var p = document.getElementById("passernum").value;
     var str = "";
+
+    if (m != 6) {
+        var round = document.getElementById("roundnum").value;
+        var room = document.getElementById("roomnum").value;
+
+        if (round !== "") {
+            str += round;
+        } else {
+            str += "※回戦数が選択されていません※" + "\n\n";
+        }
+
+        if (room !== "" && round !== "決勝") {
+            str += room + "組\n";
+        } else if (round === "決勝") {
+            str += "\n"
+            p = 0;
+        } else {
+            str += "※組数が入力されていません※" + "\n\n";
+        }
+    }
     var url = document.getElementById("imageurl").value;
 
     if (url != "") {
@@ -307,10 +330,6 @@ function maketable2(data, existsPrefer) {
         str += "※結果画像がありません※" + "\n\n";
     }
 
-    var n = Number(document.getElementById("playernum").value);
-    var m = Number(document.getElementById("membernum").value);
-
-    var p = document.getElementById("passernum").value;
     if (p !== "") {
         p = Number(p);
     }
@@ -427,7 +446,7 @@ function maketable2(data, existsPrefer) {
         if (m === 1) {
             str += "※通過人数が選択されていません※\n";
         } else {
-            str += "※通過チーム数に誤りがあります※\n";
+            str += "※通過チーム数が選択されていません※\n";
         }
     }
 
@@ -616,9 +635,7 @@ function calcSum() {
     for (var i = 0; i < 12; i++) {
         pointSum += validatePoint(playerPoints[i].value);
     }
-    document.getElementById("pointsum").readOnly = false;
     document.getElementById("pointsum").value = pointSum;
-    document.getElementById("pointsum").readOnly = true;
 }
 
 function setVisibleRoomAndPasser() {

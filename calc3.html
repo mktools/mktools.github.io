@@ -20,7 +20,7 @@
     <summary>使い方（クリックで表示）</summary>
     <ol>
       <li>チーム数を入力する（通常は4のままでOK）</li>
-      <li>通過チーム数を入力する（決勝の場合は0を入力する）</li>
+      <li>回戦数、組数、通過チーム数を入力する</li>
       <li>結果画像URLを入力する</li>
       <li>組分け一覧から集計する組をコピペして「<b>名前一括貼付</b>」を押す</li>
       <li>得点を入力(Enterキーで移動可)して「<b>計算</b>」を押す<br>
@@ -36,8 +36,35 @@
         <input id="membernum" class="number" size="3" type="hidden" value="3" readonly>
       </td>
       <td>チーム数<input id="playernum" class="number" size="3" type="number" value="4"></td>
-      <td>通過チーム数<input id="passernum" class="number" size="3" type="number" value=""></td>
     </tr>
+    <p>
+      <span style="vertical-align:top"></span>
+      <select id="roundnum" name="type" onchange="setVisibleRoomAndPasser()">
+        <option value="" selected>回戦数を選択</option>
+        <option value="1回戦">1回戦</option>
+        <option value="2回戦">2回戦</option>
+        <option value="3回戦">3回戦</option>
+        <option value="4回戦">4回戦</option>
+        <option value="5回戦">5回戦</option>
+        <option value="準々決勝">準々決勝</option>
+        <option value="準決勝">準決勝</option>
+        <option value="決勝">決勝</option>
+      </select>
+      </span>
+      <td><input id="roomnum" class="number" size="2" type="number"><span id="kumi">組</span></td>
+      <td><span style="vertical-align:top"></span>
+        <select id="passernum" name="type">
+          <option value="" selected>通過チーム数を選択</option>
+          <option value="3">3チーム通過</option>
+          <option value="2">2チーム通過</option>
+          <option value="1">1チーム通過</option>
+        </select>
+      </td>
+    </p>
+
+    </tr>
+  </p>
+
   </p>
   <p>
     <textarea id="imageurl" class="text" cols="80" rows="1" type="text" placeholder="ここに結果画像URLをコピペ"></textarea>
