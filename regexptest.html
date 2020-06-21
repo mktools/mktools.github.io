@@ -1,38 +1,68 @@
 <!DOCTYPE html>
 <html lang="ja">
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-170086977-1"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-<head>
-  <meta charset="utf-8" />
-  <title>フレコ切り出しテスト</title>
+      gtag("config", "UA-170086977-1");
+    </script>
+    <meta charset="utf-8" />
+    <title>フレコ切り出しテスト</title>
 
-  <script type="text/javascript" src="js/calc2.js"></script>
-  <script type="text/javascript" src="js/regextest.js"></script>
-  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-  <link rel="stylesheet" href="css/style.css">
-</head>
+    <script type="text/javascript" src="js/calc2.js"></script>
+    <script type="text/javascript" src="js/regextest.js"></script>
+    <script
+      type="text/javascript"
+      src="https://code.jquery.com/jquery-1.12.4.min.js"
+    ></script>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
 
-<body class="calc1">
-  <a href="index.html">トップへ戻る</a>
-  <p>
-    フレンドコード切り出し処理のテスト用
-  </p>
-  <p>
-    <textarea id="names" cols="40" rows="13" placeholder="ここに参加者一覧をコピペ"></textarea>
-    <!-- <textarea id="points" cols="3" rows="13" placeholder=""></textarea> -->
-    <br>
-    <button type="button" onclick="regextest()">フレコ切り出し</button>
-    <!-- <button type="button" onclick="pastePoints()">得点一括貼付</button> -->
+  <body class="calc1">
+    <a href="index.html">トップへ戻る</a>
+    <p>
+      フレンドコード切り出し処理のテスト用
+    </p>
+    <p>
+      <textarea
+        id="names"
+        cols="40"
+        rows="13"
+        placeholder="ここに参加者一覧をコピペ"
+      ></textarea>
+      <!-- <textarea id="points" cols="3" rows="13" placeholder=""></textarea> -->
+      <br />
+      <button type="button" onclick="regextest()">フレコ切り出し</button>
+      <!-- <button type="button" onclick="pastePoints()">得点一括貼付</button> -->
+    </p>
 
-  </p>
+    <p>
+      <textarea
+        id="result"
+        name="result"
+        cols="40"
+        rows="32"
+        placeholder="切り出せたもの"
+      ></textarea>
+    </p>
 
-  <p>
-    <textarea id="result" name="result" cols="40" rows="32" placeholder="切り出せたもの"></textarea>
-  </p>
-
-  <p>
-    <textarea id="result_failed" name="result" cols="40" rows="10" placeholder="切り出しに失敗したもの"></textarea>
-  </p>
-
-</body>
-
+    <p>
+      <textarea
+        id="result_failed"
+        name="result"
+        cols="40"
+        rows="10"
+        placeholder="切り出しに失敗したもの"
+      ></textarea>
+    </p>
+  </body>
 </html>

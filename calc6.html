@@ -1,133 +1,310 @@
 <!DOCTYPE html>
 <html lang="ja">
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-170086977-1"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-<head>
-  <meta charset="utf-8" />
-  <title>交流戦集計機</title>
+      gtag("config", "UA-170086977-1");
+    </script>
+    <meta charset="utf-8" />
+    <title>交流戦集計機</title>
 
-  <script type="text/javascript" src="js/calc2.js"></script>
-  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-  <script type="text/javascript" src="js/focus.js"></script>
-  <link rel="stylesheet" href="css/style.css">
-</head>
+    <script type="text/javascript" src="js/calc2.js"></script>
+    <script
+      type="text/javascript"
+      src="https://code.jquery.com/jquery-1.12.4.min.js"
+    ></script>
+    <script type="text/javascript" src="js/focus.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
 
-<body class="calc6">
-  <a href="index.html">トップへ戻る</a>
-  <p>
-    大規模杯集計機 - 交流戦(6v6)
-  </p>
-  <details>
-    <summary>使い方（クリックで表示）</summary>
-    <ol>
-      <li>結果画像URLを入力する（回線落ちが発生した場合は改行して複数入力する）</li>
-      <li>対戦チームのメンバーを1行ずつ記入して「<b>名前一括貼付</b>」を押す</li>
-      <li>得点を入力(Enterキーで移動可)して「<b>計算</b>」を押す<br>
-        ※回線落ち者の加点は「+」コース重複などの減点は「-」を含んだ式で表記</li>
-      <li>「<b>集計結果をコピー</b>」を押して進行スレの書き込み欄に貼りつけ</li>
-    </ol>
-  </details>
-  <p>
+  <body class="calc6">
+    <a href="index.html">トップへ戻る</a>
+    <p>
+      大規模杯集計機 - 交流戦(6v6)
+    </p>
+    <details>
+      <summary>使い方（クリックで表示）</summary>
+      <ol>
+        <li>
+          結果画像URLを入力する（回線落ちが発生した場合は改行して複数入力する）
+        </li>
+        <li>
+          対戦チームのメンバーを1行ずつ記入して「<b>名前一括貼付</b>」を押す
+        </li>
+        <li>
+          得点を入力(Enterキーで移動可)して「<b>計算</b>」を押す<br />
+          ※回線落ち者の加点は「+」コース重複などの減点は「-」を含んだ式で表記
+        </li>
+        <li>
+          「<b>集計結果をコピー</b>」を押して進行スレの書き込み欄に貼りつけ
+        </li>
+      </ol>
+    </details>
+    <p>
+      <tr class="setting">
+        <td>
+          <!-- 形式 -->
+          <input
+            id="membernum"
+            class="number"
+            size="3"
+            type="hidden"
+            value="6"
+            readonly
+          />
+        </td>
+        <td>
+          <input
+            id="playernum"
+            class="number"
+            size="3"
+            type="hidden"
+            value="2"
+            readonly
+          />
+        </td>
+        <td>
+          <input
+            id="passernum"
+            class="number"
+            size="3"
+            type="hidden"
+            value="1"
+            readonly
+          />
+        </td>
+      </tr>
+    </p>
+    <p>
+      <textarea
+        id="imageurl"
+        class="text"
+        cols="80"
+        rows="1"
+        type="text"
+        placeholder="ここに結果画像URLをコピペ"
+      ></textarea>
+    </p>
+    <p>
+      <textarea
+        id="names"
+        cols="60"
+        rows="13"
+        placeholder="ここにメンバー一覧をコピペ"
+      ></textarea>
+      <br />
+      <button type="button" onclick="pasteNames()">名前一括貼付</button>
+      <!-- <button type="button" onclick="pastePoints()">得点一括貼付</button> -->
+    </p>
 
-    <tr class="setting">
-      <td>
-        <!-- 形式 -->
-        <input id="membernum" class="number" size="3" type="hidden" value="6" readonly>
-      </td>
-      <td><input id="playernum" class="number" size="3" type="hidden" value="2" readonly></td>
-      <td><input id="passernum" class="number" size="3" type="hidden" value="1" readonly></td>
-    </tr>
-  </p>
-  <p>
-    <textarea id="imageurl" class="text" cols="80" rows="1" type="text" placeholder="ここに結果画像URLをコピペ"></textarea>
-  </p>
-  <p>
-    <textarea id="names" cols="60" rows="13" placeholder="ここにメンバー一覧をコピペ"></textarea>
-    <br>
-    <button type="button" onclick="pasteNames()">名前一括貼付</button>
-    <!-- <button type="button" onclick="pastePoints()">得点一括貼付</button> -->
-  </p>
+    <table>
+      <thead>
+        <tr>
+          <td>名前</td>
+          <td>得点</td>
+          <td>チーム名</td>
+          <td>同点時進出チーム</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="pl1">
+          <td><input tabindex="1" name="name" class="name" type="text" /></td>
+          <td>
+            <input
+              tabindex="13"
+              name="point"
+              class="point"
+              size="3"
+              type="tel"
+            />
+          </td>
+          <td rowspan="6">
+            <input tabindex="25" name="team" class="team" type="text" />
+          </td>
+          <td rowspan="6">
+            <input name="drawpasser" class="box" type="checkbox" />
+          </td>
+        </tr>
+        <tr class="pl2">
+          <td><input tabindex="2" name="name" class="name" type="text" /></td>
+          <td>
+            <input
+              tabindex="14"
+              name="point"
+              class="point"
+              size="3"
+              type="tel"
+            />
+          </td>
+        </tr>
+        <tr class="pl3">
+          <td><input tabindex="3" name="name" class="name" type="text" /></td>
+          <td>
+            <input
+              tabindex="15"
+              name="point"
+              class="point"
+              size="3"
+              type="tel"
+            />
+          </td>
+        </tr>
+        <tr class="pl4">
+          <td><input tabindex="4" name="name" class="name" type="text" /></td>
+          <td>
+            <input
+              tabindex="16"
+              name="point"
+              class="point"
+              size="3"
+              type="tel"
+            />
+          </td>
+        </tr>
+        <tr class="pl5">
+          <td><input tabindex="5" name="name" class="name" type="text" /></td>
+          <td>
+            <input
+              tabindex="17"
+              name="point"
+              class="point"
+              size="3"
+              type="tel"
+            />
+          </td>
+        </tr>
+        <tr class="pl6">
+          <td><input tabindex="6" name="name" class="name" type="text" /></td>
+          <td>
+            <input
+              tabindex="18"
+              name="point"
+              class="point"
+              size="3"
+              type="tel"
+            />
+          </td>
+        </tr>
+        <tr class="pl7">
+          <td><input tabindex="7" name="name" class="name" type="text" /></td>
+          <td>
+            <input
+              tabindex="19"
+              name="point"
+              class="point"
+              size="3"
+              type="tel"
+            />
+          </td>
+          <td rowspan="6">
+            <input tabindex="26" name="team" class="team" type="text" />
+          </td>
+          <td rowspan="6">
+            <input name="drawpasser" class="box" type="checkbox" />
+          </td>
+        </tr>
+        <tr class="pl8">
+          <td><input tabindex="8" name="name" class="name" type="text" /></td>
+          <td>
+            <input
+              tabindex="20"
+              name="point"
+              class="point"
+              size="3"
+              type="tel"
+            />
+          </td>
+        </tr>
+        <tr class="pl9">
+          <td><input tabindex="9" name="name" class="name" type="text" /></td>
+          <td>
+            <input
+              tabindex="21"
+              name="point"
+              class="point"
+              size="3"
+              type="tel"
+            />
+          </td>
+        </tr>
+        <tr class="pl10">
+          <td><input tabindex="10" name="name" class="name" type="text" /></td>
+          <td>
+            <input
+              tabindex="22"
+              name="point"
+              class="point"
+              size="3"
+              type="tel"
+            />
+          </td>
+        </tr>
+        <tr class="pl11">
+          <td><input tabindex="11" name="name" class="name" type="text" /></td>
+          <td>
+            <input
+              tabindex="23"
+              name="point"
+              class="point"
+              size="3"
+              type="tel"
+            />
+          </td>
+        </tr>
+        <tr class="pl12">
+          <td><input tabindex="12" name="name" class="name" type="text" /></td>
+          <td>
+            <input
+              tabindex="24"
+              name="point"
+              class="point"
+              size="3"
+              type="tel"
+            />
+          </td>
+        </tr>
+        <tr class="plsum" height="100%">
+          <td align="right"></td>
+          <td title="8レース: 656点 12レース: 984点 になればOK">
+            <input
+              id="pointsum"
+              class="point"
+              size="4"
+              type="text"
+              placeholder="合計点"
+              readonly
+            />
+          </td>
 
-  <table>
-    <thead>
-      <tr>
-        <td>名前</td>
-        <td>得点</td>
-        <td>チーム名</td>
-        <td>同点時進出チーム</td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="pl1">
-        <td><input tabindex="1" name="name" class="name" type="text"></td>
-        <td><input tabindex="13" name="point" class="point" size="3" type="tel"></td>
-        <td rowspan="6"><input tabindex="25" name="team" class="team" type="text"></td>
-        <td rowspan="6"><input name="drawpasser" class="box" type="checkbox"></td>
-      </tr>
-      <tr class="pl2">
-        <td><input tabindex="2" name="name" class="name" type="text"></td>
-        <td><input tabindex="14" name="point" class="point" size="3" type="tel"></td>
-      </tr>
-      <tr class="pl3">
-        <td><input tabindex="3" name="name" class="name" type="text"></td>
-        <td><input tabindex="15" name="point" class="point" size="3" type="tel"></td>
-      </tr>
-      <tr class="pl4">
-        <td><input tabindex="4" name="name" class="name" type="text"></td>
-        <td><input tabindex="16" name="point" class="point" size="3" type="tel"></td>
-      </tr>
-      <tr class="pl5">
-        <td><input tabindex="5" name="name" class="name" type="text"></td>
-        <td><input tabindex="17" name="point" class="point" size="3" type="tel"></td>
-      </tr>
-      <tr class="pl6">
-        <td><input tabindex="6" name="name" class="name" type="text"></td>
-        <td><input tabindex="18" name="point" class="point" size="3" type="tel"></td>
-      </tr>
-      <tr class="pl7">
-        <td><input tabindex="7" name="name" class="name" type="text"></td>
-        <td><input tabindex="19" name="point" class="point" size="3" type="tel"></td>
-        <td rowspan="6"><input tabindex="26" name="team" class="team" type="text"></td>
-        <td rowspan="6"><input name="drawpasser" class="box" type="checkbox"></td>
-      </tr>
-      <tr class="pl8">
-        <td><input tabindex="8" name="name" class="name" type="text"></td>
-        <td><input tabindex="20" name="point" class="point" size="3" type="tel"></td>
-      </tr>
-      <tr class="pl9">
-        <td><input tabindex="9" name="name" class="name" type="text"></td>
-        <td><input tabindex="21" name="point" class="point" size="3" type="tel"></td>
-      </tr>
-      <tr class="pl10">
-        <td><input tabindex="10" name="name" class="name" type="text"></td>
-        <td><input tabindex="22" name="point" class="point" size="3" type="tel"></td>
-      </tr>
-      <tr class="pl11">
-        <td><input tabindex="11" name="name" class="name" type="text"></td>
-        <td><input tabindex="23" name="point" class="point" size="3" type="tel"></td>
-      </tr>
-      <tr class="pl12">
-        <td><input tabindex="12" name="name" class="name" type="text"></td>
-        <td><input tabindex="24" name="point" class="point" size="3" type="tel"></td>
-      </tr>
-      <tr class="plsum" height="100%">
-        <td align="right"></td>
-        <td title="8レース: 656点 12レース: 984点 になればOK"><input id="pointsum" class="point" size="4" type="text"
-            placeholder="合計点" readonly></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <button type="button" onclick="calc2()">計算</button>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="button" onclick="calc2()">計算</button>
 
-  <p>
-    <textarea id="result" name="result" cols="60" rows="28" placeholder="ここに集計結果が出力されます"></textarea>
-  </p>
+    <p>
+      <textarea
+        id="result"
+        name="result"
+        cols="60"
+        rows="28"
+        placeholder="ここに集計結果が出力されます"
+      ></textarea>
+    </p>
 
-  <p>
-    <button type="button" onclick="copy()">集計結果をコピー</button>
-    <button type="button" onclick="reset()">リセット</button>
-  </p>
-
-</body>
-
+    <p>
+      <button type="button" onclick="copy()">集計結果をコピー</button>
+      <button type="button" onclick="reset()">リセット</button>
+    </p>
+  </body>
 </html>
