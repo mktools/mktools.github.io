@@ -1,26 +1,25 @@
 $(function () {
   $("#host").bcralnit({
-    width: '36px',
-    background: '#eee',
-    textalign: 'right',
-    color: '#000',
-    addClass: 'areaNum'
+    width: "36px",
+    background: "#eee",
+    textalign: "right",
+    color: "#000",
+    addClass: "areaNum",
   });
   $("#player").bcralnit({
-    width: '36px',
-    background: '#eee',
-    color: '#000',
-    addClass: 'areaNum'
+    width: "36px",
+    background: "#eee",
+    color: "#000",
+    addClass: "areaNum",
   });
 });
 
 //進行役を抽出する
 function extractHost() {
-
   //全参加者を取り出す
   var mixedNames = document.getElementById("mixed").value;
   //文字列処理に支障を来たしうるゼロ幅文字を除去
-  mixedNames = mixedNames.replace(/[\u200B-\u200D\u2028-\u202E\uFEFF]/g, '');
+  mixedNames = mixedNames.replace(/[\u200B-\u200D\u2028-\u202E\uFEFF]/g, "");
   mixedArray = mixedNames.split("\n");
 
   //進行，一般参加者の取り出し結果
@@ -66,7 +65,7 @@ function extractNotHost(hostNames) {
   var players = hostNames.map(function (playerName, idx) {
     var obj = {
       index: idx + 1,
-      name: playerName
+      name: playerName,
     };
     return obj;
   });
@@ -86,7 +85,7 @@ function extractDuplicate(playerNames) {
   var players = playerNames.map(function (playerName, idx) {
     var obj = {
       index: idx + 1,
-      name: playerName
+      name: playerName,
     };
     return obj;
   });
@@ -121,19 +120,19 @@ function extractDuplicate(playerNames) {
 //HTML特殊文字をエスケープする()
 function escapeHtml(string) {
   //stringでなければ(数値型など)そのまま返す
-  if (typeof string !== 'string') {
+  if (typeof string !== "string") {
     return string;
   }
   // 文字列のうち特殊文字はエスケープされたものに置換する
   return string.replace(/[&'`"<>]/g, function (match) {
     return {
-      '&': '&amp;',
-      "'": '&#x27;',
-      '`': '&#x60;',
-      '"': '&quot;',
-      '<': '&lt;',
-      '>': '&gt;',
-    } [match];
+      "&": "&amp;",
+      "'": "&#x27;",
+      "`": "&#x60;",
+      '"': "&quot;",
+      "<": "&lt;",
+      ">": "&gt;",
+    }[match];
   });
 }
 
@@ -141,7 +140,6 @@ function escapeHtml(string) {
 //進行役，一般参加者それぞれでカウントする
 //TODO: idを入力に取るのは密結合っぽいのでリファクタリングする
 function countLine(id, str) {
-
   //1団体あたりの人数
   var m = 12 / Number(document.getElementById("playernum").value);
 
@@ -163,7 +161,8 @@ function countLine(id, str) {
     if (m === 1) {
       document.getElementById(id).innerHTML = "進行役 : " + line + "名";
     } else {
-      document.getElementById(id).innerHTML = "進行役 : " + line + "団体（" + line * m + "名）";
+      document.getElementById(id).innerHTML =
+        "進行役 : " + line + "団体（" + line * m + "名）";
     }
 
     //idが一般参加者であれば一般参加者のカウントに反映
@@ -171,10 +170,10 @@ function countLine(id, str) {
     if (m === 1) {
       document.getElementById(id).innerHTML = "一般参加者 : " + line + "名";
     } else {
-      document.getElementById(id).innerHTML = "一般参加者 : " + line + "団体（" + line * m + "名）";
+      document.getElementById(id).innerHTML =
+        "一般参加者 : " + line + "団体（" + line * m + "名）";
     }
   }
-
 }
 
 //進行役・一般参加者両方にカウンタ更新をかける
@@ -185,11 +184,11 @@ function updateCount() {
 
 //組分けを行う
 function grouping() {
-
   //Fisher–Yatesアルゴリズムで配列シャッフルを行う
   function shuffle(array) {
     var n = array.length,
-      t, i;
+      t,
+      i;
 
     while (n) {
       i = Math.floor(Math.random() * n--);
@@ -205,14 +204,15 @@ function grouping() {
   var playerArray = [];
 
   var hostNames = document.getElementById("host").value;
-  hostNames = hostNames.replace(/[\u200B-\u200D\u2028-\u202E\uFEFF]/g, '');
+  hostNames = hostNames.replace(/[\u200B-\u200D\u2028-\u202E\uFEFF]/g, "");
   hostArray = hostNames.split("\n");
 
   var playerNames = document.getElementById("player").value;
-  playerNames = playerNames.replace(/[\u200B-\u200D\u2028-\u202E\uFEFF]/g, '');
+  playerNames = playerNames.replace(/[\u200B-\u200D\u2028-\u202E\uFEFF]/g, "");
   playerArray = playerNames.split("\n");
 
-  var playerNumPerGroup = Number(document.getElementById("playernum").value) - 1; // 1組あたりに必要な一般参加者数
+  var playerNumPerGroup =
+    Number(document.getElementById("playernum").value) - 1; // 1組あたりに必要な一般参加者数
   var hostNum = hostArray.length; //進行役の人数
   var playerNum = playerArray.length; //一般参加者の人数
   var str = "";
@@ -227,7 +227,7 @@ function grouping() {
     if (num > hostArray.length + 1) {
       return "一般参加者" + (num - hostArray.length) + "行目：";
     } else {
-      return "進行役" + (num) + "行目：";
+      return "進行役" + num + "行目：";
     }
   }
 
@@ -243,25 +243,42 @@ function grouping() {
 
   if (playerNumPerGroup === -1) {
     str += "<b>形式を選択してください</b>";
-
-  } else if (hostNum * playerNumPerGroup < playerNum) { //参加者が溢れる or 進行が足りないとき
-    var subStr = (playerNumPerGroup == 11) ? "名" : "団体";
-    str += "一般参加者が<b>" + (playerNum - hostNum * playerNumPerGroup) + subStr + "</b>余っています";
-    if ((playerNum % playerNumPerGroup) == 0) {
-      str += "<br>または進行役が<b>" + (playerNum / playerNumPerGroup - hostNum) + subStr + "</b>不足しています";
+  } else if (hostNum * playerNumPerGroup < playerNum) {
+    //参加者が溢れる or 進行が足りないとき
+    var subStr = playerNumPerGroup == 11 ? "名" : "団体";
+    str +=
+      "一般参加者が<b>" +
+      (playerNum - hostNum * playerNumPerGroup) +
+      subStr +
+      "</b>余っています";
+    if (playerNum % playerNumPerGroup == 0) {
+      str +=
+        "<br>または進行役が<b>" +
+        (playerNum / playerNumPerGroup - hostNum) +
+        subStr +
+        "</b>不足しています";
     }
-  } else if (hostNum * playerNumPerGroup > playerNum) { //参加者が足りない or 進行が溢れるとき
-    var subStr = (playerNumPerGroup == 11) ? "名" : "団体";
-    str += "一般参加者が<b>" + (hostNum * playerNumPerGroup - playerNum) + subStr + "</b>不足しています";
-    if ((playerNum % playerNumPerGroup) == 0) {
-      str += "<br>または進行役が<b>" + (hostNum - playerNum / playerNumPerGroup) + subStr + "</b>余っています";
+  } else if (hostNum * playerNumPerGroup > playerNum) {
+    //参加者が足りない or 進行が溢れるとき
+    var subStr = playerNumPerGroup == 11 ? "名" : "団体";
+    str +=
+      "一般参加者が<b>" +
+      (hostNum * playerNumPerGroup - playerNum) +
+      subStr +
+      "</b>不足しています";
+    if (playerNum % playerNumPerGroup == 0) {
+      str +=
+        "<br>または進行役が<b>" +
+        (hostNum - playerNum / playerNumPerGroup) +
+        subStr +
+        "</b>余っています";
     }
   } else {
-
     if (d > 0) {
       strDupl = "<p><b>※※※重複しています※※※</b><br>";
       for (var i = 0; i < d; i++) {
-        strDupl += parsePosition(duplicates[i].index) + duplicates[i].name + "<br>";
+        strDupl +=
+          parsePosition(duplicates[i].index) + duplicates[i].name + "<br>";
       }
       strDupl += "<br></p>";
       str += strDupl;
@@ -271,7 +288,7 @@ function grouping() {
     shuffle(hostArray);
 
     for (var i = 0; i < hostNum; i++) {
-      str += (i + 1) + "組<br>";
+      str += i + 1 + "組<br>";
       str += escapeHtml(hostArray[i]) + "<br>";
       for (var j = 0; j < playerNumPerGroup; j++) {
         str += escapeHtml(playerArray[i * playerNumPerGroup + j]) + "<br>";
@@ -283,13 +300,50 @@ function grouping() {
   document.getElementById("result").innerHTML = str;
 }
 
+//コピー内部処理
+function execCopy(string) {
+  var temp = document.createElement("div");
+
+  temp.appendChild(document.createElement("pre")).textContent = string;
+
+  var s = temp.style;
+  s.position = "fixed";
+  s.left = "-100%";
+
+  document.body.appendChild(temp);
+  document.getSelection().selectAllChildren(temp);
+
+  var result = document.execCommand("copy");
+
+  document.body.removeChild(temp);
+  // true なら実行できている falseなら失敗か対応していないか
+  return result;
+}
+
+function copyHost() {
+  if (execCopy(document.getElementById("host").value)) {
+    alert("進行役をコピーしました");
+  } else {
+    alert("※このブラウザでは対応していません※");
+  }
+}
+
+function copyPlayer() {
+  if (execCopy(document.getElementById("player").value)) {
+    alert("一般参加者をコピーしました");
+  } else {
+    alert("※このブラウザでは対応していません※");
+  }
+}
 //textareaの更新があるたびにカウンタを更新するためのイベントハンドラ設定
-window.addEventListener('load', function setHandler() {
-  var execUpdateCount = document.getElementsByName("updater");
-  execUpdateCount.forEach(
-    function (textarea) {
+window.addEventListener(
+  "load",
+  function setHandler() {
+    var execUpdateCount = document.getElementsByName("updater");
+    execUpdateCount.forEach(function (textarea) {
       textarea.addEventListener("change", updateCount);
       textarea.addEventListener("keyup", updateCount);
-    }
-  );
-}, false);
+    });
+  },
+  false
+);
