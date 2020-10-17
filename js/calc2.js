@@ -23,10 +23,11 @@ function pasteNames() {
 
   for (var i = 0; i < n * m; i++) {
     var pn = nameArray[i]
-    //未入力ならPlayer**（0000-0000-00**）で埋める
     if (typeof pn === "undefined" || pn === "") {
       var tempid = ("00" + (i + 1)).slice(-2)
-      playerNames[i].value = "※プレイヤー" + tempid + "が見つかりません※"
+      // 未入力ならCPUで埋める
+      playerNames[i].value =
+        "CPU" + tempid + "（0000-0000-00" + ("00" + tempid).slice(-2) + "）"
     } else {
       playerNames[i].value = pn.trim()
     }
