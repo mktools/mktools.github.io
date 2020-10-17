@@ -243,6 +243,17 @@ function calc2() {
   var n = Number(document.getElementById("playernum").value)
   var m = Number(document.getElementById("membernum").value)
 
+  // フレンドコードがない場合はダミーを挿入する
+  for (var i = 0; i < n * m; i++) {
+    if (
+      !playerNames[i].value.match(
+        /([（(]?[ 　]*[0-9]{4}[-ｰ－−‐– 　]*[0-9]{4}[-ｰ－−‐– 　]*[0-9]{4}[ 　]*[[）)]?\s*)$/
+      )
+    ) {
+      playerNames[i].value = playerNames[i].value + "（0000-0000-0000）"
+    }
+  }
+
   var preferArray = []
   var existsPrefer = false
 
