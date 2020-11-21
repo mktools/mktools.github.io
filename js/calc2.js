@@ -355,7 +355,7 @@ function maketable2(data, existsPrefer) {
     }
     if (data[p - 1].point === data[p].point) {
       if (existsPrefer) {
-        str += "\n登録順または進行役補正により "
+        str += "\n最高得点者または進行役補正により "
         for (var i = 0; i < p; i++) {
           if (data[i].point === data[p].point) {
             str += data[i].name + " "
@@ -428,7 +428,7 @@ function maketable2(data, existsPrefer) {
           }
         }
         if (correctChecked) {
-          str += "\n登録順または進行役補正により "
+          str += "\n最高得点者または進行役補正により "
           for (var i = 0; i < p; i++) {
             if (data[i].point === data[p].point) {
               str += data[i].name + " "
