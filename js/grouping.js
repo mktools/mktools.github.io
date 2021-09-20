@@ -293,6 +293,9 @@ function grouping() {
       for (var j = 0; j < playerNumPerGroup; j++) {
         str += escapeHtml(playerArray[i * playerNumPerGroup + j]) + "<br>";
       }
+      if (i !== hostNum - 1) {
+        str += "-"
+      }
       str += "<br>";
     }
   }
