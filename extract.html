@@ -3,10 +3,7 @@
 
 <head>
   <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script
-    async
-    src="https://www.googletagmanager.com/gtag/js?id=UA-170086977-1"
-  ></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-170086977-1"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() {
@@ -31,11 +28,11 @@
 
   <p>全参加者から進行役と一般参加者を抽出</p>
   <p>
-    <p>参加者を1行1団体単位で入力してください<br>「★進」を含む行を進行役に，それ以外の行を一般参加者に割り振ります</p>
-    <p>必要な進行役人数を入力した場合，その人数だけ記載順に進行役を抽出します（あふれた進行役は自動的に一般参加者の先頭に割り振られます）</p>
+  <p>参加者を1行1団体単位で入力してください<br>「★進」を含む行を進行役に，それ以外の行を一般参加者に割り振ります</p>
+  <p>必要な進行役人数を入力した場合，その人数だけ記載順に進行役を抽出します（あふれた進行役は自動的に一般参加者の先頭に割り振られます）</p>
 
-    <p><input id="rooms" type="number" placeholder="必要な進行役人数 (任意)"></p>
-    <textarea id="mixed" cols="120" rows="12" placeholder="全参加者を入力"></textarea>
+  <p><input id="rooms" type="number" placeholder="必要な進行役人数 (任意)"></p>
+  <textarea id="mixed" cols="120" rows="12" placeholder="全参加者を入力"></textarea>
   </p>
   <button type="button" onclick="extractHost()">進行役を抽出</button>
 

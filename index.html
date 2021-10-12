@@ -1,76 +1,74 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=UA-170086977-1"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || []
-      function gtag() {
-        dataLayer.push(arguments)
-      }
-      gtag("js", new Date())
 
-      gtag("config", "UA-170086977-1")
-    </script>
-    <meta charset="utf-8" />
-    <title>マリオカート8デラックス ツール置き場</title>
-    <link rel="stylesheet" href="css/style.css" />
-  </head>
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-170086977-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || []
+    function gtag() {
+      dataLayer.push(arguments)
+    }
+    gtag("js", new Date())
 
-  <body class="top">
-    <h1>マリオカート8 デラックス ツール置き場</h1>
+    gtag("config", "UA-170086977-1")
+  </script>
+  <meta charset="utf-8" />
+  <title>マリオカート8デラックス ツール置き場</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
 
-    <h2>大規模杯集計機（形式別）</h2>
+<body class="top">
+  <h1>マリオカート8 デラックス ツール置き場</h1>
+
+  <h2>大規模杯集計機（形式別）</h2>
+  <ul>
+    <li><a href="calc1.html">個人(1v1)</a></li>
+    <li><a href="calc2.html">タッグ(2v2)</a></li>
+    <li><a href="calc3.html">トリプルス(3v3)</a></li>
+    <li><a href="calc4.html">フォーマン(4v4)</a></li>
+    <li><a href="calc6.html">交流戦(6v6)</a></li>
+  </ul>
+
+  <details>
+    <summary>更新履歴（クリックで表示）</summary>
     <ul>
-      <li><a href="calc1.html">個人(1v1)</a></li>
-      <li><a href="calc2.html">タッグ(2v2)</a></li>
-      <li><a href="calc3.html">トリプルス(3v3)</a></li>
-      <li><a href="calc4.html">フォーマン(4v4)</a></li>
-      <li><a href="calc6.html">交流戦(6v6)</a></li>
+      <li>
+        20/10/17 フレンドコードがない場合はダミーを挿入、結果画像欄を複数行化
+      </li>
+      <li>
+        20/04/26
+        決勝の場合は組数と通過数を入力不要化、4/24の修正をタッグ・トリプルス・フォーマンにも反映
+      </li>
+      <li>20/04/25 合計点計算タイミングを入力直後に変更</li>
+      <li>
+        20/04/24
+        (個人杯集計機のみ)回戦数の入力欄を追加、通過人数入力欄を選択式に変更
+      </li>
+      <li>
+        19/10/24 フレンドコードの両端に括弧がない場合も検出できるように修正
+      </li>
+      <li>
+        18/10/04
+        人数と通過人数を同一にした場合は区切り線と主催コピペ用を表示しない仕様を追加
+      </li>
+      <li>
+        18/08/18
+        フレンドコード検出周りのバグ取り、結果画像URL欄を改行可に変更(回線落ち時の措置)
+      </li>
+      <li>18/08/04 バグ取りと外観の微修正</li>
+      <li>18/07/22 合計点欄(自動計算)の追加、1v1の区切りを圧縮</li>
+      <li>18/07/21 回線落ち・減点用に得点欄に+-式を入力できるように変更</li>
+      <li>
+        18/07/20
+        Enterで得点入力欄移動の実装、結果画像欄の追加、コピー・リセットの修正、通過ライン同点処理の追加
+      </li>
+      <li>18/07/19 6v6の追加、背景色追加など</li>
+      <li>18/07/18 作成</li>
     </ul>
+  </details>
 
-    <details>
-      <summary>更新履歴（クリックで表示）</summary>
-      <ul>
-        <li>
-          20/10/17 フレンドコードがない場合はダミーを挿入、結果画像欄を複数行化
-        </li>
-        <li>
-          20/04/26
-          決勝の場合は組数と通過数を入力不要化、4/24の修正をタッグ・トリプルス・フォーマンにも反映
-        </li>
-        <li>20/04/25 合計点計算タイミングを入力直後に変更</li>
-        <li>
-          20/04/24
-          (個人杯集計機のみ)回戦数の入力欄を追加、通過人数入力欄を選択式に変更
-        </li>
-        <li>
-          19/10/24 フレンドコードの両端に括弧がない場合も検出できるように修正
-        </li>
-        <li>
-          18/10/04
-          人数と通過人数を同一にした場合は区切り線と主催コピペ用を表示しない仕様を追加
-        </li>
-        <li>
-          18/08/18
-          フレンドコード検出周りのバグ取り、結果画像URL欄を改行可に変更(回線落ち時の措置)
-        </li>
-        <li>18/08/04 バグ取りと外観の微修正</li>
-        <li>18/07/22 合計点欄(自動計算)の追加、1v1の区切りを圧縮</li>
-        <li>18/07/21 回線落ち・減点用に得点欄に+-式を入力できるように変更</li>
-        <li>
-          18/07/20
-          Enterで得点入力欄移動の実装、結果画像欄の追加、コピー・リセットの修正、通過ライン同点処理の追加
-        </li>
-        <li>18/07/19 6v6の追加、背景色追加など</li>
-        <li>18/07/18 作成</li>
-      </ul>
-    </details>
-
-    <!-- <details>
+  <!-- <details>
     <summary>TODO</summary>
     <ul>
       <li><a href="https://hlorenzi.github.io/mk8d_ocr/table.html">hlorenzi's Mario Kart Table Maker</a>
@@ -78,42 +76,42 @@
     </ul>
   </details> -->
 
-    <h2>その他ツール</h2>
+  <h2>その他ツール</h2>
 
+  <ul>
+    <li><a href="group.html">模擬用組分け機</a></li>
+    <li><a href="grouping.html">大規模杯組分け機</a></li>
+  </ul>
+
+  <details>
+    <summary>更新履歴（クリックで表示）</summary>
     <ul>
-      <li><a href="group.html">模擬用組分け機</a></li>
-      <li><a href="grouping.html">大規模杯組分け機</a></li>
+      <li>
+        21/09/20 大規模杯組分け機:
+        組の間に「-」文字を追加(SUMMITの組分けを参考にしています)
+      </li>
+      <li>
+        20/01/05 大規模杯組分け機:
+        6v6の際は名前欄の進行役チェックを行わないように変更
+      </li>
+      <li>
+        19/04/25 大規模杯組分け機:
+        重複検出追加，進行役の余剰/不足人数通知を追加
+      </li>
+      <li>19/02/11 大規模杯組分け機: IEでのバグ修正，正式公開</li>
+      <li>19/01/25 模擬組分け機: twitter投稿文を微修正</li>
+      <li>18/10/13 模擬組分け機: ログ機能の微修正</li>
+      <li>
+        18/09/05 模擬組分け機:
+        ログ機能の追加，重複検出の追加，形式選択を微修正
+      </li>
+      <li>18/08/18 模擬組分け機: 結果ツイート関係の修正、名称簡略化</li>
+      <li>18/08/17 模擬組分け機: 作成</li>
+      <li>18/07/19 大規模杯組分け機: 作成</li>
     </ul>
+  </details>
 
-    <details>
-      <summary>更新履歴（クリックで表示）</summary>
-      <ul>
-        <li>
-          21/09/20 大規模杯組分け機:
-          組の間に「-」文字を追加(SUMMITの組分けを参考にしています)
-        </li>
-        <li>
-          20/01/05 大規模杯組分け機:
-          6v6の際は名前欄の進行役チェックを行わないように変更
-        </li>
-        <li>
-          19/04/25 大規模杯組分け機:
-          重複検出追加，進行役の余剰/不足人数通知を追加
-        </li>
-        <li>19/02/11 大規模杯組分け機: IEでのバグ修正，正式公開</li>
-        <li>19/01/25 模擬組分け機: twitter投稿文を微修正</li>
-        <li>18/10/13 模擬組分け機: ログ機能の微修正</li>
-        <li>
-          18/09/05 模擬組分け機:
-          ログ機能の追加，重複検出の追加，形式選択を微修正
-        </li>
-        <li>18/08/18 模擬組分け機: 結果ツイート関係の修正、名称簡略化</li>
-        <li>18/08/17 模擬組分け機: 作成</li>
-        <li>18/07/19 大規模杯組分け機: 作成</li>
-      </ul>
-    </details>
-
-    <!-- <details>
+  <!-- <details>
     <summary>TODO</summary>
     <ul>
       <li>twitterリプライからの参加者名の自動取得</li>
@@ -122,32 +120,29 @@
     </ul>
   </details> -->
 
-    <h3>リスペクト</h3>
-    <ul>
-      <li>
-        <a href="http://mkwr.jp/file/gp.htm"
-          >マリオカートWii 保管庫 &gt; 大規模杯集計用計算機</a
-        >（マンダー氏作成）
-      </li>
-      <li>
-        <a href="http://mkwr.jp/file/sin.htm"
-          >マリオカートWii 保管庫 &gt; 大規模杯主催用組分け機</a
-        >（マンダー氏作成）
-      </li>
-    </ul>
+  <h3>リスペクト</h3>
+  <ul>
+    <li>
+      <a href="http://mkwr.jp/file/gp.htm">マリオカートWii 保管庫 &gt; 大規模杯集計用計算機</a>（マンダー氏作成）
+    </li>
+    <li>
+      <a href="http://mkwr.jp/file/sin.htm">マリオカートWii 保管庫 &gt; 大規模杯主催用組分け機</a>（マンダー氏作成）
+    </li>
+  </ul>
 
-    <footer>
-      <hr />
-      <address>
-        作成者連絡先 (バグ報告やツールに対するご意見など頂けると助かります)
-        <ul>
-          <li>
-            Twitter :
-            <a href="https://twitter.com/_theta_kappa">@_theta_kappa</a>
-          </li>
-          <li>discord : theta_k#6134</li>
-        </ul>
-      </address>
-    </footer>
-  </body>
+  <footer>
+    <hr />
+    <address>
+      作成者連絡先 (バグ報告やツールに対するご意見など頂けると助かります)
+      <ul>
+        <li>
+          Twitter :
+          <a href="https://twitter.com/_theta_kappa">@_theta_kappa</a>
+        </li>
+        <li>discord : theta_k#6134</li>
+      </ul>
+    </address>
+  </footer>
+</body>
+
 </html>
