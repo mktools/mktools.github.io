@@ -1,14 +1,24 @@
 //たびたび使うフレコ正規表現
 var regexFC = /([（(]?[ 　]*[0-9]{4}[-ｰ－−‐– 　]*[0-9]{4}[-ｰ－−‐– 　]*[0-9]{4}[ 　]*[[）)]?\s*)/g
 
+//個人戦で末尾に登録順がつくときのフレコ正規表現
+var regexFCForFFA = /([（(]?[ 　]*[0-9]{4}[-ｰ－−‐– 　]*[0-9]{4}[-ｰ－−‐– 　]*[0-9]{4}[ 　]*[[）)]?\s*)(【[0-9]{1,4}】)?/g
+
 //組分けコピペ欄から名前を切出し・貼り付け
 function pasteNames() {
+  var n = Number(document.getElementById("playernum").value)
+  var m = Number(document.getElementById("membernum").value)
+
   var nameArray = []
   var allNames = document.getElementById("names").value
   //たまに混入しているゼロ幅文字を消す
   allNames = allNames.replace(/[\u200B-\u200D\u2028-\u202E\uFEFF]/g, "")
   //フレンドコードを区切りとしてプレイヤー名を検出
-  allNames = allNames.replace(regexFC, "$1\n")
+  if (m === 1) {
+    allNames = allNames.replace(regexFCForFFA, "$1$2\n")
+  } else {
+    allNames = allNames.replace(regexFC, "$1\n")
+  }
   //Switch名前欄で表現できない全角英数を半角英数に変換
   allNames = allNames.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function (s) {
     return String.fromCharCode(s.charCodeAt(0) - 65248)
@@ -18,8 +28,6 @@ function pasteNames() {
   nameArray = allNames.split("\n")
 
   var playerNames = document.getElementsByName("name")
-  var n = Number(document.getElementById("playernum").value)
-  var m = Number(document.getElementById("membernum").value)
 
   for (var i = 0; i < n * m; i++) {
     var pn = nameArray[i]
