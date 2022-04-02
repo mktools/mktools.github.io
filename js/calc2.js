@@ -14,7 +14,8 @@ function pasteNames() {
   //たまに混入しているゼロ幅文字を消す
   allNames = allNames.replace(/[\u200B-\u200D\u2028-\u202E\uFEFF]/g, "")
   //フレンドコードを区切りとしてプレイヤー名を検出
-  if (m === 1) {
+  //TODO メドレー杯が終わったらm === 1に修正
+  if (true) {
     allNames = allNames.replace(regexFCForFFA, "$1$2\n")
   } else {
     allNames = allNames.replace(regexFC, "$1\n")
@@ -258,7 +259,8 @@ function calc2() {
         /([（(]?[ 　]*[0-9]{4}[-ｰ－−‐– 　]*[0-9]{4}[-ｰ－−‐– 　]*[0-9]{4}[ 　]*[[）)]?\s*)$/
       )
     ) {
-      playerNames[i].value = playerNames[i].value + "（0000-0000-0000）"
+      // TODO:メドレー杯が終わったらコメントアウトを外す
+      // playerNames[i].value = playerNames[i].value + "（0000-0000-0000）"
     }
   }
 
