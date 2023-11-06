@@ -642,8 +642,10 @@ function reset() {
 
     var m = Number(document.getElementById("membernum").value)
     document.getElementById("playernum").value = 12 / m
-    document.getElementById("passernum").value = null
     document.getElementById("pointsum").value = null
+    document.getElementById("roundnum").value = ""
+    document.getElementById("roomnum").value = ""
+    document.getElementById("passernum").value = ""
   }
 }
 
