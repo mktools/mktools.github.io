@@ -167,14 +167,6 @@ function maketable1(data, existsPrefer) {
     str += "※組数が入力されていません※" + "\n\n"
   }
 
-  var url = document.getElementById("imageurl").value
-
-  if (url != "") {
-    str += "結果画像 : " + url + "\n\n"
-  } else {
-    str += "※結果画像がありません※" + "\n\n"
-  }
-
   if (p !== "") {
     p = Number(p)
   }
@@ -333,17 +325,6 @@ function maketable2(data, existsPrefer) {
     } else {
       str += "※組数が入力されていません※" + "\n\n"
     }
-  }
-  var url = document.getElementById("imageurl").value
-
-  if (url != "") {
-    if (url.match(/\r\n|\n/g) === null) {
-      str += "結果画像 : " + url + "\n\n"
-    } else {
-      str += "結果画像 : \n" + url + "\n\n"
-    }
-  } else {
-    str += "※結果画像がありません※" + "\n\n"
   }
 
   if (p !== "") {
@@ -636,7 +617,6 @@ function reset() {
       teamNames[i].value = ""
     }
 
-    document.getElementById("imageurl").value = ""
     document.getElementById("names").value = ""
     document.getElementById("result").value = ""
 
@@ -673,17 +653,9 @@ function setVisibleRoomAndPasser() {
   }
 }
 
-function setTextAreaRows() {
-  var text = document.getElementById("imageurl")
-  height = (text.value + "\n").match(/\n/g).length
-  text.setAttribute("rows", height)
-}
-
 window.onload = function setHandler() {
   var pointlist = document.getElementsByName("point")
   for (var i = 0, len = pointlist.length; i < len; ++i) {
     pointlist[i].addEventListener("keyup", calcSum)
   }
-  var text = document.getElementById("imageurl")
-  text.addEventListener("keyup", setTextAreaRows)
 }
