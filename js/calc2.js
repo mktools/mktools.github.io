@@ -1,41 +1,43 @@
 //たびたび使うフレコ正規表現
-var regexFC = /([（(]?[ 　]*[0-9]{4}[-ｰ－−‐– 　]*[0-9]{4}[-ｰ－−‐– 　]*[0-9]{4}[ 　]*[[）)]?\s*)/g
+const REGEX_FC =
+  /([（(]?[ 　]*[0-9]{4}[-ｰ－−‐– 　]*[0-9]{4}[-ｰ－−‐– 　]*[0-9]{4}[ 　]*[[）)]?\s*)/g
 
 //個人戦で末尾に登録順がつくときのフレコ正規表現
-var regexFCForFFA = /([（(]?[ 　]*[0-9]{4}[-ｰ－−‐– 　]*[0-9]{4}[-ｰ－−‐– 　]*[0-9]{4}[ 　]*[[）)]?\s*)(【[0-9]{1,4}】)?/g
+const REGEX_FC_FOR_FFA =
+  /([（(]?[ 　]*[0-9]{4}[-ｰ－−‐– 　]*[0-9]{4}[-ｰ－−‐– 　]*[0-9]{4}[ 　]*[[）)]?\s*)(【[0-9]{1,4}】)?/g
 
 //組分けコピペ欄から名前を切出し・貼り付け
 function pasteNames() {
-  var n = Number(document.getElementById("playernum").value)
-  var m = Number(document.getElementById("membernum").value)
+  var n = Number(document.getElementById('playernum').value)
+  var m = Number(document.getElementById('membernum').value)
 
   var nameArray = []
-  var allNames = document.getElementById("names").value
+  var allNames = document.getElementById('names').value
   //たまに混入しているゼロ幅文字を消す
-  allNames = allNames.replace(/[\u200B-\u200D\u2028-\u202E\uFEFF]/g, "")
+  allNames = allNames.replace(/[\u200B-\u200D\u2028-\u202E\uFEFF]/g, '')
   //フレンドコードを区切りとしてプレイヤー名を検出
   if (m === 1) {
-    allNames = allNames.replace(regexFCForFFA, "$1$2\n")
+    allNames = allNames.replace(REGEX_FC_FOR_FFA, '$1$2\n')
   } else {
-    allNames = allNames.replace(regexFC, "$1\n")
+    allNames = allNames.replace(REGEX_FC, '$1\n')
   }
   //Switch名前欄で表現できない全角英数を半角英数に変換
   allNames = allNames.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function (s) {
     return String.fromCharCode(s.charCodeAt(0) - 65248)
   })
 
-  allNames = allNames.replace(/\n\n/g, "\n")
-  nameArray = allNames.split("\n")
+  allNames = allNames.replace(/\n\n/g, '\n')
+  nameArray = allNames.split('\n')
 
-  var playerNames = document.getElementsByName("name")
+  var playerNames = document.getElementsByName('name')
 
   for (var i = 0; i < n * m; i++) {
     var pn = nameArray[i]
-    if (typeof pn === "undefined" || pn === "") {
-      var tempid = ("00" + (i + 1)).slice(-2)
+    if (typeof pn === 'undefined' || pn === '') {
+      var tempid = ('00' + (i + 1)).slice(-2)
       // 未入力ならCPUで埋める
       playerNames[i].value =
-        "CPU" + tempid + "（0000-0000-00" + ("00" + tempid).slice(-2) + "）"
+        'CPU' + tempid + '（0000-0000-00' + ('00' + tempid).slice(-2) + '）'
     } else {
       playerNames[i].value = pn.trim()
     }
@@ -46,14 +48,14 @@ function pasteNames() {
 //得点コピペ欄から切り出し貼り付け（デバッグ用）
 function pastePoints() {
   var pointArray = []
-  pointArray = document.getElementById("points").value.split("\n")
-  var playerPoints = document.getElementsByName("point")
-  var n = Number(document.getElementById("playernum").value)
-  var m = Number(document.getElementById("membernum").value)
+  pointArray = document.getElementById('points').value.split('\n')
+  var playerPoints = document.getElementsByName('point')
+  var n = Number(document.getElementById('playernum').value)
+  var m = Number(document.getElementById('membernum').value)
 
   for (var i = 0; i < n; i++) {
     var pointArrays = []
-    pointArrays = pointArray[i].split(",")
+    pointArrays = pointArray[i].split(',')
     for (var j = 0; j < m; j++) {
       playerPoints[i * m + j].value = pointArrays[j]
     }
@@ -93,12 +95,12 @@ function objArraySort(data, key, key2, key3) {
 //得点式を数値に変換
 function validatePoint(point) {
   //全角+-を半角にする
-  point = point.replace(/([＋])/g, "+")
-  point = point.replace(/([ー－])/g, "-")
+  point = point.replace(/([＋])/g, '+')
+  point = point.replace(/([ー－])/g, '-')
   //不正な文字を除去
-  point = point.replace(/[^0-9+-]/g, "")
-  point = point.replace(/[+-]+$/g, "")
-  point = point.replace(/([+-])([+-]+)/g, "$1")
+  point = point.replace(/[^0-9+-]/g, '')
+  point = point.replace(/[+-]+$/g, '')
+  point = point.replace(/([+-])([+-]+)/g, '$1')
   point = Number(eval(point))
   if (isNaN(point)) {
     point = 0
@@ -109,10 +111,10 @@ function validatePoint(point) {
 //計算の実行（個人杯用）
 //TODO:calc2との統一
 function calc1() {
-  var playerNames = document.getElementsByName("name")
-  var playerPoints = document.getElementsByName("point")
-  var isPrefer = document.getElementsByName("drawpasser")
-  var n = Number(document.getElementById("playernum").value)
+  var playerNames = document.getElementsByName('name')
+  var playerPoints = document.getElementsByName('point')
+  var isPrefer = document.getElementsByName('drawpasser')
+  var n = Number(document.getElementById('playernum').value)
 
   //優先進出チェック
   var preferArray = []
@@ -135,61 +137,61 @@ function calc1() {
     obj.prefer = preferArray[i]
     playersArray.push(obj)
   }
-  objArraySort(playersArray, "point", "prefer", "pos")
+  objArraySort(playersArray, 'point', 'prefer', 'pos')
 
   var result = maketable1(playersArray, existsPrefer)
-  document.getElementById("result").value = result
+  document.getElementById('result').value = result
 }
 
 //出力用文字列の作成（個人杯用）
 //TODO:maketable2との統一
 function maketable1(data, existsPrefer) {
-  var str = ""
+  var str = ''
 
-  var round = document.getElementById("roundnum").value
-  var room = document.getElementById("roomnum").value
+  var round = document.getElementById('roundnum').value
+  var room = document.getElementById('roomnum').value
 
-  if (round !== "") {
+  if (round !== '') {
     str += round
   } else {
-    str += "※回戦数が選択されていません※" + "\n\n"
+    str += '※回戦数が選択されていません※' + '\n\n'
   }
 
-  var n = Number(document.getElementById("playernum").value)
-  var p = document.getElementById("passernum").value
+  var n = Number(document.getElementById('playernum').value)
+  var p = document.getElementById('passernum').value
 
-  if (room !== "" && round !== "決勝") {
-    str += room + "組\n"
-  } else if (round === "決勝") {
-    str += "\n"
+  if (room !== '' && round !== '決勝') {
+    str += room + '組\n'
+  } else if (round === '決勝') {
+    str += '\n'
     p = 0
   } else {
-    str += "※組数が入力されていません※" + "\n\n"
+    str += '※組数が入力されていません※' + '\n\n'
   }
 
-  if (p !== "") {
+  if (p !== '') {
     p = Number(p)
   }
 
   // 決勝または通過人数なしのとき
   if (p === 0 || p === n) {
     for (var i = 0; i < n; i++) {
-      str += data[i].point + "pts : " + data[i].name + "\n"
+      str += data[i].point + 'pts : ' + data[i].name + '\n'
     }
     if (data[0].point === data[1].point) {
       //TODO: 決勝で最高得点者が複数いる場合の文面追加
     }
     if (p === 0) {
-      str += "\n優勝\n"
-      str += data[0].name + "\n"
+      str += '\n優勝\n'
+      str += data[0].name + '\n'
     }
   } else if (0 < p && p < n) {
     for (var i = 0; i < p; i++) {
-      str += data[i].point + "pts : " + data[i].name + "\n"
+      str += data[i].point + 'pts : ' + data[i].name + '\n'
     }
-    str += "--------------------------------------------\n"
+    str += '--------------------------------------------\n'
     for (i = p; i < n; i++) {
-      str += data[i].point + "pts : " + data[i].name + "\n"
+      str += data[i].point + 'pts : ' + data[i].name + '\n'
     }
 
     if (data[p - 1].point === data[p].point) {
@@ -207,28 +209,28 @@ function maketable1(data, existsPrefer) {
           }
         }
         if (correctChecked) {
-          str += "\n登録順または進行役補正により "
+          str += '\n登録順または進行役補正により '
           for (var i = 0; i < p; i++) {
             if (data[i].point === data[p].point) {
-              var dataname = data[i].name.replace(regexFC, "")
-              str += dataname + "さん "
+              var dataname = data[i].name.replace(REGEX_FC, '')
+              str += dataname + 'さん '
             }
           }
-          str += "が通過となります\n"
+          str += 'が通過となります\n'
         } else {
-          str += "\n※進出可能同点チェックに誤りがあります※\n"
+          str += '\n※進出可能同点チェックに誤りがあります※\n'
         }
       } else {
-        str += "\n※進出可能ラインで同点がいます※\n"
+        str += '\n※進出可能ラインで同点がいます※\n'
       }
     }
 
-    str += "\n主催コピペ用\n"
+    str += '\n主催コピペ用\n'
     for (var i = 0; i < p; i++) {
-      str += data[i].name + "\n"
+      str += data[i].name + '\n'
     }
   } else {
-    str += "※通過人数に誤りがあります※\n"
+    str += '※通過人数に誤りがあります※\n'
   }
 
   return str
@@ -236,13 +238,13 @@ function maketable1(data, existsPrefer) {
 
 //計算の実行（2v2～6v6用）
 function calc2() {
-  var teamNames = document.getElementsByName("team")
-  var playerNames = document.getElementsByName("name")
-  var playerPoints = document.getElementsByName("point")
-  var isPrefer = document.getElementsByName("drawpasser")
+  var teamNames = document.getElementsByName('team')
+  var playerNames = document.getElementsByName('name')
+  var playerPoints = document.getElementsByName('point')
+  var isPrefer = document.getElementsByName('drawpasser')
 
-  var n = Number(document.getElementById("playernum").value)
-  var m = Number(document.getElementById("membernum").value)
+  var n = Number(document.getElementById('playernum').value)
+  var m = Number(document.getElementById('membernum').value)
 
   // フレンドコードがない場合はダミーを挿入する
   for (var i = 0; i < n * m; i++) {
@@ -251,7 +253,7 @@ function calc2() {
         /([（(]?[ 　]*[0-9]{4}[-ｰ－−‐– 　]*[0-9]{4}[-ｰ－−‐– 　]*[0-9]{4}[ 　]*[[）)]?\s*)$/
       )
     ) {
-      playerNames[i].value = playerNames[i].value + "（0000-0000-0000）"
+      playerNames[i].value = playerNames[i].value + '（0000-0000-0000）'
     }
   }
 
@@ -296,111 +298,111 @@ function calc2() {
     objs.prefer = preferArray[i]
     teamsArray.push(objs)
   }
-  objArraySort(teamsArray, "point", "prefer", "pos")
+  objArraySort(teamsArray, 'point', 'prefer', 'pos')
   var result = maketable2(teamsArray, existsPrefer)
-  document.getElementById("result").value = result
+  document.getElementById('result').value = result
 }
 
 //出力用文字列の作成（2v2～6v6用）
 function maketable2(data, existsPrefer) {
-  var n = Number(document.getElementById("playernum").value)
-  var m = Number(document.getElementById("membernum").value)
-  var p = document.getElementById("passernum").value
-  var str = ""
+  var n = Number(document.getElementById('playernum').value)
+  var m = Number(document.getElementById('membernum').value)
+  var p = document.getElementById('passernum').value
+  var str = ''
 
   if (m != 6) {
-    var round = document.getElementById("roundnum").value
-    var room = document.getElementById("roomnum").value
+    var round = document.getElementById('roundnum').value
+    var room = document.getElementById('roomnum').value
 
-    if (round !== "") {
+    if (round !== '') {
       str += round
     } else {
-      str += "※回戦数が選択されていません※" + "\n\n"
+      str += '※回戦数が選択されていません※' + '\n\n'
     }
 
-    if (room !== "" && round !== "決勝") {
-      str += room + "組\n"
-    } else if (round === "決勝") {
-      str += "\n"
+    if (room !== '' && round !== '決勝') {
+      str += room + '組\n'
+    } else if (round === '決勝') {
+      str += '\n'
       p = 0
     } else {
-      str += "※組数が入力されていません※" + "\n\n"
+      str += '※組数が入力されていません※' + '\n\n'
     }
   }
 
-  if (p !== "") {
+  if (p !== '') {
     p = Number(p)
   }
 
   //6v6のとき
   if (m === 6) {
     for (var i = 0; i < n; i++) {
-      var strtmp = ""
+      var strtmp = ''
       for (var j = 0; j < m; j++) {
         strtmp +=
-          data[i].players[j].point + "pts : " + data[i].players[j].name + "\n"
+          data[i].players[j].point + 'pts : ' + data[i].players[j].name + '\n'
       }
       str += strtmp
-      str += data[i].name + " : " + data[i].point + "pts\n\n"
+      str += data[i].name + ' : ' + data[i].point + 'pts\n\n'
     }
     if (data[p - 1].point === data[p].point) {
       if (existsPrefer) {
-        str += "\n最高得点者または進行役補正により "
+        str += '\n最高得点者または進行役補正により '
         for (var i = 0; i < p; i++) {
           if (data[i].point === data[p].point) {
-            str += data[i].name + " "
+            str += data[i].name + ' '
           }
         }
-        str += "が通過となります\n"
+        str += 'が通過となります\n'
       } else {
-        str += "\n※同点です※\n"
+        str += '\n※同点です※\n'
       }
     }
-    str += "\n勝利チーム\n"
-    str += data[0].name + "\n"
+    str += '\n勝利チーム\n'
+    str += data[0].name + '\n'
 
-  // 6v6以外かつ、決勝または通過人数なしのとき
+    // 6v6以外かつ、決勝または通過人数なしのとき
   } else if (p === 0 || p === n) {
     for (var i = 0; i < n; i++) {
-      var strtmp = ""
+      var strtmp = ''
       for (var j = 0; j < m; j++) {
         strtmp +=
-          data[i].players[j].point + "pts : " + data[i].players[j].name + "\n"
+          data[i].players[j].point + 'pts : ' + data[i].players[j].name + '\n'
       }
       str += strtmp
-      str += data[i].name + " : " + data[i].point + "pts\n\n"
+      str += data[i].name + ' : ' + data[i].point + 'pts\n\n'
     }
     if (data[0].point === data[1].point) {
       //TODO: 決勝で最高得点チームが複数いる場合の文面追加
     }
     if (p === 0) {
-      str += "\n優勝\n"
-      var strtmp = ""
+      str += '\n優勝\n'
+      var strtmp = ''
       for (var j = 0; j < m; j++) {
         strtmp += data[0].players[j].name
       }
-      str += strtmp + "\n"
+      str += strtmp + '\n'
     }
     //6v6以外かつ決勝以外のとき
   } else if (0 < p && p < n) {
     for (var i = 0; i < p; i++) {
-      var strtmp = ""
+      var strtmp = ''
       for (var j = 0; j < m; j++) {
         strtmp +=
-          data[i].players[j].point + "pts : " + data[i].players[j].name + "\n"
+          data[i].players[j].point + 'pts : ' + data[i].players[j].name + '\n'
       }
       str += strtmp
-      str += data[i].name + " : " + data[i].point + "pts\n\n"
+      str += data[i].name + ' : ' + data[i].point + 'pts\n\n'
     }
-    str += "--------------------------------------------\n\n"
+    str += '--------------------------------------------\n\n'
     for (i = p; i < n; i++) {
-      var strtmp = ""
+      var strtmp = ''
       for (var j = 0; j < m; j++) {
         strtmp +=
-          data[i].players[j].point + "pts : " + data[i].players[j].name + "\n"
+          data[i].players[j].point + 'pts : ' + data[i].players[j].name + '\n'
       }
       str += strtmp
-      str += data[i].name + " : " + data[i].point + "pts\n\n"
+      str += data[i].name + ' : ' + data[i].point + 'pts\n\n'
     }
 
     if (data[p - 1].point === data[p].point) {
@@ -418,35 +420,35 @@ function maketable2(data, existsPrefer) {
           }
         }
         if (correctChecked) {
-          str += "\n最高得点者または進行役補正により "
+          str += '\n最高得点者または進行役補正により '
           for (var i = 0; i < p; i++) {
             if (data[i].point === data[p].point) {
-              str += data[i].name + " "
+              str += data[i].name + ' '
             }
           }
-          str += "が通過となります\n"
+          str += 'が通過となります\n'
         } else {
-          str += "\n※進出可能同点チェックに誤りがあります※\n"
+          str += '\n※進出可能同点チェックに誤りがあります※\n'
         }
       } else {
-        str += "\n※進出可能ラインで同点がいます※\n"
+        str += '\n※進出可能ラインで同点がいます※\n'
       }
     }
 
-    str += "\n主催コピペ用\n"
+    str += '\n主催コピペ用\n'
     for (var i = 0; i < p; i++) {
-      var strtmp = ""
+      var strtmp = ''
       for (var j = 0; j < m; j++) {
         strtmp += data[i].players[j].name
       }
-      str += strtmp + "\n"
+      str += strtmp + '\n'
     }
     //それ以外（通過人数が不適切）
   } else {
     if (m === 1) {
-      str += "※通過人数が選択されていません※\n"
+      str += '※通過人数が選択されていません※\n'
     } else {
-      str += "※通過チーム数が選択されていません※\n"
+      str += '※通過チーム数が選択されていません※\n'
     }
   }
 
@@ -456,7 +458,7 @@ function maketable2(data, existsPrefer) {
 // 末尾に識別子をつける変速杯において末尾タグが用いられた場合
 // 識別子の「☆」がタグに含まれてしまうのでその応急処置
 function forIrr(s) {
-  return s.replace(/☆[軽中重A]$/, "")
+  return s.replace(/☆[軽中重A]$/, '')
 }
 
 // 文字列からLongest Common Substring（最長共通部分文字列）を抽出する
@@ -464,8 +466,8 @@ function forIrr(s) {
 // https://github.com/trekhleb/javascript-algorithms/blob/master/src/algorithms/string/longest-common-substring/longestCommonSubstring.js
 function LCS(s1, s2) {
   // フレンドコードを削除
-  var s1 = s1.replace(regexFC, "")
-  var s2 = s2.replace(regexFC, "")
+  var s1 = s1.replace(REGEX_FC, '')
+  var s2 = s2.replace(REGEX_FC, '')
 
   s1 = forIrr(s1)
   s2 = forIrr(s2)
@@ -512,11 +514,11 @@ function LCS(s1, s2) {
 
   if (longestSubstringLength === 0) {
     // Longest common substring has not been found.
-    return ""
+    return ''
   }
 
   // Detect the longest substring from the matrix.
-  var longestSubstring = ""
+  var longestSubstring = ''
 
   while (substringMatrix[longestSubstringRow][longestSubstringColumn] > 0) {
     longestSubstring = s1[longestSubstringColumn - 1] + longestSubstring
@@ -529,11 +531,11 @@ function LCS(s1, s2) {
 
 //プレイヤー名からチーム名を取得および出力する
 function getTeamName() {
-  var n = Number(document.getElementById("playernum").value)
-  var m = Number(document.getElementById("membernum").value)
+  var n = Number(document.getElementById('playernum').value)
+  var m = Number(document.getElementById('membernum').value)
 
-  var playerNames = document.getElementsByName("name")
-  var teamName = document.getElementsByName("team")
+  var playerNames = document.getElementsByName('name')
+  var teamName = document.getElementsByName('team')
   var teamNameArray = []
 
   //同チーム全プレイヤー間でLCSを掛けた結果をチーム名とする
@@ -574,18 +576,18 @@ function getTeamName() {
 
 //コピー内部処理
 function execCopy(string) {
-  var temp = document.createElement("div")
+  var temp = document.createElement('div')
 
-  temp.appendChild(document.createElement("pre")).textContent = string
+  temp.appendChild(document.createElement('pre')).textContent = string
 
   var s = temp.style
-  s.position = "fixed"
-  s.left = "-100%"
+  s.position = 'fixed'
+  s.left = '-100%'
 
   document.body.appendChild(temp)
   document.getSelection().selectAllChildren(temp)
 
-  var result = document.execCommand("copy")
+  var result = document.execCommand('copy')
 
   document.body.removeChild(temp)
   // true なら実行できている falseなら失敗か対応していないか
@@ -594,39 +596,39 @@ function execCopy(string) {
 
 //コピーボタンを押した場合の処理
 function copy() {
-  if (execCopy(document.getElementById("result").value)) {
-    alert("集計結果をコピーしました")
+  if (execCopy(document.getElementById('result').value)) {
+    alert('集計結果をコピーしました')
   } else {
-    alert("※このブラウザでは対応していません※")
+    alert('※このブラウザでは対応していません※')
   }
 }
 
 //リセットボタンを押した場合の処理
 function reset() {
-  var isReset = window.confirm("入力欄・集計結果のリセットを行いますか？")
+  var isReset = window.confirm('入力欄・集計結果のリセットを行いますか？')
   if (isReset) {
-    var playerNames = document.getElementsByName("name")
-    var teamNames = document.getElementsByName("team")
-    var playerPoints = document.getElementsByName("point")
+    var playerNames = document.getElementsByName('name')
+    var teamNames = document.getElementsByName('team')
+    var playerPoints = document.getElementsByName('point')
 
     for (var i = 0; i < 12; i++) {
-      playerNames[i].value = ""
-      playerPoints[i].value = ""
+      playerNames[i].value = ''
+      playerPoints[i].value = ''
     }
 
     for (var i = 0; i < teamNames.length; i++) {
-      teamNames[i].value = ""
+      teamNames[i].value = ''
     }
 
-    document.getElementById("names").value = ""
-    document.getElementById("result").value = ""
+    document.getElementById('names').value = ''
+    document.getElementById('result').value = ''
 
-    var m = Number(document.getElementById("membernum").value)
-    document.getElementById("playernum").value = 12 / m
-    document.getElementById("pointsum").value = null
-    document.getElementById("roundnum").value = ""
-    document.getElementById("roomnum").value = ""
-    document.getElementById("passernum").value = ""
+    var m = Number(document.getElementById('membernum').value)
+    document.getElementById('playernum').value = 12 / m
+    document.getElementById('pointsum').value = null
+    document.getElementById('roundnum').value = ''
+    document.getElementById('roomnum').value = ''
+    document.getElementById('passernum').value = ''
   }
 }
 
@@ -634,29 +636,29 @@ function reset() {
 function calcSum() {
   var pointSum = 0
 
-  var playerPoints = document.getElementsByName("point")
+  var playerPoints = document.getElementsByName('point')
   for (var i = 0; i < 12; i++) {
     pointSum += validatePoint(playerPoints[i].value)
   }
-  document.getElementById("pointsum").value = pointSum
+  document.getElementById('pointsum').value = pointSum
 }
 
 function setVisibleRoomAndPasser() {
-  var round = document.getElementById("roundnum").value
-  if (round == "決勝") {
-    document.getElementById("passernum").style.display = "none"
-    document.getElementById("roomnum").style.display = "none"
-    document.getElementById("kumi").style.display = "none"
+  var round = document.getElementById('roundnum').value
+  if (round == '決勝') {
+    document.getElementById('passernum').style.display = 'none'
+    document.getElementById('roomnum').style.display = 'none'
+    document.getElementById('kumi').style.display = 'none'
   } else {
-    document.getElementById("passernum").style.display = ""
-    document.getElementById("roomnum").style.display = ""
-    document.getElementById("kumi").style.display = ""
+    document.getElementById('passernum').style.display = ''
+    document.getElementById('roomnum').style.display = ''
+    document.getElementById('kumi').style.display = ''
   }
 }
 
 window.onload = function setHandler() {
-  var pointlist = document.getElementsByName("point")
+  var pointlist = document.getElementsByName('point')
   for (var i = 0, len = pointlist.length; i < len; ++i) {
-    pointlist[i].addEventListener("keyup", calcSum)
+    pointlist[i].addEventListener('keyup', calcSum)
   }
 }
