@@ -171,6 +171,7 @@ function maketable1(data, existsPrefer) {
     p = Number(p)
   }
 
+  // 決勝または通過人数なしのとき
   if (p === 0 || p === n) {
     for (var i = 0; i < n; i++) {
       str += data[i].point + "pts : " + data[i].name + "\n"
@@ -358,8 +359,8 @@ function maketable2(data, existsPrefer) {
     str += "\n勝利チーム\n"
     str += data[0].name + "\n"
 
-    //6v6以外かつ決勝のとき
-  } else if (p === 0) {
+  // 6v6以外かつ、決勝または通過人数なしのとき
+  } else if (p === 0 || p === n) {
     for (var i = 0; i < n; i++) {
       var strtmp = ""
       for (var j = 0; j < m; j++) {
@@ -372,14 +373,14 @@ function maketable2(data, existsPrefer) {
     if (data[0].point === data[1].point) {
       //TODO: 決勝で最高得点チームが複数いる場合の文面追加
     }
-
-    str += "\n優勝\n"
-    var strtmp = ""
-    for (var j = 0; j < m; j++) {
-      strtmp += data[0].players[j].name
+    if (p === 0) {
+      str += "\n優勝\n"
+      var strtmp = ""
+      for (var j = 0; j < m; j++) {
+        strtmp += data[0].players[j].name
+      }
+      str += strtmp + "\n"
     }
-    str += strtmp + "\n"
-
     //6v6以外かつ決勝以外のとき
   } else if (0 < p && p < n) {
     for (var i = 0; i < p; i++) {
