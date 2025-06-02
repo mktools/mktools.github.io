@@ -15,21 +15,21 @@
   </script>
 
   <meta charset="utf-8" />
-  <title>MK8DX 個人杯集計機</title>
+  <title>MKWorld 個人杯集計機</title>
 
   <script type="text/javascript" src="js/calc2.js"></script>
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
   <script type="text/javascript" src="js/focus.js"></script>
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="../css/style.css" />
 </head>
 
 <body class="calc1">
   <a href="index.html">トップへ戻る</a>
-  <p>MK8DX 大規模杯集計機 - 個人(1v1)</p>
+  <p>MKWorld 集計機 - 個人(1v1)</p>
   <details>
     <summary>使い方（クリックで表示）</summary>
     <ol>
-      <li>人数を入力する（通常は12のままでOK）</li>
+      <li>人数を入力する（通常は24のままでOK）</li>
       <li>回戦数、組数、通過人数を入力する</li>
       <li>
         組分け一覧から集計する組をコピペして「<b>名前一括貼付</b>」を押す
@@ -52,7 +52,7 @@
         <input id="membernum" class="number" size="3" type="hidden" value="1" readonly />
       </td>
       <td>
-        人数<input id="playernum" class="number" size="3" type="number" value="12" />
+        人数<input id="playernum" class="number" size="3" type="number" value="24" />
       </td>
     </tr>
   </p>
@@ -78,6 +78,18 @@
       <span style="vertical-align: top"></span>
       <select id="passernum" name="type">
         <option value="" selected>通過人数を選択</option>
+        <option value="23">23人通過</option>
+        <option value="22">22人通過</option>
+        <option value="21">21人通過</option>
+        <option value="20">20人通過</option>
+        <option value="19">19人通過</option>
+        <option value="18">18人通過</option>
+        <option value="17">17人通過</option>
+        <option value="16">16人通過</option>
+        <option value="15">15人通過</option>
+        <option value="14">14人通過</option>
+        <option value="13">13人通過</option>
+        <option value="12">12人通過</option>
         <option value="11">11人通過</option>
         <option value="10">10人通過</option>
         <option value="9">9人通過</option>
@@ -89,7 +101,7 @@
         <option value="3">3人通過</option>
         <option value="2">2人通過</option>
         <option value="1">1人通過</option>
-        <option value="12">通過人数なし</option>
+        <option value="24">通過人数なし</option>
       </select>
     </td>
 
@@ -97,7 +109,7 @@
   </p>
 
   <p>
-    <textarea id="names" cols="60" rows="13" placeholder="ここに組分けをコピペ"></textarea>
+    <textarea id="names" cols="60" rows="25" placeholder="ここに組分けをコピペ"></textarea>
     <!-- <textarea id="points" cols="3" rows="13" placeholder=""></textarea> -->
     <br />
     <button type="button" onclick="pasteNames()">名前一括貼付</button>
@@ -116,90 +128,176 @@
       <tr class="pl1">
         <td><input tabindex="1" name="name" class="name" type="text" /></td>
         <td>
-          <input tabindex="13" name="point" class="point" size="3" type="tel" />
+          <input tabindex="25" name="point" class="point" size="3" type="tel" />
         </td>
         <td><input name="drawpasser" class="box" type="checkbox" /></td>
       </tr>
       <tr class="pl2">
         <td><input tabindex="2" name="name" class="name" type="text" /></td>
         <td>
-          <input tabindex="14" name="point" class="point" size="3" type="tel" />
+          <input tabindex="26" name="point" class="point" size="3" type="tel" />
         </td>
         <td><input name="drawpasser" class="box" type="checkbox" /></td>
       </tr>
       <tr class="pl3">
         <td><input tabindex="3" name="name" class="name" type="text" /></td>
         <td>
-          <input tabindex="15" name="point" class="point" size="3" type="tel" />
+          <input tabindex="27" name="point" class="point" size="3" type="tel" />
         </td>
         <td><input name="drawpasser" class="box" type="checkbox" /></td>
       </tr>
       <tr class="pl4">
         <td><input tabindex="4" name="name" class="name" type="text" /></td>
         <td>
-          <input tabindex="16" name="point" class="point" size="3" type="tel" />
+          <input tabindex="28" name="point" class="point" size="3" type="tel" />
         </td>
         <td><input name="drawpasser" class="box" type="checkbox" /></td>
       </tr>
       <tr class="pl5">
         <td><input tabindex="5" name="name" class="name" type="text" /></td>
         <td>
-          <input tabindex="17" name="point" class="point" size="3" type="tel" />
+          <input tabindex="29" name="point" class="point" size="3" type="tel" />
         </td>
         <td><input name="drawpasser" class="box" type="checkbox" /></td>
       </tr>
       <tr class="pl6">
         <td><input tabindex="6" name="name" class="name" type="text" /></td>
         <td>
-          <input tabindex="18" name="point" class="point" size="3" type="tel" />
+          <input tabindex="30" name="point" class="point" size="3" type="tel" />
         </td>
         <td><input name="drawpasser" class="box" type="checkbox" /></td>
       </tr>
       <tr class="pl7">
         <td><input tabindex="7" name="name" class="name" type="text" /></td>
         <td>
-          <input tabindex="19" name="point" class="point" size="3" type="tel" />
+          <input tabindex="31" name="point" class="point" size="3" type="tel" />
         </td>
         <td><input name="drawpasser" class="box" type="checkbox" /></td>
       </tr>
       <tr class="pl8">
         <td><input tabindex="8" name="name" class="name" type="text" /></td>
         <td>
-          <input tabindex="20" name="point" class="point" size="3" type="tel" />
+          <input tabindex="32" name="point" class="point" size="3" type="tel" />
         </td>
         <td><input name="drawpasser" class="box" type="checkbox" /></td>
       </tr>
       <tr class="pl9">
         <td><input tabindex="9" name="name" class="name" type="text" /></td>
         <td>
-          <input tabindex="21" name="point" class="point" size="3" type="tel" />
+          <input tabindex="33" name="point" class="point" size="3" type="tel" />
         </td>
         <td><input name="drawpasser" class="box" type="checkbox" /></td>
       </tr>
       <tr class="pl10">
         <td><input tabindex="10" name="name" class="name" type="text" /></td>
         <td>
-          <input tabindex="22" name="point" class="point" size="3" type="tel" />
+          <input tabindex="34" name="point" class="point" size="3" type="tel" />
         </td>
         <td><input name="drawpasser" class="box" type="checkbox" /></td>
       </tr>
       <tr class="pl11">
         <td><input tabindex="11" name="name" class="name" type="text" /></td>
         <td>
-          <input tabindex="23" name="point" class="point" size="3" type="tel" />
+          <input tabindex="35" name="point" class="point" size="3" type="tel" />
         </td>
         <td><input name="drawpasser" class="box" type="checkbox" /></td>
       </tr>
       <tr class="pl12">
         <td><input tabindex="12" name="name" class="name" type="text" /></td>
         <td>
-          <input tabindex="24" name="point" class="point" size="3" type="tel" />
+          <input tabindex="36" name="point" class="point" size="3" type="tel" />
+        </td>
+        <td><input name="drawpasser" class="box" type="checkbox" /></td>
+      </tr>
+
+         <tr class="pl13">
+        <td><input tabindex="13" name="name" class="name" type="text" /></td>
+        <td>
+          <input tabindex="37" name="point" class="point" size="3" type="tel" />
+        </td>
+        <td><input name="drawpasser" class="box" type="checkbox" /></td>
+      </tr>
+      <tr class="pl14">
+        <td><input tabindex="14" name="name" class="name" type="text" /></td>
+        <td>
+          <input tabindex="38" name="point" class="point" size="3" type="tel" />
+        </td>
+        <td><input name="drawpasser" class="box" type="checkbox" /></td>
+      </tr>
+      <tr class="pl15">
+        <td><input tabindex="15" name="name" class="name" type="text" /></td>
+        <td>
+          <input tabindex="39" name="point" class="point" size="3" type="tel" />
+        </td>
+        <td><input name="drawpasser" class="box" type="checkbox" /></td>
+      </tr>
+      <tr class="pl16">
+        <td><input tabindex="16" name="name" class="name" type="text" /></td>
+        <td>
+          <input tabindex="40" name="point" class="point" size="3" type="tel" />
+        </td>
+        <td><input name="drawpasser" class="box" type="checkbox" /></td>
+      </tr>
+      <tr class="pl17">
+        <td><input tabindex="17" name="name" class="name" type="text" /></td>
+        <td>
+          <input tabindex="41" name="point" class="point" size="3" type="tel" />
+        </td>
+        <td><input name="drawpasser" class="box" type="checkbox" /></td>
+      </tr>
+      <tr class="pl18">
+        <td><input tabindex="18" name="name" class="name" type="text" /></td>
+        <td>
+          <input tabindex="42" name="point" class="point" size="3" type="tel" />
+        </td>
+        <td><input name="drawpasser" class="box" type="checkbox" /></td>
+      </tr>
+      <tr class="pl19">
+        <td><input tabindex="19" name="name" class="name" type="text" /></td>
+        <td>
+          <input tabindex="43" name="point" class="point" size="3" type="tel" />
+        </td>
+        <td><input name="drawpasser" class="box" type="checkbox" /></td>
+      </tr>
+            <tr class="pl20">
+        <td><input tabindex="20" name="name" class="name" type="text" /></td>
+        <td>
+          <input tabindex="44" name="point" class="point" size="3" type="tel" />
+        </td>
+        <td><input name="drawpasser" class="box" type="checkbox" /></td>
+      </tr>
+      <tr class="pl21">
+        <td><input tabindex="21" name="name" class="name" type="text" /></td>
+        <td>
+          <input tabindex="45" name="point" class="point" size="3" type="tel" />
+        </td>
+        <td><input name="drawpasser" class="box" type="checkbox" /></td>
+      </tr>
+      <tr class="pl22">
+        <td><input tabindex="22" name="name" class="name" type="text" /></td>
+        <td>
+          <input tabindex="46" name="point" class="point" size="3" type="tel" />
+        </td>
+        <td><input name="drawpasser" class="box" type="checkbox" /></td>
+      </tr>
+
+         <tr class="pl23">
+        <td><input tabindex="23" name="name" class="name" type="text" /></td>
+        <td>
+          <input tabindex="47" name="point" class="point" size="3" type="tel" />
+        </td>
+        <td><input name="drawpasser" class="box" type="checkbox" /></td>
+      </tr>
+      <tr class="pl24">
+        <td><input tabindex="24" name="name" class="name" type="text" /></td>
+        <td>
+          <input tabindex="48" name="point" class="point" size="3" type="tel" />
         </td>
         <td><input name="drawpasser" class="box" type="checkbox" /></td>
       </tr>
       <tr class="plsum" height="100%">
         <td align="right"></td>
-        <td title="8レース: 656点 12レース: 984点 になればOK">
+        <td title="8レース: 864点 12レース: 1296点 になればOK">
           <input id="pointsum" class="point" size="4" type="text" placeholder="合計点" readonly />
         </td>
 
@@ -211,7 +309,7 @@
     <button type="button" onclick="calc1()">計算</button>
   </div>
   <p>
-    <textarea id="result" name="result" cols="60" rows="32" placeholder="ここに集計結果が出力されます"></textarea>
+    <textarea id="result" name="result" cols="60" rows="64" placeholder="ここに集計結果が出力されます"></textarea>
   </p>
   <p>
     <button type="button" onclick="copy()">集計結果をコピー</button>
