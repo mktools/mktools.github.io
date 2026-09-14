@@ -16,7 +16,8 @@ function pasteNames() {
   //たまに混入しているゼロ幅文字を消す
   allNames = allNames.replace(/[\u200B-\u200D\u2028-\u202E\uFEFF]/g, '')
   //フレンドコードを区切りとしてプレイヤー名を検出
-  if (m === 1) {
+  //個人戦・ランダムタッグはフレコ末尾に登録順【n】がつくことがある
+  if (m === 1 || isRandomTag()) {
     allNames = allNames.replace(REGEX_FC_FOR_FFA, '$1$2\n')
   } else {
     allNames = allNames.replace(REGEX_FC, '$1\n')
@@ -264,11 +265,11 @@ function calc2() {
   var n = Number(document.getElementById('playernum').value)
   var m = Number(document.getElementById('membernum').value)
 
-  // フレンドコードがない場合はダミーを挿入する
+  // フレンドコードがない場合はダミーを挿入する（末尾の登録順【n】は許容）
   for (var i = 0; i < n * m; i++) {
     if (
       !playerNames[i].value.match(
-        /([（(]?[ 　]*[0-9]{4}[-ｰ－−‐– 　]*[0-9]{4}[-ｰ－−‐– 　]*[0-9]{4}[ 　]*[[）)]?\s*)$/
+        /([（(]?[ 　]*[0-9]{4}[-ｰ－−‐– 　]*[0-9]{4}[-ｰ－−‐– 　]*[0-9]{4}[ 　]*[[）)]?\s*)(【[0-9]{1,4}】)?$/
       )
     ) {
       playerNames[i].value = playerNames[i].value + '（0000-0000-0000）'
