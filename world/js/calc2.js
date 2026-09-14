@@ -236,7 +236,7 @@ function maketable1(data, existsPrefer) {
   return str
 }
 
-//計算の実行（2v2～6v6用）
+//計算の実行（2v2～12v12用）
 function calc2() {
   var teamNames = document.getElementsByName('team')
   var playerNames = document.getElementsByName('name')
@@ -303,14 +303,15 @@ function calc2() {
   document.getElementById('result').value = result
 }
 
-//出力用文字列の作成（2v2～6v6用）
+//出力用文字列の作成（2v2～12v12用）
 function maketable2(data, existsPrefer) {
   var n = Number(document.getElementById('playernum').value)
   var m = Number(document.getElementById('membernum').value)
   var p = document.getElementById('passernum').value
   var str = ''
 
-  if (m != 6) {
+  //2チームのみの対戦（12v12など）は回戦・組を使わない
+  if (n !== 2) {
     var round = document.getElementById('roundnum').value
     var room = document.getElementById('roomnum').value
 
@@ -334,8 +335,8 @@ function maketable2(data, existsPrefer) {
     p = Number(p)
   }
 
-  //6v6のとき
-  if (m === 6) {
+  //2チームのみの対戦のとき
+  if (n === 2) {
     for (var i = 0; i < n; i++) {
       var strtmp = ''
       for (var j = 0; j < m; j++) {
@@ -361,7 +362,7 @@ function maketable2(data, existsPrefer) {
     str += '\n勝利チーム\n'
     str += data[0].name + '\n'
 
-    // 6v6以外かつ、決勝または通過人数なしのとき
+    // 2チーム対戦以外かつ、決勝または通過人数なしのとき
   } else if (p === 0 || p === n) {
     for (var i = 0; i < n; i++) {
       var strtmp = ''
@@ -383,7 +384,7 @@ function maketable2(data, existsPrefer) {
       }
       str += strtmp + '\n'
     }
-    //6v6以外かつ決勝以外のとき
+    //2チーム対戦以外かつ決勝以外のとき
   } else if (0 < p && p < n) {
     for (var i = 0; i < p; i++) {
       var strtmp = ''
@@ -539,35 +540,15 @@ function getTeamName() {
   var teamNameArray = []
 
   //同チーム全プレイヤー間でLCSを掛けた結果をチーム名とする
-  if (m === 2) {
-    for (var i = 0; i < n; i++) {
-      name = LCS(playerNames[i * 2].value, playerNames[i * 2 + 1].value)
-      teamNameArray.push(name)
-    }
-  } else if (m === 3) {
-    for (var i = 0; i < n; i++) {
-      name = LCS(playerNames[i * 3].value, playerNames[i * 3 + 1].value)
-      name = LCS(name, playerNames[i * 3 + 2].value)
-      teamNameArray.push(name)
-    }
-  } else if (m === 4) {
-    for (var i = 0; i < n; i++) {
-      name = LCS(playerNames[i * 4].value, playerNames[i * 4 + 1].value)
-      name = LCS(name, playerNames[i * 4 + 2].value)
-      name = LCS(name, playerNames[i * 4 + 3].value)
-      teamNameArray.push(name)
-    }
-  } else if (m === 6) {
-    for (var i = 0; i < n; i++) {
-      name = LCS(playerNames[i * 6].value, playerNames[i * 6 + 1].value)
-      name = LCS(name, playerNames[i * 6 + 2].value)
-      name = LCS(name, playerNames[i * 6 + 3].value)
-      name = LCS(name, playerNames[i * 6 + 4].value)
-      name = LCS(name, playerNames[i * 6 + 5].value)
-      teamNameArray.push(name)
-    }
-  } else {
+  if (m < 2) {
     return
+  }
+  for (var i = 0; i < n; i++) {
+    name = LCS(playerNames[i * m].value, playerNames[i * m + 1].value)
+    for (var j = 2; j < m; j++) {
+      name = LCS(name, playerNames[i * m + j].value)
+    }
+    teamNameArray.push(name)
   }
   for (var i = 0; i < n; i++) {
     teamName[i].value = teamNameArray[i]
