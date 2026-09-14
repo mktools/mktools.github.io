@@ -42,7 +42,25 @@ function pasteNames() {
       playerNames[i].value = pn.trim()
     }
   }
-  getTeamName()
+  if (isRandomTag()) {
+    setRandomTagTeamName()
+  } else {
+    getTeamName()
+  }
+}
+
+//ランダムタッグ集計機（calc2r）かどうか
+function isRandomTag() {
+  return document.getElementById('randomtag') !== null
+}
+
+//チームの選手名を組分け用に連結（ランダムタッグは1人1行）
+function joinPlayerNames(players) {
+  var names = []
+  for (var j = 0; j < players.length; j++) {
+    names.push(players[j].name)
+  }
+  return names.join(isRandomTag() ? '\n' : '')
 }
 
 //得点コピペ欄から切り出し貼り付け（デバッグ用）
@@ -378,11 +396,7 @@ function maketable2(data, existsPrefer) {
     }
     if (p === 0) {
       str += '\n優勝\n'
-      var strtmp = ''
-      for (var j = 0; j < m; j++) {
-        strtmp += data[0].players[j].name
-      }
-      str += strtmp + '\n'
+      str += joinPlayerNames(data[0].players) + '\n'
     }
     //2チーム対戦以外かつ決勝以外のとき
   } else if (0 < p && p < n) {
@@ -438,11 +452,7 @@ function maketable2(data, existsPrefer) {
 
     str += '\n主催コピペ用\n'
     for (var i = 0; i < p; i++) {
-      var strtmp = ''
-      for (var j = 0; j < m; j++) {
-        strtmp += data[i].players[j].name
-      }
-      str += strtmp + '\n'
+      str += joinPlayerNames(data[i].players) + '\n'
     }
     //それ以外（通過人数が不適切）
   } else {
@@ -552,6 +562,15 @@ function getTeamName() {
   }
   for (var i = 0; i < n; i++) {
     teamName[i].value = teamNameArray[i]
+  }
+}
+
+//ランダムタッグ用: チーム名を上から順に A★, B★, ... とする
+function setRandomTagTeamName() {
+  var n = Number(document.getElementById('playernum').value)
+  var teamName = document.getElementsByName('team')
+  for (var i = 0; i < n; i++) {
+    teamName[i].value = String.fromCharCode(65 + i) + '★'
   }
 }
 
