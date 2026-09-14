@@ -6,6 +6,7 @@ input.name { width: 270px; }
 body.top {  background-color: rgb(238, 238, 238) }
 body.calc1 {  background-color: rgb(200, 232, 239) }
 body.calc2 {  background-color: rgb(212, 242, 207) }
+body.calc2r {  background-color: rgb(207, 242, 232) }
 body.calc3 {  background-color: rgb(242, 237, 219) }
 body.calc4 {  background-color: rgb(242, 214, 207) }
 body.calc6 {  background-color: rgb(235, 217, 242) }
