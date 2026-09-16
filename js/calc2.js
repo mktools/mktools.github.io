@@ -29,7 +29,7 @@ function pasteNames() {
   allNames = allNames.replace(/\n\n/g, '\n')
   nameArray = allNames.split('\n')
 
-  var playerNames = document.getElementsByName('name')
+  var playerNames = document.getElementsByName('playername')
 
   for (var i = 0; i < n * m; i++) {
     var pn = nameArray[i]
@@ -111,7 +111,7 @@ function validatePoint(point) {
 //計算の実行（個人杯用）
 //TODO:calc2との統一
 function calc1() {
-  var playerNames = document.getElementsByName('name')
+  var playerNames = document.getElementsByName('playername')
   var playerPoints = document.getElementsByName('point')
   var isPrefer = document.getElementsByName('drawpasser')
   var n = Number(document.getElementById('playernum').value)
@@ -239,7 +239,7 @@ function maketable1(data, existsPrefer) {
 //計算の実行（2v2～6v6用）
 function calc2() {
   var teamNames = document.getElementsByName('team')
-  var playerNames = document.getElementsByName('name')
+  var playerNames = document.getElementsByName('playername')
   var playerPoints = document.getElementsByName('point')
   var isPrefer = document.getElementsByName('drawpasser')
 
@@ -534,7 +534,7 @@ function getTeamName() {
   var n = Number(document.getElementById('playernum').value)
   var m = Number(document.getElementById('membernum').value)
 
-  var playerNames = document.getElementsByName('name')
+  var playerNames = document.getElementsByName('playername')
   var teamName = document.getElementsByName('team')
   var teamNameArray = []
 
@@ -607,7 +607,7 @@ function copy() {
 function reset() {
   var isReset = window.confirm('入力欄・集計結果のリセットを行いますか？')
   if (isReset) {
-    var playerNames = document.getElementsByName('name')
+    var playerNames = document.getElementsByName('playername')
     var teamNames = document.getElementsByName('team')
     var playerPoints = document.getElementsByName('point')
 
